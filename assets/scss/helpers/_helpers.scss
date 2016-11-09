@@ -1,0 +1,13 @@
+@import "shapes";
+
+%cf {
+	&:after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+}
+
+@mixin border-inset ($width, $colour) {
+	box-shadow: inset 0 0 0 $width $colour;
+}

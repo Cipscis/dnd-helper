@@ -1,0 +1,91 @@
+/**********\
+| PALETTES |
+\**********/
+
+// Base Palette
+$white: #fff;
+$black: #000;
+
+$grey--lighter: #eee;
+$grey--light: #999;
+$grey: #666;
+$grey--dim: #444;
+$grey--dark: #333;
+$grey--darker: #222;
+
+$pink: #ffb9f9;
+$red--pastel: #f66;
+$red: #f33;
+$orange: #ffa94b;
+$yellow: #ffe64b;
+$green--warm: #77aa33;
+$green--dark: #114400;
+$blue: #2266aa;
+$blue--pastel: #66f;
+$blue--pale: #9bf3ff;
+
+$platinum: #ddddff;
+$gold: #ffaa33;
+$silver: #999999;
+$copper: #cc6633;
+
+// Team Palette
+$enemy: $red--pastel;
+$player: $blue--pastel;
+
+// Season Palette
+$spring: $pink;
+$summer: $yellow;
+$autumn: $orange;
+$winter: $blue--pale;
+
+// Terrain Palette
+$ocean:		$blue;
+$river:		$blue;
+$jungle:	$green--dark;
+$grass:		$green--warm;
+$desert:	$yellow;
+
+/************\
+| COMPONENTS |
+\************/
+// Base
+$body-background: $grey--dark;
+$body-colour: $white;
+$link-colour: $white;
+
+// Pod
+$pod-background: $grey;
+$pod-border: $white;
+
+$pod-background--inner: $grey--dark;
+
+// Button
+$btn-background: $grey--lighter;
+$btn-background--hover: $white;
+$btn-colour: $grey--dark;
+
+// Editable
+$editable-background: $grey--dim;
+$editable-colour: $white;
+
+// Form
+$form-error: $red;
+
+// Calendar
+$calendar-color: $black;
+$calendar-background--current: $white;
+$calendar-background--active: $white;
+
+// Tooltip
+$tooltip-background: $grey--dark;
+$tooltip-border: $grey--light;
+$tooltip-colour: $white;
+
+// Line Map
+$line-map-pip-colour: $black;
+$line-map-branch-colour: $white;
+
+// Initiative
+$initiative-control-colour--inactive: $grey--darker;
+$initiative-control-colour: $white;

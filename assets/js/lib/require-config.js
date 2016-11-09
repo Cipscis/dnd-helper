@@ -1,0 +1,20 @@
+require.config({
+	baseUrl: '/assets/js',
+	paths: {
+		'jquery': 'lib/jquery-3.1.1',
+		'templayed': 'lib/templayed',
+		'mustache': 'lib/mustache',
+
+		'expand-collapse': 'app/expand-collapse/expand-collapse',
+		'inventory': 'app/inventory/inventory',
+		'initiative': 'app/initiative/initiative',
+		'char-cards': 'app/char-cards/char-cards',
+		'loot-list': 'app/loot-list/loot-list',
+		'drag-sort': 'app/drag-sort/drag-sort'
+	},
+	shim: {
+		templayed: {
+			exports: 'templayed'
+		}
+	}
+});

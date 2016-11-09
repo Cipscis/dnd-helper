@@ -1,0 +1,201 @@
+/*****************\
+| INITIATIVE FORM |
+\*****************/
+
+.initiative__form {
+	margin: 20px 0;
+}
+
+
+/****************************\
+| INITIATIVE GLOBAL CONTROLS |
+\****************************/
+
+.initiative__global-controls {
+	position: fixed;
+	z-index: 1;
+	top: 30%;
+	transform: translateY(-50%);
+	right: 20px;
+
+	width: 200px;
+}
+
+
+/*****************\
+| INITIATIVE LIST |
+\*****************/
+
+.initiative__list {
+	margin: 20px 0;
+	padding: 0 200px 0 0;
+}
+
+.initiative__item {
+	@extend %cf;
+
+	margin-left: 45px;
+
+	position: relative;
+}
+
+.initiative__item--enemy {
+	@include border-inset(5px, $enemy);
+}
+.initiative__item--player {
+	@include border-inset(5px, $player);
+}
+
+
+/*********************\
+| INITIATIVE CONTROLS |
+\*********************/
+
+.initiative__current {
+	position: absolute;
+
+	top: 10px;
+	left: -45px;
+
+	height: 0;
+	width: 0;
+
+	border-left: 20px solid $initiative-control-colour--inactive;
+	border-top: 10px solid transparent;
+	border-bottom: 10px solid transparent;
+
+	cursor: pointer;
+
+	.is-current & {
+		border-left-color: $initiative-control-colour;
+	}
+}
+
+.initiative__remove {
+	@include cross(20px);
+	width: 20px;
+	height: 20px;
+
+	position: absolute;
+	top: 10px;
+	right: 10px;
+
+	cursor: pointer;
+
+	&:before,
+	&:after {
+		position: absolute;
+		top: 9px;
+		left: 0;
+	}
+}
+
+.initiative__up,
+.initiative__down {
+	position: absolute;
+	left: 13px;
+
+	width: 10px;
+	height: 10px;
+
+	cursor: pointer;
+
+	&:before,
+	&:after {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+}
+
+.initiative__up {
+	top: 10px;
+	&:before {
+		@include triangle(up, 10px, $initiative-control-colour, 5px);
+	}
+}
+.initiative__down {
+	top: 25px;
+	&:before {
+		@include triangle(down, 10px, $initiative-control-colour, 5px);
+	}
+}
+
+
+/********************\
+| INITIATIVE DETAILS |
+\********************/
+
+.initiative__name {
+	margin-top: 0;
+}
+
+.initiative__health {
+	label, input {
+		display: inline;
+	}
+}
+
+.initiative__health-current {
+	width: 60px;
+}
+
+.initiative__notes {
+	display: block;
+	min-height: 90px;
+}
+
+
+/********************\
+| INITIATIVE COUNTER |
+\********************/
+
+.initiative__counter {
+	@extend %cf;
+
+	position: relative;
+	margin-top: 20px;
+	padding-left: 30px;
+}
+
+.initiative__counter-remove {
+	position: absolute;
+	top: 5px;
+	left: 0;
+
+	width: 20px;
+	height: 20px;
+
+	cursor: pointer;
+
+	@include cross(20px);
+
+	&:before,
+	&:after {
+		position: absolute;
+		top: 9px;
+		right: 0;
+	}
+}
+
+.initiative__counter-duration {
+	float: left;
+	width: 65px;
+	margin-right: 10px;
+
+	font-size: 18px;
+}
+
+.initiative__counter-details {
+	overflow: hidden;
+}
+
+.initiative__counter-name {
+	font-weight: bold;
+}
+
+.initiative__counter-description {
+	display: block;
+	margin-top: 5px;
+}

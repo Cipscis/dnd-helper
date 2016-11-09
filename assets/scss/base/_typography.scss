@@ -1,0 +1,14 @@
+$base-font-family: Arial;
+
+body {
+	font-family: $base-font-family;
+	color: $body-colour;
+}
+
+a {
+	color: $link-colour;
+}
+
+textarea {
+	font-family: $base-font-family;
+}

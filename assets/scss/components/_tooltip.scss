@@ -1,0 +1,7 @@
+.tooltip {
+	padding: 10px 30px;
+
+	background: $tooltip-background;
+	@include border-inset(5px, $tooltip-border);
+	color: $tooltip-colour;
+}

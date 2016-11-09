@@ -1,0 +1,20 @@
+{
+	"name": "Test",
+	"layers": [
+		{
+			"name": "Skin",
+			"src": "/assets/images/charcards/test-skin.png",
+			"colour": "#52280b"
+		},
+		{
+			"name": "Clothes",
+			"src": "/assets/images/charcards/test-clothes.png",
+			"colour": "#dedede"
+		},
+		{
+			"name": "Hair",
+			"src": "/assets/images/charcards/test-hair.png",
+			"colour": "#5b5b5b"
+		}
+	]
+}

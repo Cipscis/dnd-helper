@@ -1,0 +1,36 @@
+.expand-collapse {}
+
+.expand-collapse__heading {
+	position: relative;
+	padding-left: 40px;
+
+	cursor: pointer;
+
+	@include plus(20px);
+
+	&:before,
+	&:after {
+		position: absolute;
+		left: 10px;
+		top: 50%;
+
+		transition: all 0.5s;
+	}
+
+	.expand-collapse.is-expanded > & {
+		&:before,
+		&:after {
+			transform: rotate(180deg);
+		}
+	}
+}
+
+.expand-collapse__body {
+	display: none;
+
+	padding: 0 40px;
+
+	.expand-collapse.is-expanded > & {
+		display: block;
+	}
+}

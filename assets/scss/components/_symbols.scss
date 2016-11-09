@@ -1,0 +1,291 @@
+.symbol-ara {
+	width: 100px;
+	height: 100px;
+
+	border-radius: 50px;
+	border: 1px solid $white;
+	background: $black;
+
+	position: relative;
+	&:before {
+		content: "";
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 50%;
+
+		border-radius: 50px 0 0 50px;
+		background: $white;
+	}
+	&:after {
+		content: "";
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 50%;
+
+		border-radius: 50px 0 0 50px;
+		border-left: 2px solid $white;
+		background: $black;
+
+		transform-origin: 100% 0;
+		transform: scaleX(0.6);
+	}
+}
+
+.symbol-tyro {
+	width: 100px;
+	height: 100px;
+
+	border-radius: 50px;
+	border: 1px solid $white;
+
+	position: relative;
+	&:before {
+		position: absolute;
+		content: "";
+
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 50%;
+
+		border-radius: 50px 50px 0 0;
+		background: $black;
+	}
+	&:after {
+		position: absolute;
+		content: "";
+
+		left: 0;
+		right: 0;
+		top: 50%;
+		bottom: 0;
+
+		border-radius: 0 0 50px 50px;
+		background: $white;
+	}
+}
+
+.symbol-ilune {
+	width: 100px;
+	height: 100px;
+
+	border-radius: 50px;
+	border: 1px solid $white;
+	background: $black;
+
+	position: relative;
+	&:before {
+		position: absolute;
+		content: "";
+
+		top: percentage(1/7);
+		bottom: percentage(1/7);
+		left: percentage(1/7);
+		right: percentage(1/7);
+
+		border-radius: 100%;
+		border: 1px solid $white;
+		background: $white;
+	}
+}
+
+.symbol-wan {
+	width: 100px;
+	height: 100px;
+
+	border-radius: 50px;
+	border-bottom: 50px solid blue;
+	background: $white;
+
+	position: relative;
+	&:before {
+		position: absolute;
+		content: "";
+
+		top: 25px;
+		height: 50px;
+		left: 0;
+		right: 50px;
+
+		border-radius: 100%;
+		background: blue;
+	}
+	&:after {
+		position: absolute;
+		content: "";
+
+		top: 25px;
+		height: 50px;
+		left: 50px;
+		right: 0;
+
+		border-radius: 100%;
+		background: $white;
+	}
+}
+
+.symbol-thresher {
+	width: 100px;
+	height: 100px;
+
+	border-radius: 50px;
+	border: 1px solid $white;
+	background: $black;
+
+	position: relative;
+	&:before {
+		position: absolute;
+		content: "";
+
+		top: 25px;
+		height: 50px;
+		left: 25px;
+		width: 25px;
+
+		border-radius: 50px 0 0 50px;
+		background: $white;
+	}
+	&:after {
+		position: absolute;
+		content: "";
+
+		top: 25px;
+		height: 48px;
+		right: 25px;
+		width: 23px;
+
+		border-radius: 0 50px 50px 0;
+		border: 1px solid;
+		border-right: 1px solid $white;
+		background: $black;
+	}
+}
+
+
+
+
+// Mortal Seals
+$jerga-thickness: 5px;
+
+.symbol-jerga {
+	position: relative;
+	width: 100px;
+	height: 100px;
+
+	margin: 20px;
+	background: #333;
+}
+
+.symbol-jerga__outline:before {
+	content: "";
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+
+	border: $jerga-thickness solid red;
+	border-radius: 50px;
+}
+
+.symbol-jerga__break {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 50%;
+	transform: translateY(-50%);
+
+	height: 20px;
+	background: #333;
+}
+
+
+.symbol-jerga__break-top-line:before,
+.symbol-jerga__break-top-line:after,
+.symbol-jerga__break-bottom-line:before,
+.symbol-jerga__break-bottom-line:after {
+	content: "";
+	position: absolute;
+	width: 33px;
+	border-top: $jerga-thickness solid red;
+}
+
+.symbol-jerga__break-top-line:before {
+	top: -$jerga-thickness;
+	left: $jerga-thickness;
+}
+.symbol-jerga__break-top-line:after {
+	top: -$jerga-thickness;
+	right: $jerga-thickness;
+}
+
+.symbol-jerga__break-bottom-line:before {
+	bottom: -$jerga-thickness;
+	left: $jerga-thickness;
+}
+.symbol-jerga__break-bottom-line:after {
+	bottom: -$jerga-thickness;
+	right: $jerga-thickness;
+}
+
+
+.symbol-jerga__vert-top:before,
+.symbol-jerga__vert-top:after,
+.symbol-jerga__vert-bottom:before,
+.symbol-jerga__vert-bottom:after {
+	content: "";
+	position: absolute;
+	height: 20px;
+	border-left: $jerga-thickness solid red;
+}
+
+.symbol-jerga__vert-top:before {
+	top: 20px;
+	left: 33px + $jerga-thickness;
+}
+.symbol-jerga__vert-top:after {
+	top: 20px;
+	right: 33px + $jerga-thickness;
+}
+
+.symbol-jerga__vert-bottom:before {
+	bottom: 20px;
+	left: 33px + $jerga-thickness;
+}
+.symbol-jerga__vert-bottom:after {
+	bottom: 20px;
+	right: 33px + $jerga-thickness;
+}
+
+
+.symbol-jerga__curl-top:before,
+.symbol-jerga__curl-top:after,
+.symbol-jerga__curl-bottom:before,
+.symbol-jerga__curl-bottom:after {
+	content: "";
+	position: absolute;
+	width: 10px;
+	border-top: $jerga-thickness solid red;
+}
+
+.symbol-jerga__curl-top:before {
+	top: 20px;
+	left: 25px + $jerga-thickness;
+}
+.symbol-jerga__curl-top:after {
+	top: 20px;
+	right: 25px + $jerga-thickness;
+}
+
+.symbol-jerga__curl-bottom:before {
+	bottom: 20px;
+	left: 25px + $jerga-thickness;
+}
+.symbol-jerga__curl-bottom:after {
+	bottom: 20px;
+	right: 25px + $jerga-thickness;
+}

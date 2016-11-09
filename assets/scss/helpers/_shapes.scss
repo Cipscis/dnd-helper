@@ -1,0 +1,48 @@
+@mixin plus($size: 20px, $colour: $white, $width: 2px) {
+	&:before,
+	&:after {
+		content: "";
+		width: $size;
+		border-top: $width solid $colour;
+		margin-top: -($width / 2);
+	}
+
+	&:after {
+		transform: rotate(90deg);
+	}
+}
+
+@mixin cross($size: 20px, $colour: $white, $width: 2px) {
+	@include plus($size, $colour, $width);
+
+	&:before {
+		transform: rotate(-45deg);
+	}
+	&:after {
+		transform: rotate(45deg);
+	}
+}
+
+@mixin triangle($direction: up, $size: 20px, $colour: $white, $width: 10px) {
+	display: block;
+	width: 0;
+	height: 0;
+
+	@if $direction == up {
+		border-bottom: $size solid $colour;
+		border-left: $width solid transparent;
+		border-right: $width solid transparent;
+	} @else if $direction == down {
+		border-top: $size solid $colour;
+		border-left: $width solid transparent;
+		border-right: $width solid transparent;
+	} @else if $direction == left {
+		border-left: $size solid $colour;
+		border-top: $width solid transparent;
+		border-bottom: $width solid transparent;
+	} @else {
+		border-right: $size solid $colour;
+		border-top: $width solid transparent;
+		border-bottom: $width solid transparent;
+	}
+}

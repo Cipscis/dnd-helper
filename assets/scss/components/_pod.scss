@@ -1,0 +1,26 @@
+$pod-config: (
+	null: 20px,
+	tight: 10px,
+	loose: 30px
+);
+
+@mixin pod($gutter) {
+	padding: $gutter;
+	background: $pod-background;
+}
+
+@each $variant, $gutter in $pod-config {
+	@if $variant == null {
+		.pod {
+			@include pod($gutter);
+		}
+	} @else {
+		.pod--#{$variant} {
+			@include pod($gutter);
+		}
+	}
+}
+
+.pod--border {
+	@include border-inset(2px, $pod-border);
+}

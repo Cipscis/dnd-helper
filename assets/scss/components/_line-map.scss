@@ -1,0 +1,104 @@
+.line-map {
+	list-style: none;
+
+	margin: 0 auto;
+	padding: 10px 20px;
+	text-align: center;
+
+	background: $pod-background;
+
+	> :first-child {
+		margin-top: 0;
+	}
+	> :last-child {
+		margin-bottom: 0;
+	}
+}
+
+.line-map__terrain {
+	width: 100px;
+
+	padding: 20px;
+	margin: 0 auto;
+	background: $pod-background--inner;
+
+	position: relative;
+	&:after {
+		content: "";
+		position: absolute;
+
+		left: 50%;
+		top: 50%;
+		margin-top: -5px;
+		margin-left: -5px;
+		width: 10px;
+		height: 10px;
+		background: $line-map-pip-colour;
+	}
+}
+.line-map__terrain--small {
+	&:after {
+		display: none;
+	}
+}
+
+.line-map__terrain--ocean	{ background: $ocean;	}
+.line-map__terrain--desert	{ background: $desert;	}
+.line-map__terrain--jungle	{ background: $jungle;	}
+.line-map__terrain--grass	{ background: $grass;	}
+.line-map__terrain--river	{
+	position: relative;
+	&:before {
+		content: "";
+		position: absolute;
+
+		top: 0;
+		bottom: 0;
+		left: 33%;
+		right: 33%;
+
+		background: $river;
+	}
+}
+
+.line-map__location {
+	padding: 20px 50px;
+	margin: 0;
+	background: $pod-background--inner;
+}
+
+.line-map__branch {
+	list-style: none;
+
+	margin-bottom: 20px;
+	padding: 0;
+	text-align: center;
+
+	position: relative;
+	&:before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 30px;
+
+		width: 18px;
+		height: 68px;
+
+
+		border-left: 2px solid $line-map-branch-colour;
+		border-bottom: 2px solid $line-map-branch-colour;
+	}
+	&:after {
+		@include triangle(left, 10px, $line-map-branch-colour, 5px);
+
+		content: "";
+		position: absolute;
+		left: 50px;
+		top: 64px;
+	}
+
+	.line-map__location {
+		margin-left: 70px;
+		margin-right: 70px;
+	}
+}
