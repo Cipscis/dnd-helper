@@ -46,15 +46,13 @@
 				</ul>
 
 				<div class="grid-v--tight">
-					{{#items.length}}
-						<div class="grid__item">
-							<ul class="grid--tight grid-v--tight js-inventory-items js-drag-sort-list">
-								{{#items}}
-									{{> itemTemplate}}
-								{{/items}}
-							</ul>
-						</div>
-					{{/items.length}}
+					<div class="grid__item">
+						<ul class="grid--tight grid-v--tight js-inventory-items js-drag-sort-list">
+							{{#items}}
+								{{> itemTemplate}}
+							{{/items}}
+						</ul>
+					</div>
 
 					<div class="grid__item">
 						<ul class="grid--tight grid-v--tight">
