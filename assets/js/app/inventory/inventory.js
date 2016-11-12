@@ -4,6 +4,7 @@ define(
 		'mustache',
 
 		'util/fileIO',
+		'binder',
 
 		'app/inventory/inventory-item'
 	],
@@ -14,7 +15,7 @@ define(
 	// - Different types of items (e.g. coin, weapon,
 	//   container, ammunition) with different displays
 
-	function ($, Mustache, fileIO, InventoryItem) {
+	function ($, Mustache, fileIO, Binder, InventoryItem) {
 
 		var emptyInventory = {
 			coins: [
@@ -128,26 +129,7 @@ define(
 				var data = Inventory._getData(),
 					$item = $(this);
 
-				Inventory._initInventoryItem($item, data.items[i]);
-			},
-
-			_initInventoryItem: function ($item, item) {
-				$item.data('inventory-item', item);
-				$item.on('change input', 'input, textarea, select', Inventory._itemInfoChange);
-			},
-
-			_itemInfoChange: function (e) {
-				var $input = $(e.target),
-					name = $input.attr('name'),
-					val = $input.val(),
-
-					$item = $input.closest('.js-inventory-item'),
-					inventoryItem = $item.data('inventory-item');
-
-				inventoryItem[name] = val;
-				$item
-					.find('[data-inventory-item-value="' + name + '"], [name="' + name + '"]').not($input)
-					.text(val).val(val);
+				Binder.bind(data.items[i], $item);
 			},
 
 			_loadSubmit: function (e) {
@@ -217,7 +199,7 @@ define(
 					$list = $('.js-inventory-items');
 
 				$list.append($item);
-				Inventory._initInventoryItem($item, item);
+				Binder.bind(item, $item);
 			},
 
 			_removeClick: function (e) {
