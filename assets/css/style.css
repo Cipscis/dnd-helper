@@ -1,4 +1,4 @@
-.grid:after, .grid--flush:after, .grid--tight:after, .grid--loose:after, .initiative__item:after, .initiative__counter:after {
+.grid:after, .grid--flush:after, .grid--tight:after, .grid--loose:after, .combat__item:after, .combat__counter:after {
   content: "";
   display: table;
   clear: both;
@@ -445,6 +445,43 @@ button:hover, button:focus, button:active, .button:hover, .button:focus, .button
 
 .is-droppable * {
   pointer-events: none;
+}
+
+.is-loading {
+  position: relative;
+}
+
+.is-loading:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.is-loading:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  border: 4px solid rgba(255, 255, 255, 0.5);
+  border-top-color: #fff;
+  border-radius: 30px;
+  animation: rotateCentre 1.1s infinite linear;
+}
+
+@keyframes rotateCentre {
+  0% {
+    transform: translateX(-50%) translateY(-50%) rotate(0deg);
+  }
+  100% {
+    transform: translateX(-50%) translateY(-50%) rotate(360deg);
+  }
 }
 
 .symbol-ara {
@@ -897,13 +934,13 @@ button:hover, button:focus, button:active, .button:hover, .button:focus, .button
 
 /*****************| INITIATIVE FORM |
 \*****************/
-.initiative__form {
+.combat__form {
   margin: 20px 0;
 }
 
 /****************************| INITIATIVE GLOBAL CONTROLS |
 \****************************/
-.initiative__global-controls {
+.combat__global-controls {
   position: fixed;
   z-index: 1;
   top: 30%;
@@ -914,27 +951,27 @@ button:hover, button:focus, button:active, .button:hover, .button:focus, .button
 
 /*****************| INITIATIVE LIST |
 \*****************/
-.initiative__list {
+.combat__list {
   margin: 20px 0;
   padding: 0 200px 0 0;
 }
 
-.initiative__item {
+.combat__item {
   margin-left: 45px;
   position: relative;
 }
 
-.initiative__item--enemy {
+.combat__item--enemy {
   box-shadow: inset 0 0 0 5px #f66;
 }
 
-.initiative__item--player {
+.combat__item--player {
   box-shadow: inset 0 0 0 5px #66f;
 }
 
 /*********************| INITIATIVE CONTROLS |
 \*********************/
-.initiative__current {
+.combat__current {
   position: absolute;
   top: 10px;
   left: -45px;
@@ -946,11 +983,11 @@ button:hover, button:focus, button:active, .button:hover, .button:focus, .button
   cursor: pointer;
 }
 
-.is-current .initiative__current {
+.is-current .combat__current {
   border-left-color: #fff;
 }
 
-.initiative__remove {
+.combat__remove {
   width: 20px;
   height: 20px;
   position: absolute;
@@ -959,35 +996,35 @@ button:hover, button:focus, button:active, .button:hover, .button:focus, .button
   cursor: pointer;
 }
 
-.initiative__remove:before,
-.initiative__remove:after {
+.combat__remove:before,
+.combat__remove:after {
   content: "";
   width: 20px;
   border-top: 2px solid #fff;
   margin-top: -1px;
 }
 
-.initiative__remove:after {
+.combat__remove:after {
   transform: rotate(90deg);
 }
 
-.initiative__remove:before {
+.combat__remove:before {
   transform: rotate(-45deg);
 }
 
-.initiative__remove:after {
+.combat__remove:after {
   transform: rotate(45deg);
 }
 
-.initiative__remove:before,
-.initiative__remove:after {
+.combat__remove:before,
+.combat__remove:after {
   position: absolute;
   top: 9px;
   left: 0;
 }
 
-.initiative__up,
-.initiative__down {
+.combat__up,
+.combat__down {
   position: absolute;
   left: 13px;
   width: 10px;
@@ -995,21 +1032,21 @@ button:hover, button:focus, button:active, .button:hover, .button:focus, .button
   cursor: pointer;
 }
 
-.initiative__up:before,
-.initiative__up:after,
-.initiative__down:before,
-.initiative__down:after {
+.combat__up:before,
+.combat__up:after,
+.combat__down:before,
+.combat__down:after {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
 }
 
-.initiative__up {
+.combat__up {
   top: 10px;
 }
 
-.initiative__up:before {
+.combat__up:before {
   display: block;
   width: 0;
   height: 0;
@@ -1018,11 +1055,11 @@ button:hover, button:focus, button:active, .button:hover, .button:focus, .button
   border-right: 5px solid transparent;
 }
 
-.initiative__down {
+.combat__down {
   top: 25px;
 }
 
-.initiative__down:before {
+.combat__down:before {
   display: block;
   width: 0;
   height: 0;
@@ -1033,32 +1070,32 @@ button:hover, button:focus, button:active, .button:hover, .button:focus, .button
 
 /********************| INITIATIVE DETAILS |
 \********************/
-.initiative__name {
+.combat__name {
   margin-top: 0;
 }
 
-.initiative__health label, .initiative__health input {
+.combat__health label, .combat__health input {
   display: inline;
 }
 
-.initiative__health-current {
+.combat__health-current {
   width: 60px;
 }
 
-.initiative__notes {
+.combat__notes {
   display: block;
   min-height: 90px;
 }
 
 /********************| INITIATIVE COUNTER |
 \********************/
-.initiative__counter {
+.combat__counter {
   position: relative;
   margin-top: 20px;
   padding-left: 30px;
 }
 
-.initiative__counter-remove {
+.combat__counter-remove {
   position: absolute;
   top: 5px;
   left: 0;
@@ -1067,49 +1104,49 @@ button:hover, button:focus, button:active, .button:hover, .button:focus, .button
   cursor: pointer;
 }
 
-.initiative__counter-remove:before,
-.initiative__counter-remove:after {
+.combat__counter-remove:before,
+.combat__counter-remove:after {
   content: "";
   width: 20px;
   border-top: 2px solid #fff;
   margin-top: -1px;
 }
 
-.initiative__counter-remove:after {
+.combat__counter-remove:after {
   transform: rotate(90deg);
 }
 
-.initiative__counter-remove:before {
+.combat__counter-remove:before {
   transform: rotate(-45deg);
 }
 
-.initiative__counter-remove:after {
+.combat__counter-remove:after {
   transform: rotate(45deg);
 }
 
-.initiative__counter-remove:before,
-.initiative__counter-remove:after {
+.combat__counter-remove:before,
+.combat__counter-remove:after {
   position: absolute;
   top: 9px;
   right: 0;
 }
 
-.initiative__counter-duration {
+.combat__counter-duration {
   float: left;
   width: 65px;
   margin-right: 10px;
   font-size: 18px;
 }
 
-.initiative__counter-details {
+.combat__counter-details {
   overflow: hidden;
 }
 
-.initiative__counter-name {
+.combat__counter-name {
   font-weight: bold;
 }
 
-.initiative__counter-description {
+.combat__counter-description {
   display: block;
   margin-top: 5px;
 }

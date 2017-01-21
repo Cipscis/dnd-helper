@@ -36,7 +36,12 @@ define(
 			_processDragEnter: function (e) {
 				var $target = $(e.target);
 
-				if (!$target.is($draggedEl) && $target.is('.js-drag-sort-item') && !$target.hasClass('is-droppable')) {
+				if (
+					!$target.is($draggedEl) &&
+					$target.closest('.js-drag-sort-list').is($draggedEl.closest('.js-drag-sort-list')) &&
+					$target.is('.js-drag-sort-item') &&
+					!$target.hasClass('is-droppable')
+				) {
 					$target.addClass('is-droppable');
 				}
 			},

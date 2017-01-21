@@ -7,7 +7,7 @@ require.config({
 
 		'expand-collapse': 'app/expand-collapse/expand-collapse',
 		'inventory': 'app/inventory/inventory',
-		'initiative': 'app/initiative/initiative',
+		'combat': 'app/combat/combat',
 		'char-cards': 'app/char-cards/char-cards',
 		'loot-list': 'app/loot-list/loot-list',
 		'drag-sort': 'app/drag-sort/drag-sort',

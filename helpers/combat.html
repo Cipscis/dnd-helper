@@ -9,11 +9,11 @@
 
 		<script type="text/javascript">
 			require([
-				'initiative',
+				'combat',
 				'drag-sort'
 			],
-			function (Initiative, DragSort) {
-				Initiative.init();
+			function (Combat, DragSort) {
+				Combat.init();
 				DragSort.init();
 			});
 		</script>
@@ -26,7 +26,7 @@
 
 			<div class="grid">
 				<div class="grid__item width-1 width-md-1-2 width-l-1-3 width-xl-1-4">
-					<form class="initiative__form pod js-initiative__form">
+					<form class="combat__form pod js-combat__form">
 						<ul class="grid-v--tight">
 							<li class="grid__item">
 								<input type="text" name="name" placeholder="Name" class="editable" required />
@@ -35,8 +35,8 @@
 								<input type="number" name="initiative" placeholder="Initiative" class="editable" required />
 							</li>
 							<li class="grid__item">
-								<label>Player <input type="radio" name="team" value="initiative__item--player" checked /></label>
-								<label>Enemy <input type="radio" name="team" value="initiative__item--enemy" /></label>
+								<label>Player <input type="radio" name="team" value="combat__item--player" checked /></label>
+								<label>Enemy <input type="radio" name="team" value="combat__item--enemy" /></label>
 							</li>
 							<li class="grid__item">
 								<input type="number" name="hp" placeholder="HP" class="editable" />
@@ -49,44 +49,44 @@
 				</div>
 			</div>
 
-			<div class="initiative__global-controls pod pod--border">
-				<button class="js-initiative__next">Next Turn</button>
+			<div class="combat__global-controls pod pod--border">
+				<button class="js-combat__next">Next Turn</button>
 			</div>
 
-			<script type="x-js-template" class="js-initiative__template">
-				<li class="grid__item js-initiative__item js-drag-sort-wrap" data-initiative="{{initiative}}">
-					<div class="initiative__item pod pod--loose {{team}} js-drag-sort-item" draggable="true">
-						<div class="initiative__controls">
-							<span class="initiative__current js-initiative__select"></span>
-							<span class="initiative__remove js-initiative__remove"></span>
-							<span class="initiative__up js-initiative__up"></span>
-							<span class="initiative__down js-initiative__down"></span>
+			<script type="x-js-template" class="js-combat__template">
+				<li class="grid__item js-combat__item js-drag-sort-wrap" data-initiative="{{initiative}}">
+					<div class="combat__item pod pod--loose {{team}} js-drag-sort-item" draggable="true">
+						<div class="combat__controls">
+							<span class="combat__current js-combat__select"></span>
+							<span class="combat__remove js-combat__remove"></span>
+							<span class="combat__up js-combat__up"></span>
+							<span class="combat__down js-combat__down"></span>
 						</div>
 
 						<div class="grid grid-v">
 							<div class="grid__item width-1 width-l-1-2">
-								<h2 class="initiative__name">{{name}} ({{initiative}})</h2>
+								<h2 class="combat__name"><span data-binder-value="name">{{name}}</span> (<span data-binder-value="initiative">{{initiative}}</span>)</h2>
 
 								{{#hasHp}}
-									<p class="initiative__health"><label>Health <span class="editable" contenteditable="true">{{hp}}</span></label> / {{hp}}</p>
+									<p class="combat__health"><label>Health <span class="editable" contenteditable="true" data-binder-value="hp">{{hp}}</span></label> / {{hp}}</p>
 								{{/hasHp}}
 
-								<div class="initiative__notes editable" contenteditable="true"></div>
+								<textarea class="combat__notes editable width-1" contenteditable="true" data-binder-value="description"></textarea>
 
-								<div class="initiative__counter-list js-initiative__counter-list"></div>
+								<div class="combat__counter-list js-combat__counter-list"></div>
 							</div>
 
 							<div class="grid__item width-1 width-l-1-2">
-								<form class="initiative__counter-form js-initiative__counter-form">
+								<form class="combat__counter-form js-combat__counter-form">
 									<ul class="grid-v--tight">
 										<li class="grid__item">
-											<input type="text" placeholder="Counter" name="name" required class="editable js-initiative__counter-name" />
+											<input type="text" placeholder="Counter" name="counter-name" required class="editable js-combat__counter-name" />
 										</li>
 										<li class="grid__item">
-											<input type="number" placeholder="Duration" name="duration" required class="editable js-initiative__counter-length" />
+											<input type="number" placeholder="Duration" name="counter-duration" required class="editable js-combat__counter-length" />
 										</li>
 										<li class="grid__item">
-											<textarea placeholder="Description" name="description" class="editable js-initiative__counter-description"></textarea>
+											<textarea placeholder="Description" name="counter-description" class="editable js-combat__counter-description"></textarea>
 										</li>
 										<li class="grid__item">
 											<button type="submit">Add Counter</button>
@@ -99,20 +99,20 @@
 				</li>
 			</script>
 
-			<script type="x-js-template" class="js-initiative__counter-template">
-				<div class="initiative__counter js-initiative__counter">
-					<span class="initiative__counter-remove js-initiative__counter-remove"></span>
+			<script type="x-js-template" class="js-combat__counter-template">
+				<div class="combat__counter js-combat__counter">
+					<span class="combat__counter-remove js-combat__counter-remove"></span>
 
-					<input type="number" value="{{duration}}" class="editable initiative__counter-duration js-initiative__counter-duration" />
-					<div class="initiative__counter-details">
-						<span class="initiative__counter-name">{{name}}</span>
-						<span class="initiative__counter-description editable" contenteditable="true">{{description}}</span>
+					<input type="number" value="{{counter-duration}}" class="editable combat__counter-duration js-combat__counter-duration" />
+					<div class="combat__counter-details">
+						<span class="combat__counter-name">{{counter-name}}</span>
+						<span class="combat__counter-description editable" contenteditable="true">{{counter-description}}</span>
 					</div>
 				</div>
 			</script>
 
-			<div class="initiative__list">
-				<ol class="grid-v--tight js-initiative__list js-drag-sort-list"></ol>
+			<div class="combat__list">
+				<ol class="grid-v--tight js-combat__list js-drag-sort-list"></ol>
 			</div>
 
 		</div>
