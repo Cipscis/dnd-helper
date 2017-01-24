@@ -5,6 +5,10 @@
 		width: $size;
 		border-top: $width solid $colour;
 		margin-top: -($width / 2);
+
+		position: absolute;
+		left: 0;
+		top: 50%;
 	}
 
 	&:after {
@@ -36,7 +40,7 @@
 		border-top: $size solid $colour;
 		border-left: $width solid transparent;
 		border-right: $width solid transparent;
-	} @else if $direction == left {
+	} @else if $direction == right {
 		border-left: $size solid $colour;
 		border-top: $width solid transparent;
 		border-bottom: $width solid transparent;

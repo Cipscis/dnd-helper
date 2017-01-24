@@ -9,7 +9,7 @@
 
 		<script type="text/javascript">
 			require([
-				'combat',
+				'combat/combat',
 				'drag-sort'
 			],
 			function (Combat, DragSort) {
@@ -35,8 +35,8 @@
 								<input type="number" name="initiative" placeholder="Initiative" class="editable" required />
 							</li>
 							<li class="grid__item">
-								<label>Player <input type="radio" name="team" value="combat__item--player" checked /></label>
-								<label>Enemy <input type="radio" name="team" value="combat__item--enemy" /></label>
+								<label>Player <input type="radio" name="team" value="player" checked /></label>
+								<label>Enemy <input type="radio" name="team" value="enemy" /></label>
 							</li>
 							<li class="grid__item">
 								<input type="number" name="hp" placeholder="HP" class="editable" />
@@ -54,8 +54,8 @@
 			</div>
 
 			<script type="x-js-template" class="js-combat__template">
-				<li class="grid__item js-combat__item js-drag-sort-wrap" data-initiative="{{initiative}}">
-					<div class="combat__item pod pod--loose {{team}} js-drag-sort-item" draggable="true">
+				<li class="grid__item js-combat__item js-drag-sort-wrap" data-binder-attribute-initiative="{{initiative}}" data-binder-attribute-current="false">
+					<div class="combat__item pod pod--loose js-drag-sort-item" draggable="true" data-binder-attribute-team="{{team}}" data-binder-attribute-cursor="false">
 						<div class="combat__controls">
 							<span class="combat__current js-combat__select"></span>
 							<span class="combat__remove js-combat__remove"></span>
@@ -73,6 +73,8 @@
 
 								<textarea class="combat__notes editable width-1" contenteditable="true" data-binder-value="description"></textarea>
 
+								<p><button class="js-combat__map-select">Select on map</button></p>
+
 								<div class="combat__counter-list js-combat__counter-list"></div>
 							</div>
 
@@ -80,13 +82,13 @@
 								<form class="combat__counter-form js-combat__counter-form">
 									<ul class="grid-v--tight">
 										<li class="grid__item">
-											<input type="text" placeholder="Counter" name="counter-name" required class="editable js-combat__counter-name" />
+											<input type="text" placeholder="Counter" name="name" required class="editable js-combat__counter-name" />
 										</li>
 										<li class="grid__item">
-											<input type="number" placeholder="Duration" name="counter-duration" required class="editable js-combat__counter-length" />
+											<input type="number" placeholder="Duration" name="duration" required class="editable js-combat__counter-length" />
 										</li>
 										<li class="grid__item">
-											<textarea placeholder="Description" name="counter-description" class="editable js-combat__counter-description"></textarea>
+											<textarea placeholder="Description" name="description" class="editable js-combat__counter-description"></textarea>
 										</li>
 										<li class="grid__item">
 											<button type="submit">Add Counter</button>
@@ -103,16 +105,41 @@
 				<div class="combat__counter js-combat__counter">
 					<span class="combat__counter-remove js-combat__counter-remove"></span>
 
-					<input type="number" value="{{counter-duration}}" class="editable combat__counter-duration js-combat__counter-duration" />
+					<input type="number" min="0" value="{{duration}}" data-binder-value="duration" class="editable combat__counter-duration js-combat__counter-duration" />
 					<div class="combat__counter-details">
-						<span class="combat__counter-name">{{counter-name}}</span>
-						<span class="combat__counter-description editable" contenteditable="true">{{counter-description}}</span>
+						<span class="combat__counter-name" data-binder-value="name">{{name}}</span>
+						<input class="combat__counter-description editable width-1" type="text" data-binder-value="description" value="{{description}}" />
 					</div>
 				</div>
 			</script>
 
-			<div class="combat__list">
-				<ol class="grid-v--tight js-combat__list js-drag-sort-list"></ol>
+			<div class="grid">
+
+				<div class="grid__item width-1 width-md-1-2">
+					<ol class="grid-v--tight js-combat__list js-drag-sort-list">
+						<li>&nbsp;</li>
+					</ol>
+				</div>
+
+				<div class="grid__item width-1 width-md-1-2">
+					<img src="/assets/images/combat/dungeon.jpg" class="hidden js-combat-field-image" data-tilesize="11.16" />
+
+					<div class="combat__field">
+						<div class="combat__field-controls">
+							<a href="#" class="combat__field-control--up js-map-up" title="Up"></a>
+							<a href="#" class="combat__field-control--right js-map-right" title="Right"></a>
+							<a href="#" class="combat__field-control--down js-map-down" title="Down"></a>
+							<a href="#" class="combat__field-control--left js-map-left" title="Left"></a>
+							<a href="#" class="combat__field-control--centre js-map-centre" title="Centre"></a>
+
+							<a href="#" class="combat__field-control--zoom-in js-map-zoom-in" title="Zoom in"></a>
+							<a href="#" class="combat__field-control--zoom-out js-map-zoom-out" title="Zoom out"></a>
+						</div>
+
+						<canvas width="700" height="700" class="combat__field-canvas js-combat__canvas"></canvas>
+					</div>
+				</div>
+
 			</div>
 
 		</div>

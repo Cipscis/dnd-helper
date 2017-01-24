@@ -14,10 +14,11 @@
 .combat__global-controls {
 	position: fixed;
 	z-index: 1;
-	top: 30%;
+	top: 55px;
 	transform: translateY(-50%);
 	right: 20px;
 
+	height: 75px;
 	width: 200px;
 }
 
@@ -26,24 +27,23 @@
 | INITIATIVE LIST |
 \*****************/
 
-.combat__list {
-	margin: 20px 0;
-	padding: 0 200px 0 0;
-}
-
 .combat__item {
 	@extend %cf;
 
 	margin-left: 45px;
 
 	position: relative;
-}
 
-.combat__item--enemy {
-	@include border-inset(5px, $enemy);
-}
-.combat__item--player {
-	@include border-inset(5px, $player);
+	&[data-binder-attribute-team="enemy"] {
+		@include border-inset(5px, $enemy);
+	}
+	&[data-binder-attribute-team="player"] {
+		@include border-inset(5px, $player);
+	}
+
+	&[data-binder-attribute-cursor="true"] {
+		@include border-inset(5px, #f90);
+	}
 }
 
 
@@ -66,7 +66,7 @@
 
 	cursor: pointer;
 
-	.is-current & {
+	[data-binder-attribute-current="true"] & {
 		border-left-color: $initiative-control-colour;
 	}
 }
@@ -198,4 +198,95 @@
 .combat__counter-description {
 	display: block;
 	margin-top: 5px;
+}
+
+/*******\
+| FIELD |
+\*******/
+
+.combat__field {
+	position: fixed;
+	top: 110px;
+}
+
+.combat__field-canvas {
+	background: $black;
+}
+
+.combat__field-controls {
+	position: absolute;
+	top: 10px;
+	right: 20px;
+
+	background: rgba(0, 0, 0, 0.2);
+	border-radius: 10px;
+	width: 60px;
+	height: 120px;
+}
+
+.combat__field-control--up {
+	@include triangle(up, 10px, $white, 5px);
+
+	position: absolute;
+	top: 10px;
+	right: 25px;
+}
+.combat__field-control--down {
+	@include triangle(down, 10px, $white, 5px);
+
+	position: absolute;
+	top: 40px;
+	right: 25px;
+}
+.combat__field-control--left {
+	@include triangle(left, 10px, $white, 5px);
+
+	position: absolute;
+	top: 25px;
+	right: 40px;
+}
+.combat__field-control--right {
+	@include triangle(right, 10px, $white, 5px);
+
+	position: absolute;
+	top: 25px;
+	right: 10px;
+}
+.combat__field-control--centre {
+	display: block;
+	width: 10px;
+	height: 10px;
+	background: $white;
+	border-radius: 100%;
+
+	position: absolute;
+	top: 25px;
+	right: 25px;
+}
+
+.combat__field-control--zoom-in {
+	@include plus(20px, $white, 4px);
+
+	display: inline-block;
+	position: absolute;
+	top: 60px;
+	right: 20px;
+
+	width: 20px;
+	height: 20px;
+}
+
+.combat__field-control--zoom-out {
+	@include plus(20px, $white, 4px);
+	&:after {
+		display: none;
+	}
+
+	display: inline-block;
+	position: absolute;
+	top: 90px;
+	right: 20px;
+
+	width: 20px;
+	height: 20px;
 }
