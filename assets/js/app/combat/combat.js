@@ -46,7 +46,9 @@ define(
 				$(document).on('click', '.js-combat__next', Combat._nextEvent);
 
 				$(document).on('mousedown', '.js-combat__canvas', Combat._canvasMouseEvent);
-				$(document).on('click', '.js-combat__map-select', Combat._setMapCursorEvent);
+				$(document).on('click', '.js-combat__select-on-map', Combat._setMapCursorEvent);
+
+				$(document).on('change', '.js-combat__map-select', Combat._updateMapEvent);
 
 				$(document).on('click', '.js-map-up', Combat._mapUpEvent);
 				$(document).on('click', '.js-map-down', Combat._mapDownEvent);
@@ -286,10 +288,13 @@ define(
 			// DRAWING //
 			/////////////
 			_initRendering: function () {
+				var img = new Image();
+				img.src = $('.js-combat__map-select').val();
+
 				battlefield = new Battlefield({
 					canvas: $('.js-combat__canvas')[0],
-					tileSize: $('.js-combat-field-image').data('tilesize'),
-					image: $('.js-combat-field-image')[0]
+					tileSize: $('.js-combat__map-select').find(':selected').data('tilesize'),
+					image: img
 				});
 
 				Combat._startDrawing(Combat._drawFrame, 100, 50000);
@@ -430,7 +435,7 @@ define(
 			},
 
 			_setMapCursorEvent: function (e) {
-				var $btn = $(e.target).closest('.js-combat__map-select'),
+				var $btn = $(e.target).closest('.js-combat__select-on-map'),
 					$combatant = $btn.closest('.js-combat__item'),
 					combatant = $combatant.data('binder-data');
 
@@ -446,6 +451,20 @@ define(
 				if (combatant) {
 					combatant.cursor = true;
 				}
+			},
+
+			_updateMapEvent: function (e) {
+				var $select = $(e.target).closest('.js-combat__map-select');
+
+				Combat._updateMap($select.val(), $select.find(':selected').data('tilesize'));
+			},
+
+			_updateMap: function (src, tileSize) {
+				var img = new Image();
+				img.src = src;
+
+				battlefield.image = img;
+				battlefield.tileSize = tileSize;
 			},
 
 			_mapUpEvent: function (e) {

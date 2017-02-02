@@ -73,7 +73,7 @@
 
 								<textarea class="combat__notes editable width-1" contenteditable="true" data-binder-value="description"></textarea>
 
-								<p><button class="js-combat__map-select">Select on map</button></p>
+								<p><button class="js-combat__select-on-map">Select on map</button></p>
 
 								<div class="combat__counter-list js-combat__counter-list"></div>
 							</div>
@@ -113,30 +113,34 @@
 				</div>
 			</script>
 
-			<div>
-				<ol class="grid-v--tight js-combat__list js-drag-sort-list">
-					<li>&nbsp;</li>
-				</ol>
-			</div>
+			<div class="grid-v">
+				<div class="grid__item">
+					<ol class="grid-v--tight js-combat__list js-drag-sort-list">
+						<li>&nbsp;</li>
+					</ol>
+				</div>
 
-			<div>
-				<!-- <img src="/assets/images/combat/field.jpg" class="hidden js-combat-field-image" data-tilesize="32.8" /> -->
-				<!-- <img src="/assets/images/combat/dungeon.jpg" class="hidden js-combat-field-image" data-tilesize="11.16" /> -->
-				<img src="/assets/images/combat/inn.jpg" class="hidden js-combat-field-image" data-tilesize="38.4" />
+				<div class="grid__item">
+					<select class="js-combat__map-select">
+						<option value="/assets/images/combat/field.jpg" data-tilesize="32.8">Field</option>
+						<option value="/assets/images/combat/dungeon.jpg" data-tilesize="11.16">Dungeon</option>
+						<option value="/assets/images/combat/inn.jpg" data-tilesize="38.4" selected>Inn</option>
+					</select>
 
-				<div class="combat__field">
-					<div class="combat__field-controls">
-						<a href="#" class="combat__field-control--up js-map-up" title="Up"></a>
-						<a href="#" class="combat__field-control--right js-map-right" title="Right"></a>
-						<a href="#" class="combat__field-control--down js-map-down" title="Down"></a>
-						<a href="#" class="combat__field-control--left js-map-left" title="Left"></a>
-						<a href="#" class="combat__field-control--centre js-map-centre" title="Centre"></a>
+					<div class="combat__field">
+						<div class="combat__field-controls">
+							<a href="#" class="combat__field-control--up js-map-up" title="Up"></a>
+							<a href="#" class="combat__field-control--right js-map-right" title="Right"></a>
+							<a href="#" class="combat__field-control--down js-map-down" title="Down"></a>
+							<a href="#" class="combat__field-control--left js-map-left" title="Left"></a>
+							<a href="#" class="combat__field-control--centre js-map-centre" title="Centre"></a>
 
-						<a href="#" class="combat__field-control--zoom-in js-map-zoom-in" title="Zoom in"></a>
-						<a href="#" class="combat__field-control--zoom-out js-map-zoom-out" title="Zoom out"></a>
+							<a href="#" class="combat__field-control--zoom-in js-map-zoom-in" title="Zoom in"></a>
+							<a href="#" class="combat__field-control--zoom-out js-map-zoom-out" title="Zoom out"></a>
+						</div>
+
+						<canvas width="1500" height="1000" class="combat__field-canvas js-combat__canvas"></canvas>
 					</div>
-
-					<canvas width="1500" height="1000" class="combat__field-canvas js-combat__canvas"></canvas>
 				</div>
 			</div>
 
