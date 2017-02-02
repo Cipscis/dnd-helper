@@ -205,8 +205,8 @@
 \*******/
 
 .combat__field {
-	position: fixed;
-	top: 110px;
+	position: relative;
+	margin-top: 20px;
 }
 
 .combat__field-canvas {

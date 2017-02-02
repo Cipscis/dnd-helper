@@ -97,12 +97,17 @@ define(
 				// A change has been detected in the bound object
 				// Update the DOM to reflect this change
 
-				var $el = obj.$el,
-					$boundVals,
-					$boundAttrs;
-
 				obj[name] = val;
 
+				Binder._updateBoundValues(obj, name, val);
+				Binder._updateBoundAttributes(obj, name, val);
+
+				return true;
+			},
+
+			_updateBoundValues: function (obj, name, val) {
+				var $el = obj.$el,
+					$boundVals;
 
 				// Only the bound DOM element's children can have bound values
 				$boundVals = $el.find('[data-binder-value="' + name + '"]');
@@ -115,12 +120,19 @@ define(
 					if ($closestBoundElement.is($el)) {
 						// Don't change current focus element if it's an input, so as not to interrupt input
 						if (!($activeElement.is($(el)) && $activeElement.is(':input'))) {
-							$(el).text(val).val(val);
+							if (($(el).text() || $(el).val()) !== val) {
+								$(el).text(val).val(val);
+							}
 						}
 					}
 				});
+			},
 
+			_updateBoundAttributes: function (obj, name, val) {
+				var $el = obj.$el,
+					$boundAttrs;
 
+				// Only allow valid attribute names
 				if (name.match(/^\w+$/)) {
 					// Both the bound DOM element and its children can have bound attributes
 					$boundAttrs = $el.find('[data-binder-attribute-' + name + ']').add($el.filter('[data-binder-attribute-' + name + ']'));
@@ -130,7 +142,9 @@ define(
 						var $closestBoundElement = Binder._getClosestBoundElement($(el));
 
 						if ($closestBoundElement.is($el)) {
-							$(el).attr('data-binder-attribute-' + name, val);
+							if ($(el).attr('data-binder-attribute-' + name) !== val) {
+								$(el).attr('data-binder-attribute-' + name, val);
+							}
 						}
 					});
 				}

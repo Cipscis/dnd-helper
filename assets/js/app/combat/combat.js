@@ -46,7 +46,7 @@ define(
 				$(document).on('click', '.js-combat__next', Combat._nextEvent);
 
 				$(document).on('mousedown', '.js-combat__canvas', Combat._canvasMouseEvent);
-				$(document).on('click', '.js-combat__map-select', Combat._mapSelectEvent);
+				$(document).on('click', '.js-combat__map-select', Combat._setMapCursorEvent);
 
 				$(document).on('click', '.js-map-up', Combat._mapUpEvent);
 				$(document).on('click', '.js-map-down', Combat._mapDownEvent);
@@ -396,11 +396,11 @@ define(
 				}
 
 				// Undo transformation
-				x = x - battlefield.getComputedPanX();
-				y = y - battlefield.getComputedPanY();
+				x -= battlefield.getComputedPanX();
+				y -= battlefield.getComputedPanY();
 
-				x = x/battlefield.scale;
-				y = y/battlefield.scale;
+				x /= battlefield.scale;
+				y /= battlefield.scale;
 
 				x = Math.floor(x / battlefield.tileSize);
 				y = Math.floor(y / battlefield.tileSize);
@@ -421,23 +421,23 @@ define(
 				} else {
 					if (cursor === combatant) {
 						// You clicked on the cursor, deselect it
-						Combat._mapSelect(undefined);
+						Combat._setMapCursor(undefined);
 					} else {
 						// There is a combatant here, so select it
-						Combat._mapSelect(combatant);
+						Combat._setMapCursor(combatant);
 					}
 				}
 			},
 
-			_mapSelectEvent: function (e) {
+			_setMapCursorEvent: function (e) {
 				var $btn = $(e.target).closest('.js-combat__map-select'),
 					$combatant = $btn.closest('.js-combat__item'),
 					combatant = $combatant.data('binder-data');
 
-				Combat._mapSelect(combatant);
+				Combat._setMapCursor(combatant);
 			},
 
-			_mapSelect: function (combatant) {
+			_setMapCursor: function (combatant) {
 				if (cursor) {
 					cursor.cursor = false;
 				}
@@ -484,9 +484,6 @@ define(
 				battlefield.zoom(0.5);
 			}
 		};
-
-		// For debugging while in development
-		window.combatants = combatants;
 
 		return Combat;
 

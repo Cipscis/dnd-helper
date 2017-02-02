@@ -113,33 +113,31 @@
 				</div>
 			</script>
 
-			<div class="grid">
+			<div>
+				<ol class="grid-v--tight js-combat__list js-drag-sort-list">
+					<li>&nbsp;</li>
+				</ol>
+			</div>
 
-				<div class="grid__item width-1 width-md-1-2">
-					<ol class="grid-v--tight js-combat__list js-drag-sort-list">
-						<li>&nbsp;</li>
-					</ol>
-				</div>
+			<div>
+				<!-- <img src="/assets/images/combat/field.jpg" class="hidden js-combat-field-image" data-tilesize="32.8" /> -->
+				<!-- <img src="/assets/images/combat/dungeon.jpg" class="hidden js-combat-field-image" data-tilesize="11.16" /> -->
+				<img src="/assets/images/combat/inn.jpg" class="hidden js-combat-field-image" data-tilesize="38.4" />
 
-				<div class="grid__item width-1 width-md-1-2">
-					<img src="/assets/images/combat/dungeon.jpg" class="hidden js-combat-field-image" data-tilesize="11.16" />
+				<div class="combat__field">
+					<div class="combat__field-controls">
+						<a href="#" class="combat__field-control--up js-map-up" title="Up"></a>
+						<a href="#" class="combat__field-control--right js-map-right" title="Right"></a>
+						<a href="#" class="combat__field-control--down js-map-down" title="Down"></a>
+						<a href="#" class="combat__field-control--left js-map-left" title="Left"></a>
+						<a href="#" class="combat__field-control--centre js-map-centre" title="Centre"></a>
 
-					<div class="combat__field">
-						<div class="combat__field-controls">
-							<a href="#" class="combat__field-control--up js-map-up" title="Up"></a>
-							<a href="#" class="combat__field-control--right js-map-right" title="Right"></a>
-							<a href="#" class="combat__field-control--down js-map-down" title="Down"></a>
-							<a href="#" class="combat__field-control--left js-map-left" title="Left"></a>
-							<a href="#" class="combat__field-control--centre js-map-centre" title="Centre"></a>
-
-							<a href="#" class="combat__field-control--zoom-in js-map-zoom-in" title="Zoom in"></a>
-							<a href="#" class="combat__field-control--zoom-out js-map-zoom-out" title="Zoom out"></a>
-						</div>
-
-						<canvas width="700" height="700" class="combat__field-canvas js-combat__canvas"></canvas>
+						<a href="#" class="combat__field-control--zoom-in js-map-zoom-in" title="Zoom in"></a>
+						<a href="#" class="combat__field-control--zoom-out js-map-zoom-out" title="Zoom out"></a>
 					</div>
-				</div>
 
+					<canvas width="1500" height="1000" class="combat__field-canvas js-combat__canvas"></canvas>
+				</div>
 			</div>
 
 		</div>

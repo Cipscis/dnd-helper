@@ -50,3 +50,9 @@
 		border-bottom: $width solid transparent;
 	}
 }
+
+@mixin etriangle($direction: up, $width: 20px, $colour: $white) {
+	$size: $width * 1.732; // ~= sqrt(3) = 2 * sin(60deg)
+
+	@include triangle($direction, $size, $colour, $width);
+}

@@ -89,7 +89,7 @@
 		border-bottom: 2px solid $line-map-branch-colour;
 	}
 	&:after {
-		@include triangle(left, 10px, $line-map-branch-colour, 5px);
+		@include triangle(right, 10px, $line-map-branch-colour, 5px);
 
 		content: "";
 		position: absolute;

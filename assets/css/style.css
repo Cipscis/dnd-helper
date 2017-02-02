@@ -8,6 +8,14 @@
   display: none;
 }
 
+.mar-top-0 {
+  margin-top: 0;
+}
+
+.mar-bot-0 {
+  margin-bottom: 0;
+}
+
 .width-a {
   width: auto;
 }
@@ -757,6 +765,58 @@ button:hover, button:focus, button:active, .button:hover, .button:focus, .button
   right: 30px;
 }
 
+.flag-toridal, .flag-nur-hal {
+  width: 250px;
+  height: 150px;
+  border: 1px solid #000;
+  position: relative;
+}
+
+.flag-toridal {
+  background: #292;
+}
+
+.flag-toridal:before, .flag-toridal:after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.flag-toridal:before {
+  bottom: 50px;
+  display: block;
+  width: 0;
+  height: 0;
+  border-bottom: 69.28px solid #fc0;
+  border-left: 40px solid transparent;
+  border-right: 40px solid transparent;
+}
+
+.flag-toridal:after {
+  bottom: 33px;
+  display: block;
+  width: 0;
+  height: 0;
+  border-top: 17.32px solid #03c;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+}
+
+.flag-nur-hal {
+  background: #333;
+}
+
+.flag-nur-hal:before {
+  content: "";
+  position: absolute;
+  top: -16.666%;
+  bottom: 100%;
+  left: 0;
+  right: 50%;
+  box-shadow: 0 25px 0 0 red, 125px 50px 0 0 red, 0 75px 0 0 red;
+}
+
 .calendar {
   width: 100%;
   position: relative;
@@ -923,7 +983,7 @@ button:hover, button:focus, button:active, .button:hover, .button:focus, .button
   display: block;
   width: 0;
   height: 0;
-  border-right: 10px solid #fff;
+  border-left: 10px solid #fff;
   border-top: 5px solid transparent;
   border-bottom: 5px solid transparent;
   content: "";
@@ -1165,8 +1225,8 @@ button:hover, button:focus, button:active, .button:hover, .button:focus, .button
 /*******| FIELD |
 \*******/
 .combat__field {
-  position: fixed;
-  top: 110px;
+  position: relative;
+  margin-top: 20px;
 }
 
 .combat__field-canvas {

@@ -11,7 +11,8 @@ require.config({
 		'char-cards': 'app/char-cards/char-cards',
 		'loot-list': 'app/loot-list/loot-list',
 		'drag-sort': 'app/drag-sort/drag-sort',
-		'binder': 'app/binder/binder'
+		'binder': 'app/binder/binder',
+		'filter': 'app/filter'
 	},
 	shim: {
 		templayed: {

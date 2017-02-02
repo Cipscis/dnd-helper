@@ -1,0 +1,49 @@
+<html>
+	<head>
+		<title>D&amp;D  - Glossary</title>
+
+		<link rel="stylesheet" href="/assets/css/style.css" />
+
+		<script type="text/javascript" src="/assets/js/lib/require.js"></script>
+		<script type="text/javascript" src="/assets/js/lib/require-config.js"></script>
+
+		<script type="text/javascript">
+			require([
+				'filter/filter',
+				'expand-collapse'
+			], function (Filter, ExpandCollapse) {
+				Filter.init();
+				ExpandCollapse.init();
+			});
+		</script>
+	</head>
+
+	<body>
+		<div class="body">
+
+			<h1>D&amp;D - Glossary</h1>
+
+			<ul class="grid grid-v js-filter">
+				<li class="grid__item width-1">
+					<input type="text" class="js-filter__input" />
+				</li>
+
+				<!--
+				<li class="grid__item width-1 js-filter__item">
+					<div class="expand-collapse js-expand-collapse">
+						<h3 class="expand-collapse__heading mar-top-0 mar-bot-0 js-expand-collapse__trigger js-filter__field" data-filter-field-power="5">TITLE</h3>
+
+						<ul class="hidden js-filter__field" data-filter-field-power="5">
+							<li>TAGS</li>
+						</ul>
+
+						<div class="expand-collapse__body js-expand-collapse__body js-filter__field">
+							DESCRIPTION
+						</div>
+					</div>
+				</li>
+				-->
+			</ul>
+
+	</body>
+</html>
