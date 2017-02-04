@@ -1,0 +1,46 @@
+<html>
+	<head>
+		<title>D&amp;D Mirror Map</title>
+
+		<link rel="stylesheet" href="/assets/css/style.css" />
+
+		<script type="text/javascript" src="/assets/js/lib/require.js"></script>
+		<script type="text/javascript" src="/assets/js/lib/require-config.js"></script>
+
+		<script type="text/javascript">
+			require([
+				'combat/mirrormap'
+			],
+			function (MirrorMap) {
+				MirrorMap.init();
+			});
+		</script>
+	</head>
+
+	<body>
+		<div class="body">
+
+			<h1>D&amp;D Mirror Map</h1>
+
+			<div class="grid-v">
+				<div class="grid__item">
+					<div class="combat__field">
+						<div class="combat__field-controls">
+							<a href="#" class="combat__field-control--up js-map-up" title="Up"></a>
+							<a href="#" class="combat__field-control--right js-map-right" title="Right"></a>
+							<a href="#" class="combat__field-control--down js-map-down" title="Down"></a>
+							<a href="#" class="combat__field-control--left js-map-left" title="Left"></a>
+							<a href="#" class="combat__field-control--centre js-map-centre" title="Centre"></a>
+
+							<a href="#" class="combat__field-control--zoom-in js-map-zoom-in" title="Zoom in"></a>
+							<a href="#" class="combat__field-control--zoom-out js-map-zoom-out" title="Zoom out"></a>
+						</div>
+
+						<canvas width="1500" height="1000" class="combat__field-canvas js-mirrormap__canvas"></canvas>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</body>
+</html>

@@ -100,6 +100,7 @@ define(
 				}
 
 				combatants.push(Binder.bind(combatant, $combatant));
+				Combat._updateLocalStorage();
 			},
 
 			_removeCombatantEvent: function (e) {
@@ -120,6 +121,7 @@ define(
 					}
 
 					$combatant.remove();
+					Combat._updateLocalStorage();
 				});
 			},
 
@@ -161,6 +163,7 @@ define(
 
 				counterData.$el = $counter;
 				combatant.counters.push(Binder.bind(counterData, $counter));
+				Combat._updateLocalStorage();
 			},
 
 			_removeCounterEvent: function (e) {
@@ -183,6 +186,7 @@ define(
 
 				$counter.fadeOut(300, function () {
 					$counter.remove();
+					Combat._updateLocalStorage();
 				});
 			},
 
@@ -381,6 +385,33 @@ define(
 				ctx.restore();
 			},
 
+			//////////////////
+			// LOCALSTORAGE //
+			//////////////////
+			_updateLocalStorage: function () {
+				var simpleCombatantList = [],
+					field = {
+						image: battlefield.image.src,
+						tileSize: battlefield.tileSize
+					},
+
+					i;
+
+				for (i = 0; i < combatants.length; i++) {
+					simpleCombatantList.push({
+						name: combatants[i].name,
+						team: combatants[i].team,
+						x: combatants[i].x,
+						y: combatants[i].y
+					});
+				}
+
+				localStorage.setItem('mirrormap', JSON.stringify({
+					combatants: simpleCombatantList,
+					battlefield: field
+				}));
+			},
+
 			/////////////////////
 			// MAP INTERACTION //
 			/////////////////////
@@ -422,6 +453,7 @@ define(
 					// No combatant found, so move the cursor combatant
 					if (cursor) {
 						cursor.moveTo(x, y);
+						Combat._updateLocalStorage();
 					}
 				} else {
 					if (cursor === combatant) {
@@ -465,6 +497,8 @@ define(
 
 				battlefield.image = img;
 				battlefield.tileSize = tileSize;
+
+				Combat._updateLocalStorage();
 			},
 
 			_mapUpEvent: function (e) {

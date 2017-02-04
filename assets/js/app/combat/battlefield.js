@@ -31,6 +31,13 @@ define(
 				}
 			}
 
+			if (typeof this.image === 'string') {
+				var img = new Image();
+				img.src = this.image;
+
+				this.image = img;
+			}
+
 			this.canvas = this.canvas || document.createElement('canvas');
 			this.context = this.canvas.getContext('2d');
 		};
