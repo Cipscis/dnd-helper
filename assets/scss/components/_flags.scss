@@ -1,0 +1,84 @@
+%flag {
+	width: 250px;
+	height: 150px;
+	border: 1px solid #000;
+	position: relative;
+}
+
+.flag-toridal {
+	@extend %flag;
+
+	background: #2ca32c;
+
+	&:before, &:after {
+		content: "";
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+
+	&:before {
+		bottom: 50px;
+		@include etriangle(up, (50px / 1.732), #ffce25);
+	}
+
+	&:after {
+		bottom: 34px;
+		@include etriangle(down, (50px / (3*1.732)), #20c);
+	}
+}
+
+
+
+.flag-nur-hal {
+	@extend %flag;
+
+	background: #333;
+
+	&:before {
+		content: "";
+
+		position: absolute;
+		top: -16.666%;
+		bottom: 100%;
+		left: 0;
+		right: 50%;
+
+		 box-shadow:
+			0 25px 0 0 #f00,
+			125px 50px 0 0 #f00,
+			0 75px 0 0 #f00;
+	}
+}
+
+
+
+.flag-oyado {
+	@extend %flag;
+
+	background: #f90;
+
+	&:before, &:after {
+		content: "";
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%) translateY(-50%);
+
+		width: 50px;
+		height: 50px;
+	}
+
+	&:before {
+		border-radius: 50px 50px 50px 50px;
+		background: #fff;
+
+		top: calc(50% - 33.333px);
+	}
+
+	&:after {
+		border-radius: 50px 50px 50px 50px;
+		background: #000;
+
+		top: calc(50% + 33.333px);
+	}
+}
