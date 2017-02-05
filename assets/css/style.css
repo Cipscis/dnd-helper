@@ -1510,3 +1510,9 @@ button:hover, button:focus, button:active, .button:hover, .button:focus, .button
 .inventory-item__details {
   padding: 20px 40px 0;
 }
+
+.cartographer__container {
+  max-width: 100%;
+  max-height: 1000px;
+  overflow: auto;
+}

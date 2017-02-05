@@ -12,7 +12,8 @@ require.config({
 		'loot-list': 'app/loot-list/loot-list',
 		'drag-sort': 'app/drag-sort/drag-sort',
 		'binder': 'app/binder/binder',
-		'filter': 'app/filter'
+		'filter': 'app/filter',
+		'cartographer': 'app/cartographer'
 	},
 	shim: {
 		templayed: {

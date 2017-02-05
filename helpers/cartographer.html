@@ -1,0 +1,63 @@
+<html>
+	<head>
+		<title>D&amp;D Cartographer</title>
+
+		<link rel="stylesheet" href="/assets/css/style.css" />
+
+		<script type="text/javascript" src="/assets/js/lib/require.js"></script>
+		<script type="text/javascript" src="/assets/js/lib/require-config.js"></script>
+
+		<script type="text/javascript">
+			require([
+				'cartographer/cartographer'
+			],
+			function (Cartographer) {
+				Cartographer.init();
+			});
+		</script>
+	</head>
+
+	<body>
+		<div class="body">
+
+			<h1>D&amp;D Cartographer</h1>
+
+			<div class="grid-v">
+				<div class="grid__item">
+					<div class="grid">
+						<div class="grid__item">
+							<button class="js-cartographer__save-image">Save</button>
+						</div>
+						<div class="grid__item">
+							<button class="js-cartographer__save-json">Save JSON</button>
+						</div>
+						<div class="grid__item">
+							<button class="js-cartographer__load-json">Load JSON</button>
+							<input type="file" class="hidden js-cartographer__load-json-file" />
+						</div>
+					</div>
+				</div>
+				<div class="grid__item">
+					<div class="grid">
+						<div class="grid__item">
+							<label>Left Click
+								<input type="color" value="#ffffff" class="js-cartographer__colour-primary" />
+							</label>
+						</div>
+						<div class="grid__item">
+							<label>Right Click
+								<input type="color" value="#000000" class="js-cartographer__colour-secondary" />
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="grid__item">
+					<div class="cartographer__container">
+						<canvas width="1480" height="2000" class="js-cartographer__canvas"></canvas>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</body>
+</html>
