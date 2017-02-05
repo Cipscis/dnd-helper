@@ -37,6 +37,22 @@
 						</div>
 					</div>
 				</div>
+
+				<div class="grid__item">
+					<div class="grid">
+						<div class="grid__item">
+							<label>Tile Size
+								<input type="number" value="20" min="0" max="50" class="js-cartographer__tile-size" />
+							</label>
+						</div>
+						<div class="grid__item">
+							<label>Grid Gutter
+								<input type="number" value="1" min="0" max="10" class="js-cartographer__grid-gutter" />
+							</label>
+						</div>
+					</div>
+				</div>
+
 				<div class="grid__item">
 					<div class="grid">
 						<div class="grid__item">
@@ -51,6 +67,33 @@
 						</div>
 					</div>
 				</div>
+
+				<div class="grid__item">
+					<ul class="grid">
+						<li class="grid__item">
+							<label>Rectangle
+								<input type="radio" name="tool" class="js-cartographer__tool-rectangle" checked />
+							</label>
+						</li>
+						<li class="grid__item">
+							<label>Colour picker
+								<input type="radio" name="tool" class="js-cartographer__tool-colour-picker" />
+							</label>
+						</li>
+						<li class="grid__item">
+							<label>Fill
+								<input type="radio" name="tool" class="js-cartographer__tool-fill" />
+							</label>
+						</li>
+						<li class="grid__item">
+							<button class="js-cartographer__undo">Undo</button>
+						</li>
+						<li class="grid__item">
+							<button class="js-cartographer__redo">Redo</button>
+						</li>
+					</ul>
+				</div>
+
 				<div class="grid__item">
 					<div class="cartographer__container">
 						<canvas width="1480" height="2000" class="js-cartographer__canvas"></canvas>

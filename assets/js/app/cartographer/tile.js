@@ -6,7 +6,7 @@ define(
 	) {
 
 		var defaults = {
-			colour: '#000'
+			colour: '#000000'
 		};
 
 		var Tile = function (options) {
@@ -27,15 +27,13 @@ define(
 			}
 		};
 
-		Tile.prototype.draw = function (context, x, y, tileSize) {
+		Tile.prototype.draw = function (context, x, y, tileSize, gridGutter) {
 			context.save();
 
 			context.fillStyle = this.colour;
 
 			context.translate(x * tileSize, y * tileSize);
-
-			// tileSize-1 to leave grid lines between
-			context.fillRect(0, 0, (tileSize-1), (tileSize-1));
+			context.fillRect(0, 0, (tileSize-gridGutter), (tileSize-gridGutter));
 
 			context.restore();
 		};
