@@ -114,9 +114,21 @@ define(
 
 		var Keys = {
 			_isFocusOnInput: function () {
-				var $activeEl = $(document.activeElement);
+				// Check if the current active element is an
+				// input that accepts keypresses
 
-				return $activeEl.is(':input');
+				var $activeEl = $(document.activeElement),
+					isInput = $activeEl.is(':input');
+
+				if (
+					$activeEl.is('input[type="color"]') ||
+					$activeEl.is('input[type="radio"]') ||
+					$activeEl.is('input[type="checkbox"]')
+				) {
+					isInput = false;
+				}
+
+				return isInput;
 			},
 
 			bindKey: function (key, fn, ctrlKey) {

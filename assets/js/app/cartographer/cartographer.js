@@ -420,46 +420,17 @@ define(
 			// LOAD //
 			//////////
 			_loadJsonEvent: function (e) {
-				var $loadJsonFile = $('.js-cartographer__load-json-file');
-
-				$loadJsonFile.trigger('click');
-
-				// Run _loadJsonChangeEvent once a file has been selected
-				$loadJsonFile.one('change', Cartographer._loadJsonChangeEvent);
-			},
-
-			_loadJsonChangeEvent: function (e) {
-				var file = e.target.files[0],
-					reader = new FileReader();
-
-				// So if the same file is selected again, it will trigger the "change" event
-				$(e.target).val('');
-
-				reader.onload = Cartographer._loadJsonReadEvent;
-				reader.readAsText(file);
-			},
-
-			_loadJsonReadEvent: function (e) {
-				var reader = e.target,
-					data;
-
-				if (reader.readyState === 2) {
-					// DONE
-					try {
-						data = JSON.parse(reader.result);
-
-						Cartographer._loadFromJson(data);
-					} catch (error) {
-						console.error(error);
-					}
-				}
+				fileIO.loadFile(Cartographer._loadFromJson);
 			},
 
 			_loadFromJson: function (data) {
-				var x, y;
-
-				tileSize = data.tileSize;
-				Cartographer._initTiles(data.tiles);
+				try {
+					data = JSON.parse(data);
+					tileSize = data.tileSize;
+					Cartographer._initTiles(data.tiles);
+				} catch (error) {
+					console.error(error);
+				}
 			},
 
 			///////////////
