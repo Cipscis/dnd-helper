@@ -25,7 +25,7 @@ define(
 			tiles,
 			history = [],
 			historyPosition = 0,
-			maxHistoryLength = 10,
+			maxHistoryLength = 20,
 
 			firstTileX,
 			firstTileY,
@@ -34,11 +34,24 @@ define(
 		var Cartographer = {
 			init: function () {
 				Cartographer._initContext();
-				Cartographer._initTiles();
+				Cartographer._setCanvasSize();
 				Cartographer._initRendering();
 
 				Cartographer._initEvents();
 				Cartographer._initKeybinding();
+			},
+
+			_setCanvasSize: function () {
+				var $width = $('.js-cartographer__canvas-width'),
+					$height = $('.js-cartographer__canvas-height'),
+
+					width = $width.val() || 100,
+					height = $height.val() || 100;
+
+				canvas.width = width*tileSize;
+				canvas.height = height*tileSize;
+
+				Cartographer._initTiles(tiles);
 			},
 
 			_initContext: function () {
@@ -110,6 +123,7 @@ define(
 
 				$(document).on('change', '.js-cartographer__grid-gutter', Cartographer._gridGutterChangeEvent);
 				$(document).on('change', '.js-cartographer__tile-size', Cartographer._tileSizeChangeEvent);
+				$(document).on('change', '.js-cartographer__canvas-width, .js-cartographer__canvas-height', Cartographer._setCanvasSize);
 
 				$(document).on('click', '.js-cartographer__undo', Cartographer._undo);
 				$(document).on('click', '.js-cartographer__redo', Cartographer._redo);
@@ -394,6 +408,7 @@ define(
 
 			_tileSizeChangeEvent: function (e) {
 				tileSize = $('.js-cartographer__tile-size').val();
+				Cartographer._setCanvasSize();
 			},
 
 			//////////
@@ -426,7 +441,7 @@ define(
 			_loadFromJson: function (data) {
 				try {
 					data = JSON.parse(data);
-					tileSize = data.tileSize;
+					$('.js-cartographer__tile-size').val(data.tileSize).trigger('change');
 					Cartographer._initTiles(data.tiles);
 				} catch (error) {
 					console.error(error);
