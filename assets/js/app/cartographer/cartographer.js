@@ -41,19 +41,6 @@ define(
 				Cartographer._initKeybinding();
 			},
 
-			_setCanvasSize: function () {
-				var $width = $('.js-cartographer__canvas-width'),
-					$height = $('.js-cartographer__canvas-height'),
-
-					width = $width.val() || 100,
-					height = $height.val() || 100;
-
-				canvas.width = width*tileSize;
-				canvas.height = height*tileSize;
-
-				Cartographer._initTiles(tiles);
-			},
-
 			_initContext: function () {
 				canvas = $('.js-cartographer__canvas')[0];
 				context = canvas.getContext('2d');
@@ -123,7 +110,7 @@ define(
 
 				$(document).on('change', '.js-cartographer__grid-gutter', Cartographer._gridGutterChangeEvent);
 				$(document).on('change', '.js-cartographer__tile-size', Cartographer._tileSizeChangeEvent);
-				$(document).on('change', '.js-cartographer__canvas-width, .js-cartographer__canvas-height', Cartographer._setCanvasSize);
+				$(document).on('change', '.js-cartographer__canvas-width, .js-cartographer__canvas-height', Cartographer._canvasSizeChangeEvent);
 
 				$(document).on('click', '.js-cartographer__undo', Cartographer._undo);
 				$(document).on('click', '.js-cartographer__redo', Cartographer._redo);
@@ -152,6 +139,8 @@ define(
 					Cartographer._colourPickerMouseDownEvent(e);
 				} else if ($('.js-cartographer__tool-fill').is(':checked')) {
 					Cartographer._fillMouseDownEvent(e);
+				} else if ($('.js-cartographer__tool-replace').is(':checked')) {
+					Cartographer._replaceMouseDownEvent(e);
 				}
 			},
 
@@ -399,9 +388,52 @@ define(
 				Cartographer._updateHistory();
 			},
 
-			///////////////////
-			// GRID SETTINGS //
-			///////////////////
+			//////////////////
+			// REPLACE TOOL //
+			//////////////////
+			_replaceMouseDownEvent: function (e) {
+				var i, j,
+
+					tile = Cartographer._getTileFromEvent(e),
+					colourToMatch = tile.colour,
+
+					colours = {
+						0: $('.js-cartographer__colour-primary').val(), // Left
+						2: $('.js-cartographer__colour-secondary').val() // Right
+					};
+
+				// Paint all tiles in the group
+				for (i = 0; i < tiles.length; i++) {
+					for (j = 0; j < tiles[i].length; j++) {
+						if (tiles[i][j].colour === colourToMatch) {
+							tiles[i][j].colour = colours[e.button];
+						}
+					}
+				}
+
+				Cartographer._updateHistory();
+			},
+
+			/////////////////////
+			// CANVAS SETTINGS //
+			/////////////////////
+			_canvasSizeChangeEvent: function (e) {
+				Cartographer._setCanvasSize();
+			},
+
+			_setCanvasSize: function () {
+				var $width = $('.js-cartographer__canvas-width'),
+					$height = $('.js-cartographer__canvas-height'),
+
+					width = $width.val() || 100,
+					height = $height.val() || 100;
+
+				canvas.width = width*tileSize;
+				canvas.height = height*tileSize;
+
+				Cartographer._initTiles(tiles);
+			},
+
 			_gridGutterChangeEvent: function (e) {
 				gridGutter = $('.js-cartographer__grid-gutter').val();
 			},
@@ -518,12 +550,14 @@ define(
 
 			_buildHistoryStep: function () {
 				var x, y,
-					historyStep = [];
+					historyStep = {
+						tiles: []
+					};
 
 				for (x = 0; x < tiles.length; x++) {
-					historyStep.push([]);
+					historyStep.tiles.push([]);
 					for (y = 0; y < tiles[x].length; y++) {
-						historyStep[x].push({
+						historyStep.tiles[x].push({
 							colour: tiles[x][y].colour
 						});
 					}
@@ -546,13 +580,14 @@ define(
 
 			_enforceHistoryStep: function (index) {
 				var x, y,
-					historyStep = history[index];
+					historyStep = history[index],
+					historyTiles = historyStep.tiles;
 
 				historyPosition = index;
 
-				for (x = 0; x < historyStep.length; x++) {
-					for (y = 0; y < historyStep[x].length; y++) {
-						tiles[x][y].colour = historyStep[x][y].colour;
+				for (x = 0; x < historyTiles.length; x++) {
+					for (y = 0; y < historyTiles[x].length; y++) {
+						tiles[x][y].colour = historyTiles[x][y].colour;
 					}
 				}
 			}
