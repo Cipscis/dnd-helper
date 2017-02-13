@@ -35,6 +35,8 @@ define(
 			init: function () {
 				Cartographer._initContext();
 				Cartographer._setCanvasSize();
+				Cartographer._updateHistory();
+
 				Cartographer._initRendering();
 
 				Cartographer._initEvents();
@@ -63,8 +65,6 @@ define(
 						}
 					}
 				}
-
-				Cartographer._updateHistory();
 			},
 
 			//////////////////
@@ -419,6 +419,7 @@ define(
 			/////////////////////
 			_canvasSizeChangeEvent: function (e) {
 				Cartographer._setCanvasSize();
+				Cartographer._updateHistory();
 			},
 
 			_setCanvasSize: function () {
@@ -475,6 +476,7 @@ define(
 					data = JSON.parse(data);
 					$('.js-cartographer__tile-size').val(data.tileSize).trigger('change');
 					Cartographer._initTiles(data.tiles);
+					Cartographer._updateHistory();
 				} catch (error) {
 					console.error(error);
 				}
@@ -551,7 +553,9 @@ define(
 			_buildHistoryStep: function () {
 				var x, y,
 					historyStep = {
-						tiles: []
+						tiles: [],
+						width: $('.js-cartographer__canvas-width').val(),
+						height: $('.js-cartographer__canvas-height').val()
 					};
 
 				for (x = 0; x < tiles.length; x++) {
@@ -584,6 +588,10 @@ define(
 					historyTiles = historyStep.tiles;
 
 				historyPosition = index;
+
+				$('.js-cartographer__canvas-width').val(historyStep.width);
+				$('.js-cartographer__canvas-height').val(historyStep.height);
+				Cartographer._setCanvasSize();
 
 				for (x = 0; x < historyTiles.length; x++) {
 					for (y = 0; y < historyTiles[x].length; y++) {
