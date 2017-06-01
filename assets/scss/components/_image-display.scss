@@ -1,0 +1,35 @@
+.image-display {
+	width: 100%;
+	height: 100%;
+
+	background: $black no-repeat center;
+	background-size: contain;
+
+	position: relative;
+}
+
+.image-control-wrap {
+	cursor: pointer;
+
+	position: relative;
+	&.is-selected {
+		&:after {
+			content: "";
+			position: absolute;
+			top: 10px;
+			left: 10px;
+
+			width: 20px;
+			height: 20px;
+			border-radius: 50%;
+
+			background: $green--warm;
+			border: 5px solid $yellow;
+		}
+	}
+}
+
+.image-control {
+	display: block;
+	width: 100%;
+}

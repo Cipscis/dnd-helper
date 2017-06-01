@@ -40,6 +40,9 @@
 	&[data-binder-attribute-team="player"] {
 		@include border-inset(5px, $player);
 	}
+	&[data-binder-attribute-team="ally"] {
+		@include border-inset(5px, $ally);
+	}
 
 	&[data-binder-attribute-cursor="true"] {
 		@include border-inset(5px, #f90);

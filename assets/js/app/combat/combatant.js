@@ -16,7 +16,8 @@ define(
 
 		var teamColours = {
 			player: '#00f',
-			enemy: '#f00'
+			enemy: '#f00',
+			ally: '#0f0'
 		};
 
 		var Combatant = function (options) {
