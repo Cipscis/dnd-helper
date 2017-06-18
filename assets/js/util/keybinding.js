@@ -118,7 +118,7 @@ define(
 				// input that accepts keypresses
 
 				var $activeEl = $(document.activeElement),
-					isInput = $activeEl.is(':input');
+					isInput = $activeEl.is(':input') || $activeEl.is('[contenteditable="true"]');
 
 				if (
 					$activeEl.is('input[type="color"]') ||
@@ -131,7 +131,7 @@ define(
 				return isInput;
 			},
 
-			bindKey: function (key, fn, ctrlKey) {
+			bindKey: function (key, fn, allowInInput, allowDefault, requireCtrl) {
 				var fnWrapper;
 
 				if (typeof key === 'string') {
@@ -140,8 +140,8 @@ define(
 
 				if (key) {
 					fnWrapper = function (e) {
-						// Don't check key presses if focus is on an input element unless it requires Ctrl
-						if (Keys._isFocusOnInput() && !ctrlKey) {
+						// Don't check key presses if focus is on an input element unless it is allowed or requires Ctrl
+						if (!allowInInput && Keys._isFocusOnInput() && !requireCtrl) {
 							return;
 						}
 
@@ -150,8 +150,10 @@ define(
 								return;
 							}
 
-							if (!ctrlKey || e.ctrlKey) {
-								e.preventDefault();
+							if (!requireCtrl || e.ctrlKey) {
+								if (!allowDefault) {
+									e.preventDefault();
+								}
 								return fn.call(this, e);
 							}
 						}

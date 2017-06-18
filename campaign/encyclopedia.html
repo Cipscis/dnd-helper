@@ -1,0 +1,58 @@
+<html>
+	<head>
+		<title>D&amp;D Encyclopedia</title>
+
+		<link rel="stylesheet" href="/assets/css/style.css" />
+		<meta charset="utf-8" />
+
+		<script type="text/javascript" src="/assets/js/lib/require.js"></script>
+		<script type="text/javascript" src="/assets/js/lib/require-config.js"></script>
+
+		<script type="text/javascript">
+			require([
+				'encyclopedia/encyclopedia',
+				'image/control',
+				'expand-collapse'
+			],
+			function (Encyclopedia, ImageControl, ExpandCollapse) {
+				Encyclopedia.init();
+				ImageControl.init();
+				ExpandCollapse.init();
+			});
+		</script>
+	</head>
+
+	<body>
+		<div class="body">
+
+			<div class="grid">
+				<div class="grid__item width-1-2">
+					<h2>Encyclopedia</h2>
+
+					<form class="js-encyclopedia-autocomplete-form">
+						<input class="js-encyclopedia-autocomplete-input" type="text" placeholder="Search" />
+
+						<div class="encyclopedia-autocomplete js-encyclopedia-autocomplete-output"></div>
+					</form>
+
+					<button class="js-encyclopedia-load">Load</button>
+
+					<button class="js-encyclopedia-save">Save</button>
+
+					<div>
+						<h3 class="editable js-encyclopedia-title" contenteditable="true">You can edit this title</h3>
+					</div>
+
+					<div class="editable js-encyclopedia-content" contenteditable="true">
+						<p>You can edit this content.</p>
+					</div>
+				</div>
+
+				<div class="grid__item width-1-2">
+					<div class="encyclopedia-ajax__container js-encyclopedia-ajax__container"></div>
+				</div>
+			</div>
+
+		</div>
+	</body>
+</html>

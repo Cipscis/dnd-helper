@@ -28,6 +28,20 @@ $grid-config: (
 	}
 }
 
+@mixin grid-f($gutter) {
+	padding: 0;
+	list-style: none;
+
+	display: flex;
+	flex-wrap: wrap;
+	margin-left: -$gutter;
+	margin-top: -$gutter;
+	> .grid__item {
+		padding-left: $gutter;
+		padding-top: $gutter;
+	}
+}
+
 @each $variant, $gutter in $grid-config {
 	@if $variant == null {
 		.grid {
@@ -36,12 +50,18 @@ $grid-config: (
 		.grid-v {
 			@include grid-v($gutter);
 		}
+		.grid-f {
+			@include grid-f($gutter);
+		}
 	} @else {
 		.grid--#{$variant} {
 			@include grid($gutter);
 		}
 		.grid-v--#{$variant} {
 			@include grid-v($gutter);
+		}
+		.grid-f--#{$variant} {
+			@include grid-f($gutter);
 		}
 	}
 }

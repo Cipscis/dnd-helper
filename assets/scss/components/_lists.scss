@@ -1,0 +1,18 @@
+dl {
+	@extend %cf;
+	margin: 0;
+	padding: 0;
+}
+
+dt {
+	clear: left;
+	font-weight: bold;
+}
+
+dd {
+	margin-left: 5px;
+}
+
+dt, dd {
+	float: left;
+}

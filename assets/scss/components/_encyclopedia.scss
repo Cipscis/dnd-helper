@@ -1,0 +1,44 @@
+.encyclopedia-ajax__container {
+	position: fixed;
+	width: calc(40% - 20px);
+	top: 30px;
+	bottom: 30px;
+	overflow: auto;
+
+	padding: 0 20px 20px;
+}
+
+.encyclopedia-ajax__broken-link {
+	color: $red;
+}
+
+.encyclopedia-autocomplete {
+	position: absolute;
+	z-index: 1;
+
+	background: $grey--dim;
+}
+
+.encyclopedia-autocomplete__list {
+	padding-left: 0;
+	list-style: none;
+}
+
+.encyclopedia-autocomplete__item {
+	display: block;
+}
+
+.encyclopedia-autocomplete__link {
+	display: block;
+	padding: 10px 20px;
+	text-decoration: none;
+
+	.encyclopedia-autocomplete__item:nth-child(2n) & {
+		background: rgba($black, 0.1);
+	}
+	.encyclopedia-autocomplete__item &:hover,
+	.encyclopedia-autocomplete__item &:focus {
+		background: rgba($white, 0.2);
+		outline: none;
+	}
+}

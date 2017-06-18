@@ -1,0 +1,2 @@
+cd compass
+compass watch

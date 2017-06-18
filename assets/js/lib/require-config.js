@@ -15,7 +15,9 @@ require.config({
 		'stat-block': 'app/stat-block/stat-block',
 		'binder': 'app/binder/binder',
 		'filter': 'app/filter',
-		'cartographer': 'app/cartographer'
+		'cartographer': 'app/cartographer',
+		'encyclopedia': 'app/encyclopedia',
+		'text': 'lib/text'
 	},
 	shim: {
 		templayed: {

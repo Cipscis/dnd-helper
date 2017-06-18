@@ -1,3 +1,21 @@
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes rotateCentre {
+	0% {
+		transform: translateX(-50%) translateY(-50%) rotate(0deg);
+	}
+	100% {
+		transform: translateX(-50%) translateY(-50%) rotate(360deg);
+	}
+}
+
 .is-loading {
 	position: relative;
 
@@ -11,6 +29,8 @@
 		z-index: 1;
 
 		background: rgba($black, 0.2);
+		opacity: 0;
+		animation: fadeIn forwards 1s 0.5s;
 	}
 
 	&:after {
@@ -25,15 +45,7 @@
 		border-top-color: $white;
 		border-radius: 30px;
 
-		animation: rotateCentre 1.1s infinite linear;
-	}
-
-	@keyframes rotateCentre {
-		0% {
-			transform: translateX(-50%) translateY(-50%) rotate(0deg);
-		}
-		100% {
-			transform: translateX(-50%) translateY(-50%) rotate(360deg);
-		}
+		opacity: 0;
+		animation: rotateCentre 1.1s infinite linear, fadeIn forwards 1s 0.5s;
 	}
 }

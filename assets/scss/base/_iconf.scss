@@ -1,0 +1,49 @@
+@font-face {
+	font-family: "font-icons";
+	src:	url("/assets/fonts/font-icons/fonts/font-icons.eot?1y5x0e");
+	src:	url("/assets/fonts/font-icons/fonts/font-icons.eot?1y5x0e#iefix") format("embedded-opentype"),
+			url("/assets/fonts/font-icons/fonts/font-icons.ttf?1y5x0e") format("truetype"),
+			url("/assets/fonts/font-icons/fonts/font-icons.woff?1y5x0e") format("woff"),
+			url("/assets/fonts/font-icons/fonts/font-icons.svg?1y5x0e#font-icons") format("svg");
+	font-weight: normal;
+	font-style: normal;
+}
+
+%iconf,
+[class^="iconf-"],
+[class*=" iconf-"] {
+	/* use !important to prevent issues with browser extensions that change fonts */
+	font-family: "font-icons" !important;
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.iconf-log:before {
+  content: "\e907";
+}
+.iconf-group:before {
+  content: "\e972";
+}
+.iconf-lore:before {
+	content: "\e926";
+}
+.iconf-item:before {
+	content: "\e936";
+}
+.iconf-location:before {
+	content: "\e947";
+}
+.iconf-character:before {
+	content: "\e971";
+}
+.iconf-sound:before {
+  content: "\ea27";
+}

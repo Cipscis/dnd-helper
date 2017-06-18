@@ -1,0 +1,180 @@
+{
+	"title": "Base",
+	"sections": [
+		{
+			"content": [
+
+			]
+		},
+
+		{
+			"title": "Environment",
+			"content": [
+
+			],
+			"subsections": [
+				{
+					"title": "Climate",
+					"content": [
+
+					]
+				},
+				{
+					"title": "Flora",
+					"content": [
+
+					]
+				},
+				{
+					"title": "Fauna",
+					"content": [
+
+					]
+				}
+			]
+		},
+
+		{
+			"title": "People",
+			"content": [
+
+			],
+			"subsections": [
+				{
+					"title": "Appearance",
+					"content": [
+
+					]
+				},
+				{
+					"title": "Accent",
+					"content": [
+
+					]
+				},
+				{
+					"title": "Names",
+					"content": [
+
+					]
+				},
+				{
+					"title": "People of Interest",
+					"content": [
+
+					]
+				}
+			]
+		},
+
+		{
+			"title": "Locations",
+			"content": [
+
+			],
+			"subsections": [
+				{
+					"title": "Cities",
+					"content": [
+
+					]
+				}
+			]
+		},
+
+		{
+			"title": "Society",
+			"content": [
+
+			],
+			"subsections": [
+
+			]
+		},
+
+		{
+			"title": "History",
+			"content": [
+
+			],
+			"subsections": [
+
+			]
+		},
+
+		{
+			"title": "Culture",
+			"content": [
+
+			],
+			"subsections": [
+				{
+					"title": "Food",
+					"content": [
+
+					]
+				},
+				{
+					"title": "Traditions",
+					"content": [
+
+					]
+				},
+				{
+					"title": "Festivals",
+					"content": [
+
+					]
+				},
+				{
+					"title": "Taboos",
+					"content": [
+
+					]
+				}
+			]
+		},
+
+		{
+			"title": "Aesthetic",
+			"content": [
+
+			],
+			"subsections": [
+				{
+					"title": "Fashion",
+					"content": [
+
+					]
+				},
+				{
+					"title": "Architecture",
+					"content": [
+
+					]
+				},
+				{
+					"title": "Art",
+					"content": [
+
+					]
+				}
+			]
+		},
+
+		{
+			"title": "Special",
+			"content": [
+
+			],
+			"subsections": [
+				{
+					"title": "Sounds",
+					"content": [
+
+					]
+				}
+			]
+		}
+	]
+}
