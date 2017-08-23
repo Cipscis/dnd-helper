@@ -26,6 +26,9 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
+.iconf-creature:before {
+  content: "\e9ef";
+}
 .iconf-log:before {
   content: "\e907";
 }

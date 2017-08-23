@@ -608,36 +608,41 @@ textarea {
 }
 
 /* line 29, ../scss/base/_iconf.scss */
+.iconf-creature:before {
+  content: "\e9ef";
+}
+
+/* line 32, ../scss/base/_iconf.scss */
 .iconf-log:before {
   content: "\e907";
 }
 
-/* line 32, ../scss/base/_iconf.scss */
+/* line 35, ../scss/base/_iconf.scss */
 .iconf-group:before {
   content: "\e972";
 }
 
-/* line 35, ../scss/base/_iconf.scss */
+/* line 38, ../scss/base/_iconf.scss */
 .iconf-lore:before {
   content: "\e926";
 }
 
-/* line 38, ../scss/base/_iconf.scss */
+/* line 41, ../scss/base/_iconf.scss */
 .iconf-item:before {
   content: "\e936";
 }
 
-/* line 41, ../scss/base/_iconf.scss */
+/* line 44, ../scss/base/_iconf.scss */
 .iconf-location:before {
   content: "\e947";
 }
 
-/* line 44, ../scss/base/_iconf.scss */
+/* line 47, ../scss/base/_iconf.scss */
 .iconf-character:before {
   content: "\e971";
 }
 
-/* line 47, ../scss/base/_iconf.scss */
+/* line 50, ../scss/base/_iconf.scss */
 .iconf-sound:before {
   content: "\ea27";
 }
@@ -882,6 +887,7 @@ button:hover, button:focus, button:active, .button:hover, .button:focus, .button
 /* line 1, ../scss/components/_editable.scss */
 .editable {
   display: inline-block;
+  margin: 0;
   padding: 10px 15px;
   border: none;
   background: #444;
@@ -2139,31 +2145,26 @@ dt, dd {
 /* line 11, ../scss/components/_image-display.scss */
 .image-control-wrap {
   cursor: pointer;
-  position: relative;
-}
-/* line 16, ../scss/components/_image-display.scss */
-.image-control-wrap.is-selected:after {
-  content: "";
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #77aa33;
-  border: 5px solid #ffe64b;
 }
 
-/* line 32, ../scss/components/_image-display.scss */
+/* line 15, ../scss/components/_image-display.scss */
 .image-control {
   display: block;
   width: 100%;
 }
 
-/* line 37, ../scss/components/_image-display.scss */
+/* line 20, ../scss/components/_image-display.scss */
 .image-control-title {
   display: block;
   padding: 5px;
+}
+
+/* line 27, ../scss/components/_image-display.scss */
+.image-control__drop {
+  color: #000;
+  background: #999;
+  display: inline-block;
+  padding: 20px;
 }
 
 /* line 1, ../scss/components/_encyclopedia.scss */
@@ -2213,4 +2214,9 @@ dt, dd {
 .encyclopedia-autocomplete__item .encyclopedia-autocomplete__link:hover, .encyclopedia-autocomplete__item .encyclopedia-autocomplete__link:focus {
   background: rgba(255, 255, 255, 0.2);
   outline: none;
+}
+
+/* line 9, ../scss/components/_stat-block.scss */
+.stat-block__ability-name {
+  font-weight: bold;
 }
