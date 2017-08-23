@@ -96,6 +96,7 @@ define(
 				$.ajax({
 					url: url,
 					dataType: 'json',
+					cache: false,
 					complete: function () {
 						$container.removeClass('is-loading');
 					},
@@ -219,10 +220,16 @@ define(
 
 				var $title = $(selectors.contentTitle),
 					$content = $(selectors.contentBody),
+					data;
+
+				try {
 					data = JSON.parse(json);
 
-				$title.text(data.title);
-				$content.html(data.content.join('\n'));
+					$title.text(data.title);
+					$content.html(data.content.join('\n'));
+				} catch (e) {
+					console.error(e);
+				}
 			},
 
 			_contentSave: function () {
@@ -241,10 +248,10 @@ define(
 
 				title = $title.text();
 
-				content = $content.html().split(/\n/);
+				content = $content.html();
+				content = content.replace(/(<\/p>|<\/?ul>|<\/li>|<br\s*\/?>)/g, '$1\n').trim();
+				content = content.split(/\n/);
 				for (i = 0; i < content.length; i++) {
-					content[i] = content[i].trim(0);
-
 					if (content[i] === '') {
 						content.splice(i, 1);
 						i--;

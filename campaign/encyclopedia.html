@@ -26,30 +26,44 @@
 		<div class="body">
 
 			<div class="grid">
-				<div class="grid__item width-1-2">
+				<!-- <div class="grid__item width-1-2"> -->
+				<div class="grid__item width-1">
 					<h2>Encyclopedia</h2>
 
-					<form class="js-encyclopedia-autocomplete-form">
-						<input class="js-encyclopedia-autocomplete-input" type="text" placeholder="Search" />
+					<div class="grid-v">
+						<div class="grid__item">
+							<form class="js-encyclopedia-autocomplete-form">
+								<input class="js-encyclopedia-autocomplete-input" type="text" placeholder="Search" />
 
-						<div class="encyclopedia-autocomplete js-encyclopedia-autocomplete-output"></div>
-					</form>
+								<div class="encyclopedia-autocomplete js-encyclopedia-autocomplete-output"></div>
+							</form>
+						</div>
 
-					<button class="js-encyclopedia-load">Load</button>
+						<!-- <div class="grid__item">
+							<button class="js-encyclopedia-load">Load</button>
+							<button class="js-encyclopedia-save">Save</button>
+						</div>
 
-					<button class="js-encyclopedia-save">Save</button>
+						<div class="grid__item">
+							<h3 class="editable js-encyclopedia-title" contenteditable="true">Session Planning and Summary</h3>
+						</div>
 
-					<div>
-						<h3 class="editable js-encyclopedia-title" contenteditable="true">You can edit this title</h3>
+						<div class="grid__item">
+							<div class="editable js-encyclopedia-content" contenteditable="true">
+								<p>Editable content.</p>
+							</div>
+						</div>
 					</div>
 
-					<div class="editable js-encyclopedia-content" contenteditable="true">
-						<p>You can edit this content.</p>
-					</div>
 				</div>
 
 				<div class="grid__item width-1-2">
-					<div class="encyclopedia-ajax__container js-encyclopedia-ajax__container"></div>
+					<div class="grid-v"> -->
+						<div class="grid__item">
+							<!-- <div class="encyclopedia-ajax__container js-encyclopedia-ajax__container"></div> -->
+							<div class="js-encyclopedia-ajax__container"></div>
+						</div>
+					</div>
 				</div>
 			</div>
 
