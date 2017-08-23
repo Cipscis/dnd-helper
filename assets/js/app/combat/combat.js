@@ -23,6 +23,7 @@ define(
 
 		var combatants = [],
 			cursor,
+			clickPosition,
 			battlefield;
 
 		var Combat = {
@@ -45,7 +46,8 @@ define(
 				$(document).on('click', '.js-combat__select', Combat._setCurrentEvent);
 				$(document).on('click', '.js-combat__next', Combat._nextEvent);
 
-				$(document).on('mousedown', '.js-combat__canvas', Combat._canvasMouseEvent);
+				$(document).on('mousedown', '.js-combat__canvas', Combat._canvasMouseDownEvent);
+				$(document).on('mouseup', '.js-combat__canvas', Combat._canvasMouseUpEvent);
 				$(document).on('click', '.js-combat__select-on-map', Combat._setMapCursorEvent);
 
 				$(document).on('change', '.js-combat__map-select', Combat._updateMapEvent);
@@ -67,6 +69,12 @@ define(
 
 				var $form = $(e.target).closest('.js-combat__form'),
 					formData = FormUtil.getDataFromForm($form);
+
+				switch (formData.name.toLowerCase()) {
+					case 'name':
+						formData.image = '/assets/images/combat/avatars/name-avatar.png';
+						break;
+				}
 
 				Combat._addCombatant(formData);
 			},
@@ -400,6 +408,7 @@ define(
 				for (i = 0; i < combatants.length; i++) {
 					simpleCombatantList.push({
 						name: combatants[i].name,
+						image: combatants[i].image && combatants[i].image.src,
 						team: combatants[i].team,
 						x: combatants[i].x,
 						y: combatants[i].y
@@ -415,22 +424,80 @@ define(
 			/////////////////////
 			// MAP INTERACTION //
 			/////////////////////
-			_canvasMouseEvent: function (e) {
+			_canvasMouseDownEvent: function (e) {
 				var x = e.offsetX,
-					y = e.offsetY,
-
-					combatant,
-					i;
-
-				// Captures mouse click on the canvas
-				// If clicking on a combatant, selects or deselects it
-				// If clicking on an empty space with a combatant selected, moves it there
+					y = e.offsetY;
 
 				if (e.button !== 0) {
 					// Left click
 					return;
 				}
 
+				clickPosition = {
+					x: x,
+					y: y
+				};
+			},
+
+			_canvasMouseUpEvent: function (e) {
+				var x = e.offsetX,
+					y = e.offsetY,
+
+					initialTilePos,
+					tilePos,
+					combatant,
+					i;
+
+				// Captures mouse click on the canvas
+
+				if (e.button !== 0) {
+					// Left click
+					return;
+				}
+
+				initialTilePos = Combat._getTileAtMousePos(clickPosition.x, clickPosition.y);
+				tilePos = Combat._getTileAtMousePos(x, y);
+
+				clickPosition = undefined;
+
+				if (initialTilePos.x === tilePos.x && initialTilePos.y === tilePos.y) {
+					// Clicked on the same tile
+
+					// If clicking on a combatant, selects or deselects it
+					// If clicking on an empty space with a combatant selected, moves it there
+
+					for (i = combatants.length-1; i >= 0; i--) {
+						combatant = combatants[i];
+
+						if (combatant.x === tilePos.x && combatant.y === tilePos.y) {
+							break;
+						}
+					}
+
+					if (i === -1) {
+						// No combatant found, so move the cursor combatant
+						if (cursor) {
+							cursor.moveTo(tilePos.x, tilePos.y);
+							Combat._updateLocalStorage();
+						}
+					} else {
+						if (cursor === combatant) {
+							// You clicked on the cursor, deselect it
+							Combat._setMapCursor(undefined);
+						} else {
+							// There is a combatant here, so select it
+							Combat._setMapCursor(combatant);
+						}
+					}
+				} else {
+					battlefield.pan(
+						battlefield.tileSize * (tilePos.x - initialTilePos.x),
+						battlefield.tileSize * (tilePos.y - initialTilePos.y)
+					);
+				}
+			},
+
+			_getTileAtMousePos: function (x, y) {
 				// Undo transformation
 				x -= battlefield.getComputedPanX();
 				y -= battlefield.getComputedPanY();
@@ -441,29 +508,10 @@ define(
 				x = Math.floor(x / battlefield.tileSize);
 				y = Math.floor(y / battlefield.tileSize);
 
-				for (i = combatants.length-1; i >= 0; i--) {
-					combatant = combatants[i];
-
-					if (combatant.x === x && combatant.y === y) {
-						break;
-					}
-				}
-
-				if (i === -1) {
-					// No combatant found, so move the cursor combatant
-					if (cursor) {
-						cursor.moveTo(x, y);
-						Combat._updateLocalStorage();
-					}
-				} else {
-					if (cursor === combatant) {
-						// You clicked on the cursor, deselect it
-						Combat._setMapCursor(undefined);
-					} else {
-						// There is a combatant here, so select it
-						Combat._setMapCursor(combatant);
-					}
-				}
+				return {
+					x: x,
+					y: y
+				};
 			},
 
 			_setMapCursorEvent: function (e) {

@@ -11,7 +11,8 @@ define(
 
 		var mapData,
 			combatants,
-			battlefield;
+			battlefield,
+			clickPosition;
 
 		var MirrorMap = {
 			init: function () {
@@ -27,6 +28,9 @@ define(
 
 			_initEvents: function () {
 				window.addEventListener('storage', MirrorMap._storageEvent);
+
+				$(document).on('mousedown', '.js-mirrormap__canvas', MirrorMap._canvasMouseDownEvent);
+				$(document).on('mouseup', '.js-mirrormap__canvas', MirrorMap._canvasMouseUpEvent);
 
 				$(document).on('click', '.js-map-up', MirrorMap._mapUpEvent);
 				$(document).on('click', '.js-map-down', MirrorMap._mapDownEvent);
@@ -118,6 +122,69 @@ define(
 
 					combatant.draw(battlefield.context, dt, battlefield.tileSize);
 				}
+			},
+
+			_canvasMouseDownEvent: function (e) {
+				var x = e.offsetX,
+					y = e.offsetY;
+
+				if (e.button !== 0) {
+					// Left click
+					return;
+				}
+
+				clickPosition = {
+					x: x,
+					y: y
+				};
+			},
+
+			_canvasMouseUpEvent: function (e) {
+				var x = e.offsetX,
+					y = e.offsetY,
+
+					initialTilePos,
+					tilePos,
+					combatant,
+					i;
+
+				// Captures mouse click on the canvas
+
+				if (e.button !== 0) {
+					// Left click
+					return;
+				}
+
+				initialTilePos = MirrorMap._getTileAtMousePos(clickPosition.x, clickPosition.y);
+				tilePos = MirrorMap._getTileAtMousePos(x, y);
+
+				clickPosition = undefined;
+
+				if (initialTilePos.x === tilePos.x && initialTilePos.y === tilePos.y) {
+					// Clicked on the same tile
+				} else {
+					battlefield.pan(
+						battlefield.tileSize * (tilePos.x - initialTilePos.x),
+						battlefield.tileSize * (tilePos.y - initialTilePos.y)
+					);
+				}
+			},
+
+			_getTileAtMousePos: function (x, y) {
+				// Undo transformation
+				x -= battlefield.getComputedPanX();
+				y -= battlefield.getComputedPanY();
+
+				x /= battlefield.scale;
+				y /= battlefield.scale;
+
+				x = Math.floor(x / battlefield.tileSize);
+				y = Math.floor(y / battlefield.tileSize);
+
+				return {
+					x: x,
+					y: y
+				};
 			},
 
 			_mapUpEvent: function (e) {
