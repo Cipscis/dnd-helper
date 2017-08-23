@@ -141,7 +141,9 @@ define(
 				newUrl = document.location.href.replace(/#.*$/, '') + '#' + encodeURIComponent(Encyclopedia._convertStringForMatching(data.title));
 
 				$container.html(html);
-				history.pushState({html: html, currentItem: currentItem}, document.title, newUrl);
+				if (newUrl !== document.location.href) {
+					history.pushState({html: html, currentItem: currentItem}, document.title, newUrl);
+				}
 			},
 
 			_convertSectionData: function (section ) {
