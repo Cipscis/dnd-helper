@@ -1,0 +1,9 @@
+{
+	"items": [
+		{
+			"name": "Example",
+			"type": "group",
+			"path": "/assets/json/encyclopedia/example.json"
+		}
+	]
+}

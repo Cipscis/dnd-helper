@@ -1,0 +1,20 @@
+{
+  "name": "dnd-helper",
+  "version": "0.0.1",
+  "description": "A standalone web app for helping run and play in tabletop RPGs like Dungeons & Dragons",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.15.3",
+    "body-parser": "^1.17.2",
+    "json-format": "^1.0.1"
+  },
+  "engines": {
+    "node": "8.x"
+  },
+  "repository": {
+    "url": "https://github.com/Cipscis/dnd-helper.git"
+  }
+}

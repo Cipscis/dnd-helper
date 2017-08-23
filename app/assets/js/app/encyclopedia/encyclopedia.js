@@ -259,11 +259,23 @@ define(
 				}
 
 				object = {
-					title: title,
-					content: content
+					item: {
+						title: title,
+						content: content
+					},
+					metadata: {
+						icon: $('[name="icon"]:checked').val()
+					}
 				};
 
-				fileIO.saveJson(object, title.toLowerCase().replace(/\s+/g, '-'));
+				// fileIO.saveJson(object, title.toLowerCase().replace(/\s+/g, '-'));
+				$.ajax({
+					url: '/encyclopedia/add',
+					method: 'POST',
+					data: JSON.stringify(object),
+					contentType: 'application/json',
+					success: Encyclopedia._initAutocomplete
+				});
 			},
 
 			//////////////////

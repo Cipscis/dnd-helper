@@ -1,9 +1,0 @@
-{
-	"items": [
-		{
-			"name": "Base (Location)",
-			"type": "location",
-			"path": "/assets/json/encyclopedia/base-location.json"
-		}
-	]
-}
