@@ -7,8 +7,9 @@ var processFileWritten = function (error) {
 	}
 };
 
-var fsPath = 'app/assets/json/encyclopedia/';
 var webPath = '/assets/json/encyclopedia/';
+var fsPathPrefix = 'app/';
+var fsPath = fsPathPrefix + webPath;
 
 var Encyclopedia = {
 	add: function (req, res) {
@@ -16,14 +17,8 @@ var Encyclopedia = {
 		var item = req.body.item,
 			filename = item.title.replace(/ā/g, 'a').replace(/\s+/g, '-').toLowerCase() + '.json',
 
+			fileLocation,
 			indexEntry;
-
-		// Create encyclopedia entry file
-		fs.writeFile(
-			fsPath + filename,
-			jsonFormat(req.body.item),
-			processFileWritten
-		);
 
 		// Create encyclopedia entry in index
 		indexEntry = {
@@ -31,6 +26,24 @@ var Encyclopedia = {
 			type: req.body.metadata.icon,
 			path: webPath + filename
 		};
+
+		if (req.body.metadata.path) {
+			indexEntry.path = req.body.metadata.path;
+			fileLocation = fsPathPrefix + indexEntry.path;
+		}
+		if (req.body.metadata.tags) {
+			indexEntry.tags = req.body.metadata.tags;
+		}
+		if (req.body.metadata.aka) {
+			indexEntry.aka = req.body.metadata.aka;
+		}
+
+		// Create encyclopedia entry file
+		fs.writeFile(
+			fileLocation || (fsPath + filename),
+			jsonFormat(req.body.item),
+			processFileWritten
+		);
 
 		fs.readFile(fsPath + 'index.json', 'utf-8', Encyclopedia._onIndexReadAdd(indexEntry, res));
 	},

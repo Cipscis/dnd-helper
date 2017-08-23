@@ -3,7 +3,7 @@
 	[
 		{
 			"path": ".",
-			"folder_exclude_patterns": ["css", "lib", ".sass-cache"]
+			"folder_exclude_patterns": ["css", "lib", ".sass-cache", "node_modules"]
 		}
 	]
 }

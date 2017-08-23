@@ -28,7 +28,9 @@ define(
 		var selectors = {
 			contentBody: '.js-encyclopedia-content',
 			contentTitle: '.js-encyclopedia-title',
+			contentIcon: '.js-encyclopedia-icon',
 			contentLoad: '.js-encyclopedia-load',
+			contentEdit: '.js-encyclopedia-edit',
 			contentSave: '.js-encyclopedia-save',
 
 			ajaxLink: '.js-encyclopedia-ajax-link',
@@ -56,6 +58,7 @@ define(
 					.on('click', selectors.ajaxLink, Encyclopedia._ajaxLinkClick)
 
 					.on('click', selectors.contentLoad, Encyclopedia._contentLoad)
+					.on('click', selectors.contentEdit, Encyclopedia._contentEdit)
 					.on('click', selectors.contentSave, Encyclopedia._contentSave)
 
 					.on('focus keyup', selectors.autocompleteInput, Encyclopedia._autocompleteFilter)
@@ -240,6 +243,29 @@ define(
 				}
 			},
 
+			_contentEdit: function () {
+				// Load the currently viewed entry for editing
+
+				var indexItem,
+
+					$title = $(selectors.contentTitle),
+					$icon = $(selectors.contentIcon),
+					$content = $(selectors.contentBody);
+
+				if (!currentItem) {
+					return;
+				}
+
+				indexItem = Encyclopedia._getIndexItem(currentItem.title);
+
+				// Currently only supports files with no sections
+				// Does not support images
+
+				$title.text(currentItem.title);
+				$icon.prop('checked', false).filter('[value="' + indexItem.type + '"]').prop('checked', true);
+				$content.html(currentItem.content.join('\n'));
+			},
+
 			_contentSave: function () {
 				// Currently only supports files with no sections
 				// Does not support images
@@ -252,7 +278,8 @@ define(
 
 					i,
 
-					object;
+					object,
+					indexItem;
 
 				title = $title.text();
 
@@ -272,9 +299,18 @@ define(
 						content: content
 					},
 					metadata: {
-						icon: $('[name="icon"]:checked').val()
+						icon: $(selectors.contentIcon).filter(':checked').val()
 					}
 				};
+
+				if (currentItem && (currentItem.title === title)) {
+					// Editing the current item
+					indexItem = Encyclopedia._getIndexItem(currentItem.title);
+
+					object.metadata.path = indexItem.path;
+					object.metadata.tags = indexItem.tags;
+					object.metadata.aka = indexItem.aka;
+				}
 
 				// fileIO.saveJson(object, title.toLowerCase().replace(/\s+/g, '-'));
 				$.ajax({

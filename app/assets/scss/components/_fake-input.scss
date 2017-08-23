@@ -1,0 +1,20 @@
+.fake-input {
+	input {
+		display: none;
+	}
+}
+
+.fake-input__display {
+	padding: 4px;
+	border: 1px solid transparent;
+
+	&:hover {
+		cursor: pointer;
+		background: $grey;
+	}
+
+	.fake-input input:checked + & {
+		border-color: $white;
+		background: $grey;
+	}
+}

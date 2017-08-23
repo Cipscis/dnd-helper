@@ -48,13 +48,34 @@
 						</div>
 
 						<div class="grid__item">
-							<label><span class="iconf-creature"></span> <input type="radio" value="creature" name="icon" checked /></label>
-							<label><span class="iconf-log"></span> <input type="radio" value="log" name="icon" /></label>
-							<label><span class="iconf-group"></span> <input type="radio" value="group" name="icon" /></label>
-							<label><span class="iconf-lore"></span> <input type="radio" value="lore" name="icon" /></label>
-							<label><span class="iconf-item"></span> <input type="radio" value="item" name="icon" /></label>
-							<label><span class="iconf-location"></span> <input type="radio" value="location" name="icon" /></label>
-							<label><span class="iconf-character"></span> <input type="radio" value="character" name="icon" /></label>
+							<label class="fake-input">
+								<input type="radio" value="creature" name="icon" class="js-encyclopedia-icon" checked />
+								<span class="iconf-creature fake-input__display"></span>
+							</label>
+							<label class="fake-input">
+								<input type="radio" value="log" name="icon" class="js-encyclopedia-icon" />
+								<span class="iconf-log fake-input__display"></span>
+							</label>
+							<label class="fake-input">
+								<input type="radio" value="group" name="icon" class="js-encyclopedia-icon" />
+								<span class="iconf-group fake-input__display"></span>
+							</label>
+							<label class="fake-input">
+								<input type="radio" value="lore" name="icon" class="js-encyclopedia-icon" />
+								<span class="iconf-lore fake-input__display"></span>
+							</label>
+							<label class="fake-input">
+								<input type="radio" value="item" name="icon" class="js-encyclopedia-icon" />
+								<span class="iconf-item fake-input__display"></span>
+							</label>
+							<label class="fake-input">
+								<input type="radio" value="location" name="icon" class="js-encyclopedia-icon" />
+								<span class="iconf-location fake-input__display"></span>
+							</label>
+							<label class="fake-input">
+								<input type="radio" value="character" name="icon" class="js-encyclopedia-icon" />
+								<span class="iconf-character fake-input__display"></span>
+							</label>
 						</div>
 
 						<div class="grid__item">
@@ -64,6 +85,7 @@
 						</div>
 
 						<div class="grid__item">
+							<button class="js-encyclopedia-edit">Edit</button>
 							<button class="js-encyclopedia-save">Save</button>
 						</div>
 					</div>
