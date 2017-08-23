@@ -22,6 +22,9 @@ define(
 	)
 
 	{
+		var index,
+			currentItem;
+
 		var selectors = {
 			contentBody: '.js-encyclopedia-content',
 			contentTitle: '.js-encyclopedia-title',
@@ -37,7 +40,6 @@ define(
 			autocompleteItem: '.js-encyclopedia-autocomplete-item',
 
 			// Data
-			autocompleteDataIndex: 'autocomplete-index',
 			autocompleteDataTags: 'autocomplete-tags',
 			dataValue: 'value'
 		};
@@ -111,13 +113,14 @@ define(
 				var $container = $(selectors.ajaxContainer),
 
 					$input = $(selectors.autocompleteInput),
-					index = $input.data(selectors.autocompleteDataIndex),
 
 					html,
 					newUrl,
 
 					section, i,
 					subsection, j;
+
+				currentItem = data;
 
 				// Convert data
 				data = Encyclopedia._convertSectionData(data);
@@ -133,12 +136,12 @@ define(
 				}
 
 				html = templayed(ajaxTemplate)(data);
-				html = Encyclopedia._convertLinks(html, index);
+				html = Encyclopedia._convertLinks(html);
 
 				newUrl = document.location.href.replace(/#.*$/, '') + '#' + encodeURIComponent(Encyclopedia._convertStringForMatching(data.title));
 
 				$container.html(html);
-				history.pushState({html: html}, document.title, newUrl);
+				history.pushState({html: html, currentItem: currentItem}, document.title, newUrl);
 			},
 
 			_convertSectionData: function (section ) {
@@ -164,7 +167,7 @@ define(
 				return section;
 			},
 
-			_convertLinks: function (html, index) {
+			_convertLinks: function (html) {
 				var i, item,
 					names,
 					regex,
@@ -202,15 +205,18 @@ define(
 			// CONTENT //
 			/////////////
 
-			_createContentLinks: function (index) {
+			_createContentLinks: function () {
 				var $content = $(selectors.content),
 					html = $content.html();
 
-				html = Encyclopedia._convertLinks(html, index);
+				html = Encyclopedia._convertLinks(html);
 				$content.html(html);
 			},
 
 			_contentLoad: function () {
+				// Pick a JSON file manually from the file system
+				// and load it for editing
+
 				fileIO.loadFile(Encyclopedia._contentLoadCallback);
 			},
 
@@ -293,26 +299,26 @@ define(
 				});
 			},
 
-			_indexLoaded: function (index) {
+			_indexLoaded: function (indexData) {
 				var $input = $(selectors.autocompleteInput),
 					hash, item;
+
+				index = indexData;
 
 				$input.data(selectors.autocompleteDataIndex, index);
 
 				if (document.location.hash.length) {
 					hash = decodeURIComponent(document.location.hash.substr(1));
-					item = Encyclopedia._getIndexItem(hash, index);
+					item = Encyclopedia._getIndexItem(hash);
 
 					if (item) {
 						Encyclopedia._ajaxLoad(item.path);
 					} else {
-						history.replaceState({html: ''}, document.title, document.location.href);
+						history.replaceState({html: '', currentItem: undefined}, document.title, document.location.href);
 					}
 				} else {
-					history.replaceState({html: ''}, document.title, document.location.href);
+					history.replaceState({html: '', currentItem: undefined}, document.title, document.location.href);
 				}
-
-				// Encyclopedia._createContentLinks(index);
 			},
 
 			_focusOnAutocomplete: function () {
@@ -333,14 +339,14 @@ define(
 			_autocompleteSelectionMove: function (offset, e) {
 				var $focus = $(document.activeElement),
 					$items = $(selectors.autocompleteInput).add(selectors.autocompleteItem),
-					index,
+					i,
 					$nextItem;
 
-				index = $items.index($focus);
-				index += offset;
-				index = index % $items.length;
+				i = $items.index($focus);
+				i += offset;
+				i = i % $items.length;
 
-				$nextItem = $items.eq(index);
+				$nextItem = $items.eq(i);
 
 				if ($items.length > 1) {
 					if (e) {
@@ -364,7 +370,6 @@ define(
 
 					val = $input.val(),
 					oldValue = $input.data(selectors.dataValue),
-					index = $input.data(selectors.autocompleteDataIndex),
 
 					results = {
 						items: []
@@ -491,7 +496,7 @@ define(
 				return string.toLowerCase().replace(/ā/gi, 'a');
 			},
 
-			_getIndexItem: function (name, index) {
+			_getIndexItem: function (name) {
 				var i, item,
 					j, aka;
 
@@ -528,6 +533,7 @@ define(
 
 				if (e.state) {
 					$container.html(e.state.html);
+					currentItem = e.state.currentItem;
 				}
 			}
 		};
