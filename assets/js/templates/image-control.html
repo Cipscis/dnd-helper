@@ -1,0 +1,23 @@
+<a href="#" class="js-expand-collapse__children-trigger">Toggle Children</a>
+
+{{#sections}}
+	<div class="expand-collapse js-expand-collapse">
+		<h2 class="expand-collapse__heading js-expand-collapse__trigger">{{title}}</h2>
+		<div class="expand-collapse__body js-expand-collapse__body">
+
+			<div class="grid-f">
+
+				{{#images}}
+					<div class="grid__item flex-1-3 image-control-wrap js-image-control">
+						{{^placeholder}}
+							<img src="{{src}}" class="image-control js-image" data-colour="{{colour}}" />
+							<span class="image-control-title">{{title}}</span>
+						{{/placeholder}}
+					</div>
+				{{/images}}
+
+			</div>
+
+		</div>
+	</div>
+{{/sections}}

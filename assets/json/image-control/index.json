@@ -1,0 +1,14 @@
+{
+	"sections": [
+		{
+			"title": "Example Section",
+			"images": [
+				{
+					"src": "/assets/images/image.jpg",
+					"colour": "#fafafa",
+					"title": "Example image"
+				}
+			]
+		}
+	]
+}

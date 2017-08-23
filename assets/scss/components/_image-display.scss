@@ -10,23 +10,6 @@
 
 .image-control-wrap {
 	cursor: pointer;
-
-	position: relative;
-	&.is-selected {
-		&:after {
-			content: "";
-			position: absolute;
-			top: 10px;
-			left: 10px;
-
-			width: 20px;
-			height: 20px;
-			border-radius: 50%;
-
-			background: $green--warm;
-			border: 5px solid $yellow;
-		}
-	}
 }
 
 .image-control {
@@ -37,4 +20,14 @@
 .image-control-title {
 	display: block;
 	padding: 5px;
+}
+
+.image-control__path {}
+
+.image-control__drop {
+	color: $black;
+	background: $grey--light;
+
+	display: inline-block;
+	padding: 20px;
 }
