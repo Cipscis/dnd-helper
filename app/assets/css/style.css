@@ -1028,23 +1028,30 @@ dt, dd {
 
 /* line 2, ../scss/components/_fake-input.scss */
 .fake-input input {
-  display: none;
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
 }
 
-/* line 7, ../scss/components/_fake-input.scss */
+/* line 10, ../scss/components/_fake-input.scss */
 .fake-input__display {
   padding: 4px;
   border: 1px solid transparent;
 }
-/* line 11, ../scss/components/_fake-input.scss */
+/* line 14, ../scss/components/_fake-input.scss */
 .fake-input__display:hover {
   cursor: pointer;
   background: #666;
 }
-/* line 16, ../scss/components/_fake-input.scss */
-.fake-input input:checked + .fake-input__display {
+/* line 19, ../scss/components/_fake-input.scss */
+input:checked + .fake-input__display {
   border-color: #fff;
   background: #666;
+}
+/* line 23, ../scss/components/_fake-input.scss */
+input:focus + .fake-input__display {
+  background: #999;
 }
 
 /* line 1, ../scss/components/_symbols.scss */

@@ -1,6 +1,9 @@
 .fake-input {
 	input {
-		display: none;
+		position: absolute;
+		width: 0;
+		height: 0;
+		overflow: hidden;
 	}
 }
 
@@ -13,8 +16,11 @@
 		background: $grey;
 	}
 
-	.fake-input input:checked + & {
+	input:checked + & {
 		border-color: $white;
 		background: $grey;
+	}
+	input:focus + & {
+		background: $grey--light;
 	}
 }
