@@ -144,10 +144,12 @@ define(
 				newUrl = document.location.href.replace(/#.*$/, '') + '#' + encodeURIComponent(Encyclopedia._convertStringForMatching(data.title));
 
 				$container.html(html);
+
+				document.title = currentItem.title;
 				if (newUrl === document.location.href) {
 					history.replaceState({html: html, currentItem: currentItem}, document.title, newUrl);
 				} else {
-					history.pushState({html: html, currentItem: currentItem}, document.title, newUrl);
+					history.pushState({html: html, currentItem: currentItem}, currentItem.title, newUrl);
 				}
 			},
 
@@ -578,6 +580,7 @@ define(
 				if (e.state) {
 					$container.html(e.state.html);
 					currentItem = e.state.currentItem;
+					document.title = currentItem.title;
 				}
 			}
 		};
