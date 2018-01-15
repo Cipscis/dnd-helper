@@ -1,0 +1,9 @@
+{
+	"maps": [
+		{
+			"name": "Tavern",
+			"tilesize": "20",
+			"url": "/assets/images/combat/Tavern.png"
+		}
+	]
+}

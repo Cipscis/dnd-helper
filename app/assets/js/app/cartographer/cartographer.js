@@ -117,11 +117,11 @@ define(
 			},
 
 			_initKeybinding: function () {
-				keybinding.bindKey('Z', Cartographer._undo, true);
-				keybinding.bindKey('Y', Cartographer._redo, true);
+				keybinding.bindKey('Z', Cartographer._undo);
+				keybinding.bindKey('Y', Cartographer._redo);
 
-				keybinding.bindKey('S', Cartographer._saveJsonEvent, true);
-				keybinding.bindKey('L', Cartographer._loadJsonEvent, true);
+				keybinding.bindKey('S', Cartographer._saveJsonEvent);
+				keybinding.bindKey('L', Cartographer._loadJsonEvent);
 
 				keybinding.bindKey('R', Cartographer._selectRectangleTool);
 				keybinding.bindKey('I', Cartographer._selectColourPickerTool);
@@ -452,16 +452,38 @@ define(
 			},
 
 			_saveImage: function () {
-				window.open(canvas.toDataURL('image/png'));
+				var name = $('.js-cartographer__name').val() || 'map';
+
+				canvas.toBlob(fileIO.saveBlobAs(name));
+
+				Cartographer._saveToIndex();
+			},
+
+			_saveToIndex: function () {
+				var name = $('.js-cartographer__name').val() || 'map',
+					object = {
+						name: name,
+						tilesize: tileSize,
+						url: '/assets/images/combat/' + name + '.png'
+					};
+
+				$.ajax({
+					url: '/cartographer/add',
+					method: 'POST',
+					data: JSON.stringify(object),
+					contentType: 'application/json'
+				});
 			},
 
 			_saveJsonEvent: function () {
-				var data = {};
+				var data = {},
+					name = $('.js-cartographer__name').val() || 'map';
 
 				data.tiles = tiles;
 				data.tileSize = tileSize;
+				data.name = name;
 
-				fileIO.saveJson(data, 'New Map');
+				fileIO.saveJson(data, name);
 			},
 
 			//////////
@@ -475,6 +497,7 @@ define(
 				try {
 					data = JSON.parse(data);
 					$('.js-cartographer__tile-size').val(data.tileSize).trigger('change');
+					$('.js-cartographer__name').val(data.name).trigger('change');
 					Cartographer._initTiles(data.tiles);
 					Cartographer._updateHistory();
 				} catch (error) {

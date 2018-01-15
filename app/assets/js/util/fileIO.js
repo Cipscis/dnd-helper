@@ -12,9 +12,7 @@ define(
 			saveJson: function (data, filename) {
 				// Construct a JSON Blob and download it
 
-				var blob, url;
-
-				$link = $link || document.createElement('a');
+				var blob;
 
 				blob = new Blob(
 					[JSON.stringify(data)],
@@ -23,13 +21,25 @@ define(
 					}
 				);
 
-				url = URL.createObjectURL(blob);
+				IO.saveBlob(blob, filename + '.json');
+			},
 
+			saveBlob: function (blob, filename) {
+				var url = URL.createObjectURL(blob);
+
+				$link = $link || document.createElement('a');
 				$link.href = url;
-				$link.download = filename + '.json';
+				$link.download = filename;
 				$link.click();
 
 				URL.revokeObjectURL(url);
+			},
+
+			saveBlobAs: function (filename) {
+				// For use as a callback with only the blob passed in
+				return function (blob) {
+					IO.saveBlob(blob, filename);
+				};
 			},
 
 			loadFile: function (callback) {

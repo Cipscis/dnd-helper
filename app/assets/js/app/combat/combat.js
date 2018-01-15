@@ -7,7 +7,9 @@ define(
 		'combat/battlefield',
 
 		'util/form-util',
-		'templayed'
+		'templayed',
+
+		'text!templates/combat-map-select.html'
 	],
 
 	function (
@@ -18,7 +20,9 @@ define(
 		Battlefield,
 
 		FormUtil,
-		templayed
+		templayed,
+
+		mapSelectTemplate
 	) {
 
 		var combatants = [],
@@ -30,7 +34,7 @@ define(
 			init: function () {
 				Combat._initEvents();
 
-				Combat._initRendering();
+				Combat._loadBattlefields(Combat._renderBattlefieldsList);
 			},
 
 			_initEvents: function () {
@@ -61,6 +65,26 @@ define(
 				$(document).on('click', '.js-map-zoom-out', Combat._mapZoomOutEvent);
 			},
 
+			_loadBattlefields: function (callback) {
+				var url = '/assets/json/cartographer/index.json';
+
+				$.ajax({
+					url: url,
+					dataType: 'json',
+					complete: callback
+				});
+			},
+
+			_renderBattlefieldsList: function (data, statusCode) {
+				if (statusCode === 'success') {
+					$('.js-combat__map-select').html(templayed(mapSelectTemplate)(data.responseJSON));
+
+					Combat._initRendering();
+				} else {
+					console.error(arguments);
+				}
+			},
+
 			////////////////////
 			// ADD AND REMOVE //
 			////////////////////
@@ -70,9 +94,18 @@ define(
 				var $form = $(e.target).closest('.js-combat__form'),
 					formData = FormUtil.getDataFromForm($form);
 
-				switch (formData.name.toLowerCase()) {
-					case 'name':
-						formData.image = '/assets/images/combat/avatars/name-avatar.png';
+				switch (formData.name.toLowerCase().replace(/ā/g, 'a')) {
+					case 'lucia':
+						formData.image = '/assets/images/combat/avatars/lucia-avatar.png';
+						break;
+					case 'malwa':
+						formData.image = '/assets/images/combat/avatars/malwa-avatar.png';
+						break;
+					case 'seilon':
+						formData.image = '/assets/images/combat/avatars/seilon-avatar.png';
+						break;
+					case 'vyriel':
+						formData.image = '/assets/images/combat/avatars/vyriel-avatar.png';
 						break;
 				}
 
