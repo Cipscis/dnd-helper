@@ -1,0 +1,41 @@
+{
+	"sections": [
+		{
+			"title": "Weather",
+			"sounds": [
+				{
+					"title": "Rain",
+					"href": "https://www.youtube.com/watch?v=jX6kn9_U8qk"
+				},
+				{
+					"title": "Rain - gentle",
+					"href": "https://www.youtube.com/watch?v=Jvw-YnP9Xl4"
+				},
+				{
+					"title": "Rain - indoors",
+					"href": "https://www.youtube.com/watch?v=c8AxA99dnCk"
+				}
+			]
+		},
+		{
+			"title": "Cave",
+			"sounds": [
+				{
+					"title": "Cave - dry",
+					"href": "https://www.youtube.com/watch?v=JVhZMcBOPWE"
+				},
+				{
+					"title": "Cave - wet, creepy",
+					"href": "http://www.infinitelooper.com/?v=_2AAR9jRc7I"
+				},
+				{
+					"title": "Cave - creepy, ambient music",
+					"href": "http://www.infinitelooper.com/?v=plBqaqVV3JI",
+					"tags": [
+						"music"
+					]
+				}
+			]
+		}
+	]
+}

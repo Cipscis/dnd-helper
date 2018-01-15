@@ -9,6 +9,7 @@ require.config({
 		'inventory': 'app/inventory/inventory',
 		'combat': 'app/combat',
 		'image': 'app/image',
+		'sound': 'app/sound',
 		'char-cards': 'app/char-cards/char-cards',
 		'loot-list': 'app/loot-list/loot-list',
 		'drag-sort': 'app/drag-sort/drag-sort',

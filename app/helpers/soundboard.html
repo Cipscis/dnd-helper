@@ -1,0 +1,37 @@
+<html>
+	<head>
+		<title>D&amp;D Soundboard</title>
+
+		<link rel="stylesheet" href="/assets/css/style.css" />
+		<meta charset="utf-8" />
+
+		<script type="text/javascript" src="/assets/js/lib/require.js"></script>
+		<script type="text/javascript" src="/assets/js/lib/require-config.js"></script>
+
+		<script type="text/javascript">
+			require([
+				'sound/board',
+				'expand-collapse'
+			],
+			function (Soundboard) {
+				Soundboard.init();
+			});
+		</script>
+	</head>
+
+	<body>
+		<div class="body">
+
+			<h1>Soundboard</h1>
+
+			<div class="grid-v">
+				<div class="grid__item">
+
+					<div class="js-soundboard-container"></div>
+
+				</div>
+			</div>
+
+		</div>
+	</body>
+</html>

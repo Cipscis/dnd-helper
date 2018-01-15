@@ -1,0 +1,28 @@
+<input type="text" placeholder="Filter" class="js-soundboard-filter" />
+
+{{#sections}}
+	<div class="js-soundboard-section">
+		<h2>{{title}}</h2>
+
+		<div class="grid-f">
+
+			{{#sounds}}
+				<div class="grid__item flex-1-3 js-soundboard-item">
+					<div class="soundboard__sound-wrap" style="background-image: url({{image}});">
+						<a href="{{href}}" target="_blank" class="soundboard__sound">
+							<span class="soundboard__title js-soundboard-title">{{title}}</span>
+
+							<ul class="hidden">
+								<li class="js-soundboard-tag">{{sectionTitle}}</li>
+								{{#tags}}
+									<li class="js-soundboard-tag">{{.}}</li>
+								{{/tags}}
+							</ul>
+						</a>
+					</div>
+				</div>
+			{{/sounds}}
+
+		</div>
+	</div>
+{{/sections}}

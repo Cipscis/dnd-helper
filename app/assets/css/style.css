@@ -12,6 +12,9 @@
 .mar-bot-0 {
   margin-bottom: 0; }
 
+.interactive {
+  cursor: pointer; }
+
 .width-a {
   width: auto; }
 
@@ -1459,3 +1462,31 @@ dt, dd {
 
 .stat-block__ability-name {
   font-weight: bold; }
+
+.soundboard__sound-wrap {
+  cursor: pointer;
+  position: relative;
+  padding-top: 50%;
+  background-size: cover;
+  background-position: 50% 50%; }
+
+.soundboard__sound {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  transition: background 0.3s ease; }
+  .soundboard__sound:hover {
+    background-color: rgba(0, 0, 0, 0.2); }
+
+.soundboard__title {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  filter: drop-shadow(0 0 10px #000, 0.4); }
