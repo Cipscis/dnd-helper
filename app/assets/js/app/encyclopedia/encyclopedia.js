@@ -139,7 +139,7 @@ define(
 				}
 
 				html = templayed(ajaxTemplate)(data);
-				html = Encyclopedia._convertLinks(html);
+				html = Encyclopedia._convertHtml(html);
 
 				newUrl = document.location.href.replace(/#.*$/, '') + '#' + encodeURIComponent(Encyclopedia._convertStringForMatching(data.title));
 
@@ -174,6 +174,19 @@ define(
 				section.subsections = section.subsections || [];
 
 				return section;
+			},
+
+			_convertHtml: function (html) {
+				html = Encyclopedia._convertImages(html);
+				html = Encyclopedia._convertLinks(html);
+
+				return html;
+			},
+
+			_convertImages: function (html) {
+				html = html.replace(/\[\[img\|(.*?)\]\]/g, '<img src="/assets/images/$1" class="interactive js-image" />');
+
+				return html;
 			},
 
 			_convertLinks: function (html) {
@@ -218,7 +231,7 @@ define(
 				var $content = $(selectors.content),
 					html = $content.html();
 
-				html = Encyclopedia._convertLinks(html);
+				html = Encyclopedia._convertHtml(html);
 				$content.html(html);
 			},
 
