@@ -3,18 +3,28 @@ define(
 		'jquery',
 		'templayed',
 
+		'youtube',
+
 		'text!templates/soundboard.html'
 	],
 
-	function ($, templayed, SoundboardTemplate) {
+	function ($, templayed, YT, SoundboardTemplate) {
 
 		var selectors = {
 			container: '.js-soundboard-container',
+
 			filter: '.js-soundboard-filter',
 			section: '.js-soundboard-section',
 			item: '.js-soundboard-item',
+
 			title: '.js-soundboard-title',
-			tag: '.js-soundboard-tag'
+			tag: '.js-soundboard-tag',
+
+			link: '.js-soundboard-link'
+		};
+
+		var dataSelectors = {
+			repeat: 'soundboard-repeat'
 		};
 
 		var Soundboard = {
@@ -25,9 +35,13 @@ define(
 
 			_initEvents: function () {
 				$(document)
-					.on('input change', selectors.filter, Soundboard._applyFilter);
+					.on('input change', selectors.filter, Soundboard._applyFilter)
+					.on('click', selectors.link, Soundboard._linkClickEvent);
 			},
 
+			////////////////////
+			// INITIALISATION //
+			////////////////////
 			_loadIndex: function (callback) {
 				var url = '/assets/json/soundboard/index.json';
 
@@ -65,6 +79,84 @@ define(
 				return data;
 			},
 
+			////////////
+			// SOUNDS //
+			////////////
+			_linkClickEvent: function (e) {
+				var $link = $(e.target),
+					href = $link[0].href;
+
+				if ((/^https?:\/\/(www\.)?youtube.com/).test(href)) {
+					e.preventDefault();
+					Soundboard._youTubeClick($link);
+				} else if ((/\.\w+$/.test(href))) {
+					e.preventDefault();
+					Soundboard._soundFileClick($link);
+				}
+			},
+
+			// YOUTUBE //
+			_youTubeClick: function ($link) {
+				// On clicking a YouTube link, embed the video in an iframe
+
+				if (!(YT && YT.Player)) {
+					console.error('YouTube API not loaded');
+					return;
+				}
+
+				var $item = $link.closest(selectors.item);
+				var videoUrl = $link[0].href;
+				var videoId = videoUrl.match(/\?v=([^&]*)/)[1];
+
+				var events = {
+					onReady: Soundboard._youTubeAutoplay
+				};
+				if ($link.data(dataSelectors.repeat)) {
+					events.onStateChange = Soundboard._youTubeRepeat;
+				}
+
+				var player = new YT.Player($link[0],
+					{
+						height: $item.height,
+						width: $item.width,
+						videoId: videoId,
+						events: events
+					}
+				);
+			},
+
+			_youTubeAutoplay: function (event) {
+				event.target.playVideo();
+			},
+
+			_youTubeRepeat: function (event) {
+				var state = event.data;
+
+				if (state === YT.PlayerState.ENDED) {
+					event.target.playVideo();
+				}
+			},
+
+			// SOUND FILE //
+			_soundFileClick: function ($link) {
+				// On clicking a direct sound file link, embed the sound in an audio tag
+
+				var $item = $link.closest(selectors.item);
+				var url = $link[0].href;
+				var $tag = $(
+					'<audio class="soundboard__audio" controls loop>' +
+						'<source src="' + url + '" type="audio/mpeg" />', +
+					'</audio>'
+				);
+
+				$link.replaceWith($tag);
+
+				$tag[0].play();
+			},
+
+			///////////////
+			// FILTERING //
+			///////////////
 			_applyFilter: function (e) {
 				e.preventDefault();
 

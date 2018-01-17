@@ -18,11 +18,16 @@ require.config({
 		'filter': 'app/filter',
 		'cartographer': 'app/cartographer',
 		'encyclopedia': 'app/encyclopedia',
-		'text': 'lib/text'
+		'text': 'lib/text',
+
+		'youtube': 'https://www.youtube.com/iframe_api?' // Query string to prevent .js being added automatically
 	},
 	shim: {
 		templayed: {
 			exports: 'templayed'
+		},
+		youtube: {
+			exports: 'YT'
 		}
 	}
 });

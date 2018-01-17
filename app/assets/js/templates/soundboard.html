@@ -9,7 +9,7 @@
 			{{#sounds}}
 				<div class="grid__item flex-1 flex-md-1-2 flex-l-1-3 js-soundboard-item">
 					<div class="soundboard__sound-wrap" style="background-image: url({{image}});">
-						<a href="{{href}}" target="_blank" class="soundboard__sound">
+						<a href="{{href}}" target="_blank" class="soundboard__sound js-soundboard-link" {{#repeat}}data-soundboard-repeat="true"{{/repeat}}>
 							<span class="soundboard__title js-soundboard-title">{{title}}</span>
 
 							<ul class="hidden">
