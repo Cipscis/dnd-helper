@@ -7,6 +7,13 @@
 
 $cols: 5;
 
+.width-1 {
+	width: 100%;
+}
+.flex-1 {
+	flex: 0 1 100%;
+}
+
 @each $bp, $width in $breakpoints {
 	@if $bp == null {
 		@for $i from 2 through $cols {
@@ -21,6 +28,12 @@ $cols: 5;
 		}
 	} @else {
 		@include bp($bp) {
+			.width-#{$bp}-1 {
+				width: 100%;
+			}
+			.flex-#{$bp}-1 {
+				flex: 0 1 100%;
+			}
 			@for $i from 2 through $cols {
 				@for $j from 1 to $i {
 					.width-#{$bp}-#{$j}-#{$i} {
