@@ -4,11 +4,12 @@
   "description": "A standalone web app for helping run and play in tabletop RPGs like Dungeons & Dragons",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "node server.js | node build.js"
   },
   "dependencies": {
-    "express": "^4.15.3",
     "body-parser": "^1.17.2",
+    "express": "^4.15.3",
     "json-format": "^1.0.1"
   },
   "engines": {
