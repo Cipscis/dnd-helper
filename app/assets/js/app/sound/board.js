@@ -20,11 +20,13 @@ define(
 			title: '.js-soundboard-title',
 			tag: '.js-soundboard-tag',
 
-			link: '.js-soundboard-link'
+			link: '.js-soundboard-link',
+			placeholder: '.js-soundboard-audio-wrapper'
 		};
 
 		var dataSelectors = {
-			repeat: 'soundboard-repeat'
+			repeat: 'soundboard-repeat',
+			audio: 'soundboard-audio'
 		};
 
 		var Soundboard = {
@@ -73,6 +75,9 @@ define(
 						let sound = sounds[j];
 
 						sound.sectionTitle = section.title;
+						if (sound.description) {
+							sound.hasDescription = [{description: sound.description}];
+						}
 					}
 				}
 
@@ -83,57 +88,94 @@ define(
 			// SOUNDS //
 			////////////
 			_linkClickEvent: function (e) {
-				var $link = $(e.target),
+				var $link = $(e.target).closest('[href]'),
 					href = $link[0].href;
 
 				if ((/^https?:\/\/(www\.)?youtube.com/).test(href)) {
 					e.preventDefault();
-					Soundboard._youTubeClick($link);
+					Soundboard._youtubeClick($link);
 				} else if ((/\.\w+$/.test(href))) {
 					e.preventDefault();
 					Soundboard._soundFileClick($link);
 				}
 			},
 
-			// YOUTUBE //
-			_youTubeClick: function ($link) {
-				// On clicking a YouTube link, embed the video in an iframe
+			// Youtube //
+			_youtubeClick: function ($link) {
+				// On clicking a Youtube link, embed the video in an iframe
 
 				if (!(YT && YT.Player)) {
-					console.error('YouTube API not loaded');
+					console.error('Youtube API not loaded');
 					return;
 				}
 
 				var $item = $link.closest(selectors.item);
+				var player = $item.data(dataSelectors.audio);
+
+				if (player) {
+					// On clicks after the first, toggle pause/play
+					if (player.getPlayerState() ===  YT.PlayerState.PLAYING) {
+						player.pauseVideo();
+					} else {
+						// Paused, stopped, ended etc.
+						player.playVideo();
+					}
+				} else {
+					// On first click, initialise player
+					player = Soundboard._initYoutubePlayer($link);
+					$item.data(dataSelectors.audio, player);
+				}
+			},
+
+			_initYoutubePlayer: function ($link) {
+				var $item = $link.closest(selectors.item);
+				var $placeholder = $item.find(selectors.placeholder);
 				var videoUrl = $link[0].href;
 				var videoId = videoUrl.match(/\?v=([^&]*)/)[1];
 
 				var events = {
-					onReady: Soundboard._youTubeAutoplay
+					onReady: Soundboard._youtubePlayerReady,
+					onStateChange: Soundboard._youtubePlayerStateChange
+				};
+				var playerVars = {
+					autoplay: 1
 				};
 				if ($link.data(dataSelectors.repeat)) {
-					events.onStateChange = Soundboard._youTubeRepeat;
+					playerVars.loop = 1;
+					playerVars.playlist = videoId; // Required to get looping to work
 				}
 
-				var player = new YT.Player($link[0],
+				// A new YT.Player will play automatically
+				var player = new YT.Player($placeholder[0],
 					{
-						height: $item.height,
-						width: $item.width,
+						height: $placeholder.height,
+						width: $placeholder.width,
 						videoId: videoId,
+						playerVars: playerVars,
 						events: events
 					}
 				);
+				// Re-retrieve placeholder as it's been replaced by the player
+				$placeholder = $item.find(selectors.placeholder);
+				$placeholder.show();
+
+				return player;
 			},
 
-			_youTubeAutoplay: function (event) {
-				event.target.playVideo();
+			_youtubePlayerReady: function (event) {
+				var player = event.target;
+
+				player.setPlaybackQuality('small');
 			},
 
-			_youTubeRepeat: function (event) {
-				var state = event.data;
+			_youtubePlayerStateChange: function (event) {
+				var $player = $(event.target.a);
+				var $item = $player.closest(selectors.item);
 
-				if (state === YT.PlayerState.ENDED) {
-					event.target.playVideo();
+				if (event.data === YT.PlayerState.PLAYING) {
+					$item.addClass('is-playing');
+				} else {
+					$item.removeClass('is-playing');
 				}
 			},
 
@@ -142,16 +184,53 @@ define(
 				// On clicking a direct sound file link, embed the sound in an audio tag
 
 				var $item = $link.closest(selectors.item);
+				var audio = $item.data(dataSelectors.audio);
+
+				if (audio) {
+					if (audio.paused) {
+						audio.play();
+						$item.addClass('is-playing');
+					} else {
+						audio.pause();
+						$item.removeClass('is-playing');
+					}
+				} else {
+					audio = Soundboard._initSoundFile($link);
+					$item.data(dataSelectors.audio, audio);
+
+					audio.play();
+					$item.addClass('is-playing');
+				}
+			},
+
+			_initSoundFile: function ($link) {
+				var $item = $link.closest(selectors.item);
+				var $placeholder = $item.find(selectors.placeholder);
 				var url = $link[0].href;
 				var $tag = $(
-					'<audio class="soundboard__audio" controls loop>' +
+					'<audio class="soundboard__audio" controls' + ($link.data(dataSelectors.repeat) ? ' loop' : '') + '>' +
 						'<source src="' + url + '" type="audio/mpeg" />', +
 					'</audio>'
 				);
 
-				$link.replaceWith($tag);
+				$placeholder.append($tag);
+				$placeholder.show();
 
-				$tag[0].play();
+				$tag.on('playing ended pause', Soundboard._soundFileStateChange);
+
+				var audio = $tag[0];
+				return audio;
+			},
+
+			_soundFileStateChange: function (e) {
+				var audio = e.target;
+				var $item = $(audio).closest(selectors.item);
+
+				if (audio.paused) {
+					$item.removeClass('is-playing');
+				} else {
+					$item.addClass('is-playing');
+				}
 			},
 
 			///////////////
