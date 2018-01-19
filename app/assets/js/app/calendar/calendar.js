@@ -102,7 +102,7 @@ define(
 			_convertLinks: function (string) {
 				// Convert any text within double square braces into an encyclopedia link
 
-				return string.replace(/\[\[(.*?)\]\]/g, '<a href="/campaign/encyclopedia.html#$1" tabindex="-1">$1</a>');
+				return string.replace(/\[\[(.*?)\]\]/g, '<a href="/campaign/encyclopedia.html#$1" tabindex="-1" target="_blank">$1</a>');
 			},
 
 			/////////////
