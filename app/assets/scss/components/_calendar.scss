@@ -69,7 +69,8 @@
 		font-weight: bold;
 	}
 
-	&:focus {
+	&:focus,
+	&:focus-within {
 		outline: none;
 		background: $calendar-background--active;
 

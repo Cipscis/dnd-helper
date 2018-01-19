@@ -45,6 +45,9 @@ define(
 				}
 			},
 
+			/////////////////////////
+			// DATA TRANSFORMATION //
+			/////////////////////////
 			_processData: function (data) {
 				// Days require some transformation
 				var months = data.months;
@@ -67,7 +70,7 @@ define(
 
 						let day = {
 							date: dateString,
-							content: days[date].join('')
+							content: Calendar._convertLinks(days[date].join(''))
 						};
 
 						// Add day to array
@@ -94,6 +97,12 @@ define(
 				}
 
 				return data;
+			},
+
+			_convertLinks: function (string) {
+				// Convert any text within double square braces into an encyclopedia link
+
+				return string.replace(/\[\[(.*?)\]\]/g, '<a href="/campaign/encyclopedia.html#$1">$1</a>');
 			},
 
 			/////////////

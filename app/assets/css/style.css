@@ -967,10 +967,10 @@ dt, dd {
   .calendar__month-day[tabindex] {
     cursor: pointer;
     font-weight: bold; }
-  .calendar__month-day:focus {
+  .calendar__month-day:focus, .calendar__month-day:focus-within {
     outline: none;
     background: #fff; }
-    .calendar__month-day:focus .calendar__day-events {
+    .calendar__month-day:focus .calendar__day-events, .calendar__month-day:focus-within .calendar__day-events {
       display: block; }
 
 .calendar__day-events {
