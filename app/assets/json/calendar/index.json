@@ -1,0 +1,57 @@
+{
+	"current": [7, 28],
+	"months": [
+		{
+			"name": "1st Month",
+			"days": {}
+		},
+		{
+			"name": "2nd Month",
+			"days": {}
+		},
+		{
+			"name": "3rd Month",
+			"days": {}
+		},
+		{
+			"name": "4th Month",
+			"days": {}
+		},
+		{
+			"name": "5th Month",
+			"days": {}
+		},
+		{
+			"name": "6th Month",
+			"days": {}
+		},
+		{
+			"name": "7th Month",
+			"days": {}
+		},
+		{
+			"name": "8th Month",
+			"days": {}
+		},
+		{
+			"name": "9th Month",
+			"days": {}
+		},
+		{
+			"name": "10th Month",
+			"days": {}
+		},
+		{
+			"name": "11th Month",
+			"days": {}
+		},
+		{
+			"name": "12th Month",
+			"days": {}
+		},
+		{
+			"name": "13th Month",
+			"days": {}
+		}
+	]
+}

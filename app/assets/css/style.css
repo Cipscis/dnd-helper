@@ -917,37 +917,21 @@ dt, dd {
 .calendar {
   width: 100%;
   position: relative;
-  text-align: center; }
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  list-style: none;
+  margin: 0;
+  padding: 0; }
 
 .calendar__month {
-  padding: 10px; }
-  .calendar__month table {
-    width: 100%;
-    text-align: center;
-    color: #000; }
-  .calendar__month caption {
-    font-weight: bold;
-    margin-bottom: 10px; }
-  .calendar__month td.is-current {
-    background: #fff; }
-  .calendar__month td .calendar__day-events {
-    display: none;
-    position: absolute;
-    top: 50%;
-    left: 10px;
-    right: 10px;
-    transform: translateY(-50%);
-    text-align: left;
-    font-weight: normal;
-    cursor: default; }
-  .calendar__month td[tabindex] {
-    cursor: pointer;
-    font-weight: bold; }
-  .calendar__month td:focus {
-    outline: none;
-    background: #fff; }
-    .calendar__month td:focus .calendar__day-events {
-      display: block; }
+  flex: 0 1 calc(33.33333% - 6px);
+  margin-bottom: 9px;
+  min-height: 110px;
+  padding: 10px;
+  text-align: center;
+  color: #000; }
 
 .calendar__month--spring {
   background: #ffb9f9; }
@@ -960,6 +944,45 @@ dt, dd {
 
 .calendar__month--winter {
   background: #9bf3ff; }
+
+.calendar__month-name {
+  font-weight: bold;
+  margin-bottom: 10px; }
+
+.calendar__month-days {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: day; }
+
+.calendar__month-day {
+  flex: 0 1 14.28571%; }
+  .calendar__month-day:before {
+    counter-increment: day;
+    content: counter(day); }
+  .calendar__month-day.is-current {
+    background: #fff; }
+  .calendar__month-day[tabindex] {
+    cursor: pointer;
+    font-weight: bold; }
+  .calendar__month-day:focus {
+    outline: none;
+    background: #fff; }
+    .calendar__month-day:focus .calendar__day-events {
+      display: block; }
+
+.calendar__day-events {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  right: 10px;
+  transform: translateY(-50%);
+  text-align: left;
+  font-weight: normal;
+  cursor: default; }
 
 .line-map {
   list-style: none;

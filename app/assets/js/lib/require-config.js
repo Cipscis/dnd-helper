@@ -18,6 +18,7 @@ require.config({
 		'filter': 'app/filter',
 		'cartographer': 'app/cartographer',
 		'encyclopedia': 'app/encyclopedia',
+		'calendar': 'app/calendar',
 		'text': 'lib/text',
 
 		'youtube': 'https://www.youtube.com/iframe_api?' // Query string to prevent .js being added automatically
