@@ -3,12 +3,12 @@ define(
 		'jquery',
 		'templayed',
 
-		'youtube',
+		'sound/player',
 
 		'text!templates/soundboard.html'
 	],
 
-	function ($, templayed, YT, SoundboardTemplate) {
+	function ($, templayed, Player, SoundboardTemplate) {
 
 		var selectors = {
 			container: '.js-soundboard-container',
@@ -26,7 +26,8 @@ define(
 
 		var dataSelectors = {
 			repeat: 'soundboard-repeat',
-			audio: 'soundboard-audio'
+			player: 'soundboard-player',
+			volume: 'soundboard-volume'
 		};
 
 		var Soundboard = {
@@ -78,6 +79,9 @@ define(
 						if (sound.description) {
 							sound.hasDescription = [{description: sound.description}];
 						}
+						if (sound.volume) {
+							sound.hasVolume = [{volume: sound.volume}];
+						}
 					}
 				}
 
@@ -91,81 +95,56 @@ define(
 				var $link = $(e.target).closest('[href]'),
 					href = $link[0].href;
 
+				var type;
+
 				if ((/^https?:\/\/(www\.)?youtube.com/).test(href)) {
 					e.preventDefault();
-					Soundboard._youtubeClick($link);
+					type = Player.Types.YOUTUBE;
 				} else if ((/\.\w+$/.test(href))) {
 					e.preventDefault();
-					Soundboard._soundFileClick($link);
-				}
-			},
-
-			// Youtube //
-			_youtubeClick: function ($link) {
-				// On clicking a Youtube link, embed the video in an iframe
-
-				if (!(YT && YT.Player)) {
-					console.error('Youtube API not loaded');
-					return;
+					type = Player.Types.HTML;
 				}
 
-				var $item = $link.closest(selectors.item);
-				var player = $item.data(dataSelectors.audio);
+				if (type) {
+					var $item = $link.closest(selectors.item);
+					var player = $item.data(dataSelectors.player);
 
-				if (player) {
-					// On clicks after the first, toggle pause/play
-					if (player.getPlayerState() ===  YT.PlayerState.PLAYING) {
-						player.pauseVideo();
+					if (player) {
+						player.toggle();
 					} else {
-						// Paused, stopped, ended etc.
-						player.playVideo();
+						player = Soundboard._initPlayer($link, type);
 					}
-				} else {
-					// On first click, initialise player
-					player = Soundboard._initYoutubePlayer($link);
-					$item.data(dataSelectors.audio, player);
 				}
 			},
 
-			_initYoutubePlayer: function ($link) {
+			_initPlayer: function ($link, type) {
 				var $item = $link.closest(selectors.item);
-				var $placeholder = $item.find(selectors.placeholder);
-				var videoUrl = $link[0].href;
-				var videoId = videoUrl.match(/\?v=([^&]*)/)[1];
+				var $element = $item.find(selectors.placeholder);
+				var href = $link[0].href;
 
-				var events = {
-					onReady: Soundboard._youtubePlayerReady,
-					onStateChange: Soundboard._youtubePlayerStateChange
+				var options = {
+					href: href,
+					type: type,
+					element: $element[0],
+
+					volume: $link.data(dataSelectors.volume || 1),
+					loop: $link.data(dataSelectors.repeat) ? 1 : 0
 				};
-				var playerVars = {
-					autoplay: 1
-				};
-				if ($link.data(dataSelectors.repeat)) {
-					playerVars.loop = 1;
-					playerVars.playlist = videoId; // Required to get looping to work
+
+				if (type === Player.Types.YOUTUBE) {
+					options.onStateChange = Soundboard._youtubePlayerStateChange;
+				} else if (type === Player.Types.HTML) {
+					options.onStateChange = Soundboard._soundFileStateChange;
 				}
 
-				// A new YT.Player will play automatically
-				var player = new YT.Player($placeholder[0],
-					{
-						height: $placeholder.height,
-						width: $placeholder.width,
-						videoId: videoId,
-						playerVars: playerVars,
-						events: events
-					}
-				);
-				// Re-retrieve placeholder as it's been replaced by the player
-				$placeholder = $item.find(selectors.placeholder);
-				$placeholder.show();
+				var player = new Player(options);
+
+				$item.data(dataSelectors.player, player);
+				// Can't use cached element as it's possibly been replaced by the Youtube API
+				$element = $item.find(selectors.placeholder);
+				$element.show();
 
 				return player;
-			},
-
-			_youtubePlayerReady: function (event) {
-				var player = event.target;
-
-				player.setPlaybackQuality('small');
 			},
 
 			_youtubePlayerStateChange: function (event) {
@@ -177,49 +156,6 @@ define(
 				} else {
 					$item.removeClass('is-playing');
 				}
-			},
-
-			// SOUND FILE //
-			_soundFileClick: function ($link) {
-				// On clicking a direct sound file link, embed the sound in an audio tag
-
-				var $item = $link.closest(selectors.item);
-				var audio = $item.data(dataSelectors.audio);
-
-				if (audio) {
-					if (audio.paused) {
-						audio.play();
-						$item.addClass('is-playing');
-					} else {
-						audio.pause();
-						$item.removeClass('is-playing');
-					}
-				} else {
-					audio = Soundboard._initSoundFile($link);
-					$item.data(dataSelectors.audio, audio);
-
-					audio.play();
-					$item.addClass('is-playing');
-				}
-			},
-
-			_initSoundFile: function ($link) {
-				var $item = $link.closest(selectors.item);
-				var $placeholder = $item.find(selectors.placeholder);
-				var url = $link[0].href;
-				var $tag = $(
-					'<audio class="soundboard__audio" controls' + ($link.data(dataSelectors.repeat) ? ' loop' : '') + '>' +
-						'<source src="' + url + '" type="audio/mpeg" />', +
-					'</audio>'
-				);
-
-				$placeholder.append($tag);
-				$placeholder.show();
-
-				$tag.on('playing ended pause', Soundboard._soundFileStateChange);
-
-				var audio = $tag[0];
-				return audio;
 			},
 
 			_soundFileStateChange: function (e) {
