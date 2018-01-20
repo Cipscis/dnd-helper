@@ -1,14 +1,14 @@
-<input type="text" placeholder="Filter" class="js-soundboard-filter" />
+<input type="text" placeholder="Filter" class="js-section-filter-query" />
 
 {{#sections}}
-	<div class="js-soundboard-section">
+	<div class="js-section-filter-section">
 		<h2>{{title}}</h2>
 
 		<div class="grid-f">
 
 			{{#sounds}}
-				<div class="grid__item flex-1 flex-md-1-2 flex-l-1-3 js-soundboard-item">
-					<span class="soundboard__title js-soundboard-title">{{title}}</span>
+				<div class="grid__item flex-1 flex-md-1-2 flex-l-1-3 js-soundboard-item js-section-filter-item">
+					<span class="soundboard__title js-section-filter-title">{{title}}</span>
 					<div class="soundboard__sound-wrap" style="background-image: url({{image}});">
 						<a href="{{href}}" target="_blank" class="soundboard__sound js-soundboard-link" {{#repeat}}data-soundboard-repeat="true"{{/repeat}}{{#hasVolume}} data-soundboard-volume="{{volume}}"{{/hasVolume}}>
 
@@ -18,9 +18,9 @@
 								{{/hasDescription}}
 
 								<ul class="hidden">
-									<li class="js-soundboard-tag">{{sectionTitle}}</li>
+									<li class="js-section-filter-tag">{{sectionTitle}}</li>
 									{{#tags}}
-										<li class="js-soundboard-tag">{{.}}</li>
+										<li class="js-section-filter-tag">{{.}}</li>
 									{{/tags}}
 								</ul>
 							</div>

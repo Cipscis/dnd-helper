@@ -4,21 +4,16 @@ define(
 		'templayed',
 
 		'sound/player',
+		'filter/section',
 
 		'text!templates/soundboard.html'
 	],
 
-	function ($, templayed, Player, SoundboardTemplate) {
+	function ($, templayed, Player, SectionFilter, SoundboardTemplate) {
 
 		var selectors = {
 			container: '.js-soundboard-container',
-
-			filter: '.js-soundboard-filter',
-			section: '.js-soundboard-section',
 			item: '.js-soundboard-item',
-
-			title: '.js-soundboard-title',
-			tag: '.js-soundboard-tag',
 
 			link: '.js-soundboard-link',
 			placeholder: '.js-soundboard-audio-wrapper'
@@ -33,12 +28,12 @@ define(
 		var Soundboard = {
 			init: function () {
 				Soundboard._initEvents();
+				SectionFilter.init();
 				Soundboard._loadIndex(Soundboard._renderTemplate);
 			},
 
 			_initEvents: function () {
 				$(document)
-					.on('input change', selectors.filter, Soundboard._applyFilter)
 					.on('click', selectors.link, Soundboard._linkClickEvent);
 			},
 
@@ -166,61 +161,6 @@ define(
 					$item.removeClass('is-playing');
 				} else {
 					$item.addClass('is-playing');
-				}
-			},
-
-			///////////////
-			// FILTERING //
-			///////////////
-			_applyFilter: function (e) {
-				e.preventDefault();
-
-				var $filter = $(this);
-				var q = $filter.val();
-
-				var $sections = $(selectors.section);
-				var $items = $(selectors.item);
-
-				$sections.show();
-				$items.show();
-
-				$items.each(Soundboard._filterItem(q));
-				$sections.each(Soundboard._hideSectionIfEmpty);
-			},
-
-			_filterItem: function (q) {
-				var qRegex = new RegExp(q, 'i');
-
-				return function () {
-					var $item = $(this);
-
-					var $title = $item.find(selectors.title);
-					var title = $title.html();
-
-					var $tags = $item.find(selectors.tag);
-
-					var match = qRegex.test(title);
-
-					// Check if any of the tags match
-					for (var i = 0; i < $tags.length; i++) {
-						if (match) {
-							break;
-						}
-						match = match || qRegex.test($tags.eq(i).html());
-					}
-
-					if (!match) {
-						$item.hide();
-					}
-				};
-			},
-
-			_hideSectionIfEmpty: function () {
-				var $section = $(this);
-				var $items = $section.find(selectors.item);
-
-				if ($items.filter(':visible').length === 0) {
-					$section.hide();
 				}
 			}
 		};
