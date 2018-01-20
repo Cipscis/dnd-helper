@@ -3,14 +3,19 @@ define(
 		'jquery',
 		'templayed',
 
+		'filter/section',
+
 		'text!templates/image-control.html'
 	],
 
-	function ($, templayed, imageControlTemplate) {
+	function ($, templayed, FilterSection, imageControlTemplate) {
 
 		var ImageControl = {
 			init: function () {
 				ImageControl._initEvents();
+				FilterSection.init({
+					keybinding: true
+				});
 				ImageControl._loadIndex(ImageControl._renderImages);
 			},
 
@@ -35,11 +40,30 @@ define(
 			},
 
 			_renderImages: function (data, statusCode) {
+				data = ImageControl._transformData(data.responseJSON);
+
 				if (statusCode === 'success') {
-					$('.js-image-container').html(templayed(imageControlTemplate)(data.responseJSON));
+					$('.js-image-container').html(templayed(imageControlTemplate)(data));
 				} else {
 					console.error(arguments);
 				}
+			},
+
+			_transformData: function (data) {
+				var i, section,
+					j, item;
+
+				for (i = 0; i < data.sections.length; i++) {
+					section = data.sections[i];
+
+					for (j = 0; j < section.images.length; j++) {
+						item = section.images[j];
+
+						item.sectionTitle = section.title;
+					}
+				}
+
+				return data;
 			},
 
 			_selectImage: function (e) {

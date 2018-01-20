@@ -28,7 +28,9 @@ define(
 		var Soundboard = {
 			init: function () {
 				Soundboard._initEvents();
-				SectionFilter.init();
+				SectionFilter.init({
+					keybinding: true
+				});
 				Soundboard._loadIndex(Soundboard._renderTemplate);
 			},
 

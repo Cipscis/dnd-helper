@@ -1,23 +1,26 @@
-<a href="#" class="js-expand-collapse__children-trigger">Toggle Children</a>
-
 {{#sections}}
-	<div class="expand-collapse js-expand-collapse">
-		<h2 class="expand-collapse__heading js-expand-collapse__trigger">{{title}}</h2>
-		<div class="expand-collapse__body js-expand-collapse__body">
+	<div class="expand-collapse js-section-filter-section">
+		<h2>{{title}}</h2>
 
-			<div class="grid-f">
+		<div class="grid-f">
 
-				{{#images}}
-					<div class="grid__item flex-1-3 image-control-wrap js-image-control">
-						{{^placeholder}}
-							<img src="{{src}}" class="image-control js-image" data-colour="{{colour}}" />
-							<span class="image-control-title">{{title}}</span>
-						{{/placeholder}}
-					</div>
-				{{/images}}
+			{{#images}}
+				<div class="grid__item flex-1-3 image-control-wrap js-image-control js-section-filter-item">
+					{{^placeholder}}
+						<img src="{{src}}" class="image-control js-image" data-colour="{{colour}}" />
+						<span class="image-control-title js-section-filter-title">{{title}}</span>
 
-			</div>
+						<ul class="hidden">
+							<li class="js-section-filter-tag">{{sectionTitle}}</li>
+							{{#tags}}
+								<li class="js-section-filter-tag">{{.}}</li>
+							{{/tags}}
+						</ul>
+					{{/placeholder}}
+				</div>
+			{{/images}}
 
 		</div>
+
 	</div>
 {{/sections}}

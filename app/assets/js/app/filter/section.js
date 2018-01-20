@@ -14,13 +14,30 @@ define(
 		};
 
 		var SectionFilter = {
-			init: function () {
+			init: function (options) {
+				options = options || {};
+
 				SectionFilter._initEvents();
+
+				if (options.keybinding === true) {
+					SectionFilter._initKeybinding();
+				}
 			},
 
 			_initEvents: function () {
 				$(document)
 					.on('input change', selectors.query, SectionFilter._applyFilter);
+			},
+
+			_initKeybinding: function () {
+				require(['util/keybinding'], function (keybinding) {
+					keybinding.bindKey('/', SectionFilter._focusOnQuery);
+					keybinding.bindKey('?', SectionFilter._focusOnQuery);
+				});
+			},
+
+			_focusOnQuery: function (e) {
+				$(selectors.query).focus();
 			},
 
 			_applyFilter: function (e) {

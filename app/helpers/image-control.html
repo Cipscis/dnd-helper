@@ -10,12 +10,10 @@
 
 		<script type="text/javascript">
 			require([
-				'image/control',
-				'expand-collapse'
+				'image/control'
 			],
-			function (ImageControl, ExpandCollapse) {
+			function (ImageControl) {
 				ImageControl.init();
-				ExpandCollapse.init();
 			});
 		</script>
 	</head>
@@ -34,6 +32,10 @@
 
 				<div class="grid__item">
 					<input type="text" class="image-control__path js-image-path" placeholder="Paste image URL here" />
+				</div>
+
+				<div class="grid__item">
+					<input type="text" class="js-section-filter-query" placeholder="Filter" />
 				</div>
 
 				<div class="grid__item">
