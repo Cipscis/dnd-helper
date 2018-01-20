@@ -5,18 +5,20 @@
 		<div class="grid-f">
 
 			{{#images}}
-				<div class="grid__item flex-1-3 image-control-wrap js-image-control js-section-filter-item">
-					{{^placeholder}}
-						<img src="{{src}}" class="image-control js-image" data-colour="{{colour}}" />
-						<span class="image-control-title js-section-filter-title">{{title}}</span>
+				<div class="grid__item flex-1-3 js-image-control js-section-filter-item">
+					<span class="image-control-title js-section-filter-title">{{title}}</span>
+					<div class="image-control-wrap">
+						{{^placeholder}}
+							<img src="{{src}}" class="image-control js-image" data-colour="{{colour}}" />
 
-						<ul class="hidden">
-							<li class="js-section-filter-tag">{{sectionTitle}}</li>
-							{{#tags}}
-								<li class="js-section-filter-tag">{{.}}</li>
-							{{/tags}}
-						</ul>
-					{{/placeholder}}
+							<ul class="hidden">
+								<li class="js-section-filter-tag">{{sectionTitle}}</li>
+								{{#tags}}
+									<li class="js-section-filter-tag">{{.}}</li>
+								{{/tags}}
+							</ul>
+						{{/placeholder}}
+					</div>
 				</div>
 			{{/images}}
 

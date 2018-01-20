@@ -1463,9 +1463,15 @@ dt, dd {
   position: relative; }
 
 .image-control-wrap {
-  cursor: pointer; }
+  cursor: pointer;
+  padding-top: 56.25%;
+  position: relative;
+  overflow: hidden; }
 
 .image-control {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
   display: block;
   width: 100%; }
 
@@ -1510,7 +1516,7 @@ dt, dd {
 
 .soundboard__sound-wrap {
   position: relative;
-  padding-top: 50%;
+  padding-top: 56.25%;
   background-size: cover;
   background-position: 50% 50%; }
 
