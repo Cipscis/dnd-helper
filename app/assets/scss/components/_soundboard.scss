@@ -6,6 +6,14 @@
 	background-size: cover;
 	background-position: 50% 50%;
 }
+.soundboard__sound-uncalibrated {
+	position: absolute;
+	z-index: 1;
+	top: 20px;
+	left: 20px;
+
+	@include no($red);
+}
 
 .soundboard__sound {
 	display: block;

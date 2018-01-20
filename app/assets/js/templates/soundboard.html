@@ -12,6 +12,10 @@
 					<div class="soundboard__sound-wrap" style="background-image: url({{image}});">
 						<a href="{{href}}" target="_blank" class="soundboard__sound js-soundboard-link" {{#repeat}}data-soundboard-repeat="true"{{/repeat}}{{#hasVolume}} data-soundboard-volume="{{volume}}"{{/hasVolume}}>
 
+							{{^calibrated}}
+								<span class="soundboard__sound-uncalibrated" title="Uncalibrated"></span>
+							{{/calibrated}}
+
 							<div class="soundboard__sound-body">
 								{{#hasDescription}}
 									<span class="soundboard__description">{{description}}</span>

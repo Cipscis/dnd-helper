@@ -1520,6 +1520,24 @@ dt, dd {
   background-size: cover;
   background-position: 50% 50%; }
 
+.soundboard__sound-uncalibrated {
+  position: absolute;
+  z-index: 1;
+  top: 20px;
+  left: 20px; }
+  .soundboard__sound-uncalibrated:before, .soundboard__sound-uncalibrated:after {
+    content: "";
+    position: absolute;
+    width: 40px;
+    height: 40px; }
+  .soundboard__sound-uncalibrated:before {
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 5px #f33; }
+  .soundboard__sound-uncalibrated:after {
+    border-top: 5px solid #f33;
+    transform-origin: 0 0;
+    transform: translate(10%, 72%) rotate(-45deg); }
+
 .soundboard__sound {
   display: block;
   position: absolute;
