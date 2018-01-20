@@ -60,6 +60,10 @@ define(
 						item = section.images[j];
 
 						item.sectionTitle = section.title;
+						if (item.colour) {
+							// For mustache checking
+							item.hasColour = [{colour: item.colour}];
+						}
 					}
 				}
 
@@ -69,7 +73,7 @@ define(
 			_selectImage: function (e) {
 				var $wrap = $(e.target).closest('.js-image-control'),
 					$image = $wrap.find('.js-image'),
-					imagePath = $image.attr('src'),
+					imagePath = $image.data('src'),
 					colour = $image.data('colour') || '#000';
 
 				ImageControl._setImage(imagePath, colour);

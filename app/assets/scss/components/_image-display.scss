@@ -10,6 +10,7 @@
 
 .image-control-wrap {
 	cursor: pointer;
+
 	padding-top: percentage(1080/1920);
 	position: relative;
 	overflow: hidden;
@@ -17,11 +18,17 @@
 
 .image-control {
 	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
+	top: 0;
+	left: 0;
 
 	display: block;
 	width: 100%;
+	height: 100%;
+
+	background-color: $black;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
 }
 
 .image-control-title {

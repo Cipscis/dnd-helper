@@ -1470,10 +1470,15 @@ dt, dd {
 
 .image-control {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 0;
+  left: 0;
   display: block;
-  width: 100%; }
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: 50% 50%; }
 
 .image-control-title {
   display: block;
