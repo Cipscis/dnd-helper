@@ -37,7 +37,7 @@ define(
 			},
 
 			_focusOnQuery: function (e) {
-				$(selectors.query).focus();
+				$(selectors.query).focus().select();
 			},
 
 			_applyFilter: function (e) {
