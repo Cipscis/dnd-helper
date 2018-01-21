@@ -1,9 +1,11 @@
 define(
 	[
-		'jquery'
+		'jquery',
+
+		'util/throttle-debounce'
 	],
 
-	function ($) {
+	function ($, tdUtil) {
 		var selectors = {
 			query: '.js-section-filter-query',
 			section: '.js-section-filter-section',
@@ -26,7 +28,7 @@ define(
 
 			_initEvents: function () {
 				$(document)
-					.on('input change', selectors.query, SectionFilter._applyFilter);
+					.on('input change', selectors.query, tdUtil.debounce(SectionFilter._applyFilter, 150));
 			},
 
 			_initKeybinding: function () {
