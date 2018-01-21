@@ -3,8 +3,8 @@ var app = express();
 
 var bodyParser = require('body-parser');
 
-var encyclopedia = require('./server/encyclopedia');
-var cartographer = require('./server/cartographer');
+var encyclopedia = require('./encyclopedia');
+var cartographer = require('./cartographer');
 
 app.use(express.static('app'));
 
