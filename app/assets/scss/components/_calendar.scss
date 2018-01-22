@@ -13,6 +13,10 @@
 	padding: 0;
 }
 
+.calendar__year-num {
+	color: $white;
+}
+
 .calendar__month {
 	flex: 0 1 calc(#{percentage(1/3)} - 6px);
 	margin-bottom: 9px;
