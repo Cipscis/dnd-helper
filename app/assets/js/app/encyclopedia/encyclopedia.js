@@ -179,6 +179,7 @@ define(
 			_convertHtml: function (html) {
 				html = Encyclopedia._convertImages(html);
 				html = Encyclopedia._convertLinks(html);
+				html = Encyclopedia._convertMarkdown(html);
 
 				return html;
 			},
@@ -219,6 +220,40 @@ define(
 
 				// Find any links without anywhere to go and highlight them
 				html = html.replace(/\[\[(.*?)\]\]/g, '<span class="encyclopedia-ajax__broken-link">$1</span>');
+
+				return html;
+			},
+
+			_convertMarkdown: function (html) {
+				// Encyclopedia allows some markdown to be used
+
+				// Headings
+				html = html.replace(/^\s*(<p>)?# (.*?)(<\/p>)?$/gm, '<h1>$2</h1>');
+				html = html.replace(/^\s*(<p>)?## (.*?)(<\/p>)?$/gm, '<h2>$2</h2>');
+				html = html.replace(/^\s*(<p>)?### (.*?)(<\/p>)?$/gm, '<h3>$2</h3>');
+				html = html.replace(/^\s*(<p>)?#### (.*?)(<\/p>)?$/gm, '<h4>$2</h4>');
+				html = html.replace(/^\s*(<p>)?##### (.*?)(<\/p>)?$/gm, '<h5>$2</h5>');
+				html = html.replace(/^\s*(<p>)?###### (.*?)(<\/p>)?$/gm, '<h6>$2</h6>');
+
+				// Bold
+				html = html.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+				html = html.replace(/__(.*?)__/g, '<b>$1</b>');
+
+				// Italics
+				html = html.replace(/\*(.*?)\*/g, '<i>$1</i>');
+				html = html.replace(/_(.*?)_/g, '<i>$1</i>');
+
+				// Strikethrough
+				html = html.replace(/~~(.*?)~~/g, '<del>$1</del>');
+
+				// Horizontal rules
+				html = html.replace(/-{3,}|\*{3,}|_{3,}/g, '<hr />');
+
+				// Blockquotes
+				html = html.replace(/((^\s*(<p>)?&gt; (.*$))+)/gm, '<blockquote>$4</blockquote>');
+
+				// Consolidate blockquotes
+				html = html.replace(/<\/blockquote>\s*($^)?\s*<blockquote>/gm, '');
 
 				return html;
 			},
