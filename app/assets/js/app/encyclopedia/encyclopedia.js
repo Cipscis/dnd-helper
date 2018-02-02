@@ -237,11 +237,9 @@ define(
 
 				// Bold
 				html = html.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
-				html = html.replace(/__(.*?)__/g, '<b>$1</b>');
 
 				// Italics
 				html = html.replace(/\*(.*?)\*/g, '<i>$1</i>');
-				html = html.replace(/_(.*?)_/g, '<i>$1</i>');
 
 				// Strikethrough
 				html = html.replace(/~~(.*?)~~/g, '<del>$1</del>');
