@@ -254,10 +254,10 @@ define(
 				html = html.replace(/^\s*(<p>)?###### (.*?)(<\/p>)?$/gm, '<h6>$2</h6>');
 
 				// Bold
-				html = html.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+				html = html.replace(/(^|[^\\])\*\*(.*?[^\\])\*\*/g, '$1<b>$2</b>');
 
 				// Italics
-				html = html.replace(/\*(.*?)\*/g, '<i>$1</i>');
+				html = html.replace(/(^|[^\\])\*(.*?[^\\])\*/g, '$1<i>$2</i>');
 
 				// Strikethrough
 				html = html.replace(/~~(.*?)~~/g, '<del>$1</del>');
@@ -270,6 +270,9 @@ define(
 
 				// Consolidate blockquotes
 				html = html.replace(/<\/blockquote>\s*($^)?\s*<blockquote>/gm, '');
+
+				// Unescape characters
+				html = html.replace(/\\\*/g, '*');
 
 				return html;
 			},
