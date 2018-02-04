@@ -11,13 +11,11 @@
 		<script type="text/javascript">
 			require([
 				'encyclopedia/encyclopedia',
-				'image/control',
-				'expand-collapse'
+				'image/control'
 			],
-			function (Encyclopedia, ImageControl, ExpandCollapse) {
+			function (Encyclopedia, ImageControl) {
 				Encyclopedia.init();
 				ImageControl.init();
-				ExpandCollapse.init();
 			});
 		</script>
 	</head>
@@ -26,7 +24,6 @@
 		<div class="body">
 
 			<div class="grid">
-				<!-- <div class="grid__item width-1-2"> -->
 				<div class="grid__item width-1">
 					<h2><a href="/campaign/encyclopedia.html">Encyclopedia</a></h2>
 
