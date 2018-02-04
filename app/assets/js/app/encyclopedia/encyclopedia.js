@@ -23,13 +23,15 @@ define(
 
 	{
 		var index,
-			currentItem;
+			currentItem,
+			unsavedChanges = false;
 
 		var selectors = {
 			contentBody: '.js-encyclopedia-content',
 			contentTitle: '.js-encyclopedia-title',
 			contentIcon: '.js-encyclopedia-icon',
-			contentLoad: '.js-encyclopedia-load',
+			contentAka: '.js-encyclopedia-aka',
+
 			contentEdit: '.js-encyclopedia-edit',
 			contentSave: '.js-encyclopedia-save',
 
@@ -57,9 +59,13 @@ define(
 				$(document)
 					.on('click', selectors.ajaxLink, Encyclopedia._ajaxLinkClick)
 
-					.on('click', selectors.contentLoad, Encyclopedia._contentLoad)
 					.on('click', selectors.contentEdit, Encyclopedia._contentEdit)
 					.on('click', selectors.contentSave, Encyclopedia._contentSave)
+
+					.on('change', selectors.contentBody, Encyclopedia._markUnsavedChanges)
+					.on('change', selectors.contentTitle, Encyclopedia._markUnsavedChanges)
+					.on('change', selectors.contentIcon, Encyclopedia._markUnsavedChanges)
+					.on('change', selectors.contentAka, Encyclopedia._markUnsavedChanges)
 
 					.on('focus keyup', selectors.autocompleteInput, Encyclopedia._autocompleteFilter)
 					.on('blur', selectors.autocompleteInput, Encyclopedia._resetStoredAutocompleteValue)
@@ -77,6 +83,9 @@ define(
 				keybinding.bindKey('UP', Encyclopedia._autocompleteSelectionUp, true, true);
 
 				keybinding.bindKey('ESC', Encyclopedia._hideAutocompleteResults, true);
+
+				keybinding.bindKey('S', Encyclopedia._contentSave, true, false, true);
+				keybinding.bindKey('L', Encyclopedia._contentEdit, true, false, true);
 			},
 
 			//////////
@@ -145,7 +154,7 @@ define(
 
 				$container.html(html);
 
-				document.title = currentItem.title;
+				document.title = 'D&D Encyclopedia | ' + currentItem.title;
 				if (newUrl === document.location.href) {
 					history.replaceState({html: html, currentItem: currentItem}, document.title, newUrl);
 				} else {
@@ -185,7 +194,15 @@ define(
 			},
 
 			_convertImages: function (html) {
-				html = html.replace(/\[\[img\|(.*?)\]\]/g, '<img src="/assets/images/$1" class="interactive js-image" />');
+				var template = '<div class="grid-f">' +
+					'<div class="grid__item flex-1-3 js-image-control">' +
+						'<div class="image-control-wrap">' +
+							'<div data-src="/assets/images/$1" style="background-image: url(/assets/images/$1" class="image-control js-image"></div>' +
+						'</div>' +
+					'</div>' +
+				'</div>';
+
+				html = html.replace(/\[\[img\|(.*?)\]\]/g, template);
 
 				return html;
 			},
@@ -268,50 +285,34 @@ define(
 				$content.html(html);
 			},
 
-			_contentLoad: function () {
-				// Pick a JSON file manually from the file system
-				// and load it for editing
-
-				fileIO.loadFile(Encyclopedia._contentLoadCallback);
-			},
-
-			_contentLoadCallback: function (json) {
-				// Current only supports files with no sections
-				// Does not support images
-
-				var $title = $(selectors.contentTitle),
-					$content = $(selectors.contentBody),
-					data;
-
-				try {
-					data = JSON.parse(json);
-
-					$title.text(data.title);
-					$content.html(data.content.join('\n'));
-				} catch (e) {
-					console.error(e);
-				}
-			},
-
 			_contentEdit: function () {
 				// Load the currently viewed entry for editing
 
 				var indexItem,
 
 					$title = $(selectors.contentTitle),
+					$aka = $(selectors.contentAka),
 					$icon = $(selectors.contentIcon),
-					$content = $(selectors.contentBody);
+					$content = $(selectors.contentBody),
+
+					aka;
 
 				if (!currentItem) {
 					return;
 				}
 
+				if (unsavedChanges) {
+					if (!confirm('Discard unsaved changes?')) {
+						return;
+					}
+				}
+
 				indexItem = Encyclopedia._getIndexItem(currentItem.title);
 
-				// Currently only supports files with no sections
-				// Does not support images
+				aka = indexItem.aka ? indexItem.aka.join(', ') : '';
 
 				$title.text(currentItem.title);
+				$aka.text(aka);
 				$icon.prop('checked', false).filter('[value="' + indexItem.type + '"]').prop('checked', true);
 				$content.html(currentItem.content.join('\n'));
 			},
@@ -325,6 +326,9 @@ define(
 
 					$content = $(selectors.contentBody),
 					content,
+
+					$aka = $(selectors.contentAka),
+					aka,
 
 					i,
 
@@ -343,13 +347,16 @@ define(
 					}
 				}
 
+				aka = $aka.text().split(', ');
+
 				object = {
 					item: {
 						title: title,
 						content: content
 					},
 					metadata: {
-						icon: $(selectors.contentIcon).filter(':checked').val()
+						icon: $(selectors.contentIcon).filter(':checked').val(),
+						aka: aka
 					}
 				};
 
@@ -363,7 +370,6 @@ define(
 
 					object.metadata.path = indexItem.path;
 					object.metadata.tags = indexItem.tags;
-					object.metadata.aka = indexItem.aka;
 				}
 
 				// fileIO.saveJson(object, title.toLowerCase().replace(/\s+/g, '-'));
@@ -372,8 +378,17 @@ define(
 					method: 'POST',
 					data: JSON.stringify(object),
 					contentType: 'application/json',
-					success: Encyclopedia._initAutocomplete
+					success: Encyclopedia._onContentSaveComplete
 				});
+			},
+
+			_onContentSaveComplete: function () {
+				unsavedChanges = false;
+				Encyclopedia._initAutocomplete();
+			},
+
+			_markUnsavedChanges: function (e) {
+				unsavedChanges = true;
 			},
 
 			//////////////////
