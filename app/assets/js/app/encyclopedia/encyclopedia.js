@@ -130,25 +130,9 @@ define(
 					$input = $(selectors.autocompleteInput),
 
 					html,
-					newUrl,
-
-					section, i,
-					subsection, j;
+					newUrl
 
 				currentItem = data;
-
-				// Convert data
-				data = Encyclopedia._convertSectionData(data);
-
-				if (data.sections) {
-					for (i = 0; i < data.sections.length; i++) {
-						data.sections[i] = Encyclopedia._convertSectionData(data.sections[i]);
-
-						for (j = 0; j < data.sections[i].subsections.length; j++) {
-							data.sections[i].subsections[j] = Encyclopedia._convertSectionData(data.sections[i].subsections[j]);
-						}
-					}
-				}
 
 				html = templayed(ajaxTemplate)(data);
 				html = Encyclopedia._convertHtml(html);
@@ -163,29 +147,6 @@ define(
 				} else {
 					history.pushState({html: html, currentItem: currentItem}, currentItem.title, newUrl);
 				}
-			},
-
-			_convertSectionData: function (section ) {
-				if (section.title) {
-					section.hasTitle = [{
-						title: section.title
-					}];
-				} else {
-					section.hasTitle = false;
-				}
-
-				if (section.images) {
-					section.hasImages = [{
-						images: section.images
-					}];
-				} else {
-					section.hasImages = false;
-				}
-
-				section.content = section.content || [];
-				section.subsections = section.subsections || [];
-
-				return section;
 			},
 
 			_convertHtml: function (html) {
@@ -328,9 +289,6 @@ define(
 			},
 
 			_contentSave: function () {
-				// Currently only supports files with no sections
-				// Does not support images
-
 				var $title = $(selectors.contentTitle),
 					title,
 
