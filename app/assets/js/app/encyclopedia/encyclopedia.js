@@ -45,7 +45,8 @@ define(
 
 			// Data
 			autocompleteDataTags: 'autocomplete-tags',
-			dataValue: 'value'
+			dataValue: 'value',
+			jsonSrc: 'src'
 		};
 
 		var Encyclopedia = {
@@ -96,7 +97,7 @@ define(
 				e.preventDefault();
 
 				var $link = $(e.target).closest(selectors.ajaxLink),
-					url = $link.attr('href');
+					url = $link.data(selectors.jsonSrc);
 
 				Encyclopedia._ajaxLoad(url);
 			},
@@ -228,7 +229,7 @@ define(
 
 					regex = new RegExp('\\[\\[(' + names + ')\\]\\]', 'gi');
 
-					link = '<a href="' + item.path + '" class="' + selectors.ajaxLink.substr(1) + '">$1</a>';
+					link = '<a href="#' + item.name + '" data-' + selectors.jsonSrc + '="' + item.path + '" class="' + selectors.ajaxLink.substr(1) + '">$1</a>';
 
 					for (j = 0; j < names.length; j++) {
 						html = html.replace(regex, link);

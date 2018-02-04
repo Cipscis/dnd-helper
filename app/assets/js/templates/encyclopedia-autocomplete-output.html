@@ -1,7 +1,7 @@
 <ul class="encyclopedia-autocomplete__list">
 	{{#items}}
 		<li class="encyclopedia-autocomplete__item">
-			<a href="{{item.path}}" class="encyclopedia-autocomplete__link js-encyclopedia-ajax-link js-encyclopedia-autocomplete-item">
+			<a href="#{{item.name}}" data-src="{{item.path}}" class="encyclopedia-autocomplete__link js-encyclopedia-ajax-link js-encyclopedia-autocomplete-item">
 				<span class="iconf-{{item.type}}"></span>
 				{{item.name}}
 			</a>
