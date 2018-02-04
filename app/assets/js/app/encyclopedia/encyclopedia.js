@@ -31,6 +31,7 @@ define(
 			contentTitle: '.js-encyclopedia-title',
 			contentIcon: '.js-encyclopedia-icon',
 			contentAka: '.js-encyclopedia-aka',
+			contentTags: '.js-encyclopedia-tags',
 
 			contentEdit: '.js-encyclopedia-edit',
 			contentSave: '.js-encyclopedia-save',
@@ -67,6 +68,7 @@ define(
 					.on('change', selectors.contentTitle, Encyclopedia._markUnsavedChanges)
 					.on('change', selectors.contentIcon, Encyclopedia._markUnsavedChanges)
 					.on('change', selectors.contentAka, Encyclopedia._markUnsavedChanges)
+					.on('change', selectors.contentTags, Encyclopedia._markUnsavedChanges)
 
 					.on('focus keyup', selectors.autocompleteInput, Encyclopedia._autocompleteFilter)
 					.on('blur', selectors.autocompleteInput, Encyclopedia._resetStoredAutocompleteValue)
@@ -296,10 +298,12 @@ define(
 
 					$title = $(selectors.contentTitle),
 					$aka = $(selectors.contentAka),
+					$tags = $(selectors.contentTags),
 					$icon = $(selectors.contentIcon),
 					$content = $(selectors.contentBody),
 
-					aka;
+					aka,
+					tags;
 
 				if (!currentItem) {
 					return;
@@ -314,9 +318,11 @@ define(
 				indexItem = Encyclopedia._getIndexItem(currentItem.title);
 
 				aka = indexItem.aka ? indexItem.aka.join(', ') : '';
+				tags = indexItem.tags ? indexItem.tags.join(', ') : '';
 
 				$title.text(currentItem.title);
 				$aka.text(aka);
+				$tags.text(tags);
 				$icon.prop('checked', false).filter('[value="' + indexItem.type + '"]').prop('checked', true);
 				$content.html(currentItem.content.join('\n'));
 			},
@@ -333,6 +339,9 @@ define(
 
 					$aka = $(selectors.contentAka),
 					aka,
+
+					$tags = $(selectors.contentTags),
+					tags,
 
 					i,
 
@@ -351,7 +360,8 @@ define(
 					}
 				}
 
-				aka = $aka.text().split(', ');
+				aka = $aka.text().replace(/\s*,\s*/g, ',').split(',');
+				tags = $tags.text().replace(/\s*,\s*/g, ',').split(',');
 
 				object = {
 					item: {
@@ -360,7 +370,8 @@ define(
 					},
 					metadata: {
 						icon: $(selectors.contentIcon).filter(':checked').val(),
-						aka: aka
+						aka: aka,
+						tags: tags
 					}
 				};
 
@@ -373,7 +384,6 @@ define(
 					indexItem = Encyclopedia._getIndexItem(currentItem.title);
 
 					object.metadata.path = indexItem.path;
-					object.metadata.tags = indexItem.tags;
 				}
 
 				// fileIO.saveJson(object, title.toLowerCase().replace(/\s+/g, '-'));
