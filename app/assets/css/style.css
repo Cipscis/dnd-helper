@@ -385,16 +385,11 @@ input[type="color"] {
 .grid {
   padding: 0;
   list-style: none;
-  margin-left: -20px; }
+  margin-left: -20px;
+  margin-top: -20px; }
   .grid > .grid__item {
     float: left;
-    padding-left: 20px; }
-
-.grid-v {
-  padding: 0;
-  list-style: none;
-  margin-top: -20px; }
-  .grid-v > .grid__item {
+    padding-left: 20px;
     padding-top: 20px; }
 
 .grid-f {
@@ -411,16 +406,11 @@ input[type="color"] {
 .grid--flush {
   padding: 0;
   list-style: none;
-  margin-left: 0; }
+  margin-left: 0;
+  margin-top: 0; }
   .grid--flush > .grid__item {
     float: left;
-    padding-left: 0; }
-
-.grid-v--flush {
-  padding: 0;
-  list-style: none;
-  margin-top: 0; }
-  .grid-v--flush > .grid__item {
+    padding-left: 0;
     padding-top: 0; }
 
 .grid-f--flush {
@@ -437,16 +427,11 @@ input[type="color"] {
 .grid--tight {
   padding: 0;
   list-style: none;
-  margin-left: -10px; }
+  margin-left: -10px;
+  margin-top: -10px; }
   .grid--tight > .grid__item {
     float: left;
-    padding-left: 10px; }
-
-.grid-v--tight {
-  padding: 0;
-  list-style: none;
-  margin-top: -10px; }
-  .grid-v--tight > .grid__item {
+    padding-left: 10px;
     padding-top: 10px; }
 
 .grid-f--tight {
@@ -463,16 +448,11 @@ input[type="color"] {
 .grid--loose {
   padding: 0;
   list-style: none;
-  margin-left: -40px; }
+  margin-left: -40px;
+  margin-top: -40px; }
   .grid--loose > .grid__item {
     float: left;
-    padding-left: 40px; }
-
-.grid-v--loose {
-  padding: 0;
-  list-style: none;
-  margin-top: -40px; }
-  .grid-v--loose > .grid__item {
+    padding-left: 40px;
     padding-top: 40px; }
 
 .grid-f--loose {

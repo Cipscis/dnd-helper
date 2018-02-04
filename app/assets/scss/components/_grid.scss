@@ -12,18 +12,10 @@ $grid-config: (
 	list-style: none;
 
 	margin-left: -$gutter;
+	margin-top: -$gutter;
 	> .grid__item {
 		float: left;
 		padding-left: $gutter;
-	}
-}
-
-@mixin grid-v($gutter) {
-	padding: 0;
-	list-style: none;
-
-	margin-top: -$gutter;
-	> .grid__item {
 		padding-top: $gutter;
 	}
 }
@@ -47,18 +39,12 @@ $grid-config: (
 		.grid {
 			@include grid($gutter);
 		}
-		.grid-v {
-			@include grid-v($gutter);
-		}
 		.grid-f {
 			@include grid-f($gutter);
 		}
 	} @else {
 		.grid--#{$variant} {
 			@include grid($gutter);
-		}
-		.grid-v--#{$variant} {
-			@include grid-v($gutter);
 		}
 		.grid-f--#{$variant} {
 			@include grid-f($gutter);
