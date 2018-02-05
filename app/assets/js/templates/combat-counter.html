@@ -1,0 +1,12 @@
+<div class="combat__counter js-combat__counter">
+	<span class="combat__counter-remove js-combat__counter-remove"></span>
+
+	<div class="combat__counter-left">
+		<span class="combat__counter-name" data-binder-value="name">{{name}}</span>
+		<input type="number" min="0" value="{{duration}}" data-binder-value="duration" class="editable combat__counter-duration js-combat__counter-duration" />
+	</div>
+
+	<div class="combat__counter-right">
+		<input class="combat__counter-description editable width-1" type="text" data-binder-value="description" value="{{description}}" />
+	</div>
+</div>

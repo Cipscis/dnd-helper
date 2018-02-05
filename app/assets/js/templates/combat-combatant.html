@@ -1,0 +1,69 @@
+<li class="grid__item width-1 js-combat__item js-drag-sort-wrap" data-binder-attribute-initiative="{{initiative}}" data-binder-attribute-current="false">
+	<div class="combat__item pod pod--loose js-drag-sort-item" draggable="true" data-binder-attribute-team="{{team}}" data-binder-attribute-cursor="false">
+		<div class="combat__controls">
+			<span class="combat__current js-combat__select"></span>
+			<span class="combat__remove js-combat__remove"></span>
+			<span class="combat__up js-combat__up"></span>
+			<span class="combat__down js-combat__down"></span>
+		</div>
+
+		<div class="expand-collapse js-expand-collapse">
+			<div class="grid">
+				<div class="grid__item width-1">
+					<div class="grid">
+						<div class="grid__item width-1-4">
+							<h2 class="combat__name">
+								<span data-binder-value="name">{{name}}</span> (<span data-binder-value="initiative">{{initiative}}</span>)
+							</h2>
+						</div>
+
+						{{#hasHp}}
+							<div class="grid__item width-1-4">
+								<div class="combat__health">
+									<label>Health <span class="editable" contenteditable="true" data-binder-value="hp">{{hp}}</span></label> / {{hp}}
+								</div>
+							</div>
+						{{/hasHp}}
+
+						<div class="grid__item width-1-4">
+							<button class="js-combat__select-on-map">Select on map</button>
+						</div>
+
+						<div class="grid__item width-1-4">
+							<button class="js-expand-collapse__trigger">Expand/Collapse</button>
+						</div>
+					</div>
+
+					<div class="expand-collapse__body js-expand-collapse__body">
+						<div class="grid--tight">
+							<div class="grid__item width-1">
+								<textarea class="combat__notes editable width-1" contenteditable="true" data-binder-value="description" placeholder="Notes" rows="1"></textarea>
+							</div>
+
+							<div class="grid__item width-1">
+								<form class="combat__counter-form js-combat__counter-form">
+									<ul class="grid--tight">
+										<li class="grid__item width-1-4">
+											<input type="text" placeholder="Counter" name="name" required class="editable js-combat__counter-name" />
+										</li>
+										<li class="grid__item width-1-4">
+											<input type="number" placeholder="Duration" name="duration" required class="editable js-combat__counter-length" />
+										</li>
+										<li class="grid__item width-1-4">
+											<input type="text" placeholder="Description" name="description" class="editable js-combat__counter-description" />
+										</li>
+										<li class="grid__item width-1-4">
+											<button type="submit">Add Counter</button>
+										</li>
+									</ul>
+								</form>
+							</div>
+						</div>
+
+						<div class="combat__counter-list js-combat__counter-list"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</li>
