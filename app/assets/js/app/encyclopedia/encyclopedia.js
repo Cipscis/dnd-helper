@@ -64,11 +64,11 @@ define(
 					.on('click', selectors.contentEdit, Encyclopedia._contentEdit)
 					.on('click', selectors.contentSave, Encyclopedia._contentSave)
 
-					.on('change', selectors.contentBody, Encyclopedia._markUnsavedChanges)
-					.on('change', selectors.contentTitle, Encyclopedia._markUnsavedChanges)
-					.on('change', selectors.contentIcon, Encyclopedia._markUnsavedChanges)
-					.on('change', selectors.contentAka, Encyclopedia._markUnsavedChanges)
-					.on('change', selectors.contentTags, Encyclopedia._markUnsavedChanges)
+					.on(
+						'change input',
+						[selectors.contentBody, selectors.contentTitle, selectors.contentIcon, selectors.contentAka, selectors.contentTags].join(', '),
+						Encyclopedia._markUnsavedChanges
+					)
 
 					.on('focus keyup', selectors.autocompleteInput, Encyclopedia._autocompleteFilter)
 					.on('blur', selectors.autocompleteInput, Encyclopedia._resetStoredAutocompleteValue)

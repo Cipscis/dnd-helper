@@ -19,28 +19,28 @@ $cols: 5;
 		@for $i from 2 through $cols {
 			@for $j from 1 to $i {
 				.width-#{$j}-#{$i} {
-					width: percentage($j / $i);
+					width: percentage($j / $i) !important;
 				}
 				.flex-#{$j}-#{$i} {
-					flex: 0 1 percentage($j / $i);
+					flex: 0 1 percentage($j / $i) !important;
 				}
 			}
 		}
 	} @else {
 		@include bp($bp) {
 			.width-#{$bp}-1 {
-				width: 100%;
+				width: 100% !important;
 			}
 			.flex-#{$bp}-1 {
-				flex: 0 1 100%;
+				flex: 0 1 100% !important;
 			}
 			@for $i from 2 through $cols {
 				@for $j from 1 to $i {
 					.width-#{$bp}-#{$j}-#{$i} {
-						width: percentage($j / $i);
+						width: percentage($j / $i) !important;
 					}
 					.flex-#{$bp}-#{$j}-#{$i} {
-						flex: 0 1 percentage($j / $i);
+						flex: 0 1 percentage($j / $i) !important;
 					}
 				}
 			}
