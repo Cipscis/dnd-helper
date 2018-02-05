@@ -9,6 +9,8 @@ define(
 		'util/form-util',
 		'templayed',
 
+		'text!templates/combat-combatant.html',
+		'text!templates/combat-counter.html',
 		'text!templates/combat-map-select.html'
 	],
 
@@ -22,6 +24,8 @@ define(
 		FormUtil,
 		templayed,
 
+		combatantTemplate,
+		counterTemplate,
 		mapSelectTemplate
 	) {
 
@@ -115,7 +119,6 @@ define(
 			_addCombatant: function (combatantData) {
 				var combatant,
 
-					$template = $('.js-combat__template'),
 					$list = $('.js-combat__list'),
 					$entry, $combatants,
 
@@ -123,7 +126,7 @@ define(
 
 				combatant = new Combatant(combatantData);
 
-				$combatant = $(templayed($template.html())(combatant));
+				$combatant = $(templayed(combatantTemplate)(combatant));
 				$combatants = $list.find('.js-combat__item');
 
 				// Assuming the list is sorted - which it
@@ -184,8 +187,7 @@ define(
 			},
 
 			_addCounter: function (counterData, combatant) {
-				var $template = $('.js-combat__counter-template'),
-					$combatant = combatant.$el,
+				var $combatant = combatant.$el,
 					$counterList = $combatant.find('.js-combat__counter-list'),
 					$counter,
 
@@ -196,7 +198,7 @@ define(
 					counterData.hasDescription = true;
 				}
 
-				$counter = $(templayed($template.html())(counterData));
+				$counter = $(templayed(counterTemplate)(counterData));
 
 				// If there's more than one $counterList, make sure all
 				// new $counter elements are added to the bound data

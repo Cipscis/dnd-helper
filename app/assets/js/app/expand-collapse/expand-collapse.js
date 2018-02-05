@@ -5,21 +5,29 @@ define(
 
 	function ($) {
 
+		var selectors = {
+			wrapper: '.js-expand-collapse',
+			trigger: '.js-expand-collapse__trigger',
+			childrenTrigger: '.js-expand-collapse__children-trigger',
+			body: '.js-expand-collapse__body'
+		};
+
 		var ExpandCollapse = {
 			init: function () {
 				ExpandCollapse._initEvents();
 			},
 
 			_initEvents: function () {
-				$(document).on('click', '.js-expand-collapse__trigger', ExpandCollapse._processClick);
-				$(document).on('click', '.js-expand-collapse__children-trigger', ExpandCollapse._toggleChildren);
+				$(document)
+					.on('click', selectors.trigger, ExpandCollapse._processClick)
+					.on('click', selectors.childrenTrigger, ExpandCollapse._toggleChildren);
 			},
 
 			_processClick: function (e) {
 				e.preventDefault();
 
-				var $trigger = $(e.target).closest('.js-expand-collapse__trigger'),
-					$expandCollapse = $trigger.closest('.js-expand-collapse');
+				var $trigger = $(e.target).closest(selectors.trigger),
+					$expandCollapse = $trigger.closest(selectors.wrapper);
 
 				ExpandCollapse._toggle($expandCollapse);
 			},
@@ -27,9 +35,9 @@ define(
 			_toggleChildren: function (e) {
 				e.preventDefault();
 
-				var $trigger = $(e.target).closest('.js-expand-collapse__children-trigger'),
-					$parent = $trigger.closest('.js-expand-collapse, body'),
-					$children = $parent.find('.js-expand-collapse');
+				var $trigger = $(e.target).closest(selectors.childrenTrigger),
+					$parent = $trigger.closest(selectors.wrapper + ', body'),
+					$children = $parent.find(selectors.wrapper);
 
 				if ($children.filter('.is-expanded').length) {
 					$children.each(function () {
@@ -51,7 +59,7 @@ define(
 			},
 
 			_toggle: function ($expandCollapse) {
-				var $body = $expandCollapse.children('.js-expand-collapse__body');
+				var $body = $expandCollapse.children(selectors.body);
 
 				if ($expandCollapse.hasClass('is-expanded')) {
 					ExpandCollapse._close($expandCollapse);

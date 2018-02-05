@@ -25,9 +25,7 @@
 .expand-collapse__body {
 	display: none;
 
-	padding: 0 40px;
-
-	.expand-collapse.is-expanded > & {
+	.expand-collapse.is-expanded & {
 		display: block;
 	}
 }

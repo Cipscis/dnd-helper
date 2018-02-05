@@ -523,9 +523,8 @@ button, .button {
     transform: rotate(180deg); }
 
 .expand-collapse__body {
-  display: none;
-  padding: 0 40px; }
-  .expand-collapse.is-expanded > .expand-collapse__body {
+  display: none; }
+  .expand-collapse.is-expanded .expand-collapse__body {
     display: block; }
 
 .tooltip {
@@ -1169,7 +1168,7 @@ dt, dd {
 /********************| INITIATIVE DETAILS |
 \********************/
 .combat__name {
-  margin-top: 0; }
+  margin: 0; }
 
 .combat__health label, .combat__health input {
   display: inline; }
@@ -1179,13 +1178,13 @@ dt, dd {
 
 .combat__notes {
   display: block;
-  min-height: 90px; }
+  resize: vertical; }
 
 /********************| INITIATIVE COUNTER |
 \********************/
 .combat__counter {
   position: relative;
-  margin-top: 20px;
+  margin-top: 10px;
   padding-left: 30px; }
 
 .combat__counter-remove {
@@ -1214,21 +1213,21 @@ dt, dd {
     top: 9px;
     right: 0; }
 
-.combat__counter-duration {
-  float: left;
-  width: 65px;
-  margin-right: 10px;
-  font-size: 18px; }
-
-.combat__counter-details {
-  overflow: hidden; }
+.combat__counter-left {
+  float: left; }
 
 .combat__counter-name {
   font-weight: bold; }
 
+.combat__counter-duration {
+  width: 65px;
+  margin: 0 10px; }
+
+.combat__counter-right {
+  overflow: hidden; }
+
 .combat__counter-description {
-  display: block;
-  margin-top: 5px; }
+  display: block; }
 
 /*******| FIELD |
 \*******/
