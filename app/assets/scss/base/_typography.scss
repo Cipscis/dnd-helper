@@ -17,3 +17,21 @@ hr {
 	border: none;
 	border-top: 1px solid $white;
 }
+
+.body-text {
+	p, ul, ol {
+		margin: 16px 0;
+	}
+	li {
+		margin: 5px 0;
+	}
+
+	h1, h2, h3, h4, h5, h6, p, ul, ol, li {
+		&:first-child {
+			margin-top: 0;
+		}
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+}

@@ -51,7 +51,7 @@
       "attrs": [],
       "properties": {
         "ligatures": "quill, feather",
-        "name": "log",
+        "name": "lore",
         "id": 0,
         "order": 3,
         "prevSize": 32,
@@ -120,7 +120,7 @@
       "attrs": [],
       "properties": {
         "ligatures": "file-text2, file4",
-        "name": "lore",
+        "name": "log",
         "id": 2,
         "order": 272,
         "prevSize": 32,

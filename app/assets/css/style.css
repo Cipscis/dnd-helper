@@ -307,6 +307,18 @@ hr {
   border: none;
   border-top: 1px solid #fff; }
 
+.body-text p, .body-text ul, .body-text ol {
+  margin: 16px 0; }
+
+.body-text li {
+  margin: 5px 0; }
+
+.body-text h1:first-child, .body-text h2:first-child, .body-text h3:first-child, .body-text h4:first-child, .body-text h5:first-child, .body-text h6:first-child, .body-text p:first-child, .body-text ul:first-child, .body-text ol:first-child, .body-text li:first-child {
+  margin-top: 0; }
+
+.body-text h1:last-child, .body-text h2:last-child, .body-text h3:last-child, .body-text h4:last-child, .body-text h5:last-child, .body-text h6:last-child, .body-text p:last-child, .body-text ul:last-child, .body-text ol:last-child, .body-text li:last-child {
+  margin-bottom: 0; }
+
 @font-face {
   font-family: "font-icons";
   src: url("/assets/fonts/font-icons/fonts/font-icons.eot?1y5x0e");
@@ -332,13 +344,13 @@ hr {
 .iconf-creature:before {
   content: "\e9ef"; }
 
-.iconf-log:before {
+.iconf-lore:before {
   content: "\e907"; }
 
 .iconf-group:before {
   content: "\e972"; }
 
-.iconf-lore:before {
+.iconf-log:before {
   content: "\e926"; }
 
 .iconf-item:before {

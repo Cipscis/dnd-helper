@@ -81,6 +81,8 @@ define(
 			_initKeys: function () {
 				keybinding.bindKey('/', Encyclopedia._focusOnAutocomplete);
 				keybinding.bindKey('?', Encyclopedia._focusOnAutocomplete);
+				keybinding.bindKey('/', Encyclopedia._focusOnAutocomplete, true, true, true);
+				keybinding.bindKey('?', Encyclopedia._focusOnAutocomplete, true, true, true);
 
 				keybinding.bindKey('DOWN', Encyclopedia._autocompleteSelectionDown, true, true);
 				keybinding.bindKey('UP', Encyclopedia._autocompleteSelectionUp, true, true);
@@ -226,7 +228,7 @@ define(
 				html = html.replace(/~~(.*?)~~/g, '<del>$1</del>');
 
 				// Horizontal rules
-				html = html.replace(/-{3,}|\*{3,}|_{3,}/g, '<hr />');
+				html = html.replace(/^\s*-{3,}|\*{3,}|_{3,}\s*$/g, '<hr />');
 
 				// Blockquotes
 				html = html.replace(/((^\s*(<p>)?&gt; (.*$))+)/gm, '<blockquote>$4</blockquote>');
@@ -234,8 +236,22 @@ define(
 				// Consolidate blockquotes
 				html = html.replace(/<\/blockquote>\s*($^)?\s*<blockquote>/gm, '');
 
+				// Unordered lists
+				html = html.replace(/^\s*(<p>)?- (.*$)/gm, '$1<li>$2</li>');
+
+				// Consolidate unordered lists
+				html = html.replace(/<p>\s*<li>/gm, '<ul><li>');
+				html = html.replace(/<\/p>\s*<\/li>/gm, '</li></ul>');
+
+				// Ordered lists
+				html = html.replace(/^\s*(<p>)?\d+. (.*$)/gm, '$1<li>$2</li>');
+
+				// Consolidate unordered lists
+				html = html.replace(/<p>\s*<li>/gm, '<ol><li>');
+				html = html.replace(/<\/p>\s*<\/li>/gm, '</li></ol>');
+
 				// Unescape characters
-				html = html.replace(/\\\*/g, '*');
+				html = html.replace(/\\([*])/g, '$1');
 
 				return html;
 			},
