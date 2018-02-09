@@ -244,7 +244,7 @@ define(
 				html = html.replace(/<\/p>\s*<\/li>/gm, '</li></ul>');
 
 				// Ordered lists
-				html = html.replace(/^\s*(<p>)?\d+. (.*$)/gm, '$1<li>$2</li>');
+				html = html.replace(/^\s*(<p>)?\d+\. (.*$)/gm, '$1<li>$2</li>');
 
 				// Consolidate unordered lists
 				html = html.replace(/<p>\s*<li>/gm, '<ol><li>');
