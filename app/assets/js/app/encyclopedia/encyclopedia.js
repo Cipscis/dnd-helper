@@ -228,7 +228,7 @@ define(
 				html = html.replace(/~~(.*?)~~/g, '<del>$1</del>');
 
 				// Horizontal rules
-				html = html.replace(/^\s*-{3,}|\*{3,}|_{3,}\s*$/g, '<hr />');
+				html = html.replace(/^\s*(<p>)?\s*[-*_]{3,}\s*(<\/p>)?\s*$/gm, '<hr />');
 
 				// Blockquotes
 				html = html.replace(/((^\s*(<p>)?&gt; (.*$))+)/gm, '<blockquote>$4</blockquote>');
@@ -244,7 +244,7 @@ define(
 				html = html.replace(/<\/p>\s*<\/li>/gm, '</li></ul>');
 
 				// Ordered lists
-				html = html.replace(/^\s*(<p>)?\d+. (.*$)/gm, '$1<li>$2</li>');
+				html = html.replace(/^\s*(<p>)?\d+\. (.*$)/gm, '$1<li>$2</li>');
 
 				// Consolidate unordered lists
 				html = html.replace(/<p>\s*<li>/gm, '<ol><li>');
