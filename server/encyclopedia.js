@@ -12,6 +12,7 @@ var fsPathPrefix = 'app/';
 var fsPath = fsPathPrefix + webPath;
 
 var Encyclopedia = {
+	// Add
 	add: function (req, res) {
 
 		var item = req.body.item,
@@ -84,9 +85,129 @@ var Encyclopedia = {
 				}
 			);
 		};
+	},
+
+	// Collect Missing Links
+	collectMissingLinks: function (req, res) {
+		fs.readFile(fsPath + 'index.json', 'utf-8', Encyclopedia._onIndexReadCollectMissingLinks(res));
+	},
+
+	_onIndexReadCollectMissingLinks: function (res) {
+		return function (err, index) {
+			if (err) {
+				return console.error(err);
+			}
+
+			index = JSON.parse(index);
+
+			var missingLinks = [];
+			var filesToProcess = index.items.length;
+
+			var collectLinksFromIndexEntry = function (err, indexEntry) {
+				if (err) {
+					return console.error(err);
+				}
+
+				indexEntry = JSON.parse(indexEntry);
+
+				var html = indexEntry.content.join('');
+
+				var links = html.match(/\[\[(.*?)\]\]/gm);
+				if (links !== null) {
+					missingLinks = missingLinks.concat(links)
+				}
+
+				filesToProcess--;
+
+				if (filesToProcess === 0) {
+					missingLinks = Encyclopedia._cleanLinksList(missingLinks);
+					missingLinks = Encyclopedia._removeActiveLinks(missingLinks, index);
+					res.send(missingLinks);
+				}
+			};
+
+			var i, item;
+			for (i = 0; i < index.items.length; i++) {
+				item = index.items[i];
+
+				fs.readFile(fsPathPrefix + item.path, 'utf-8', collectLinksFromIndexEntry);
+			}
+		};
+	},
+
+	_cleanLinksList: function (links) {
+		var cleanLinks = [];
+
+		var i,
+			link;
+
+		for (i = 0; i < links.length; i++) {
+			link = links[i];
+
+			// Remove brackets
+			link = link.replace(/^\[\[(.*?)\]\]$/, '$1');
+
+			// Convert to lower case
+			link = link.toLowerCase();
+
+			links[i] = link;
+		}
+
+		for (i = 0; i < links.length; i++) {
+			link = links[i];
+
+			// Exclude images
+			if ((/^img\|/).test(link)) {
+				continue;
+			}
+
+			// Remove duplicates
+			if (links.indexOf(link) === i) {
+				cleanLinks.push(link);
+			}
+		}
+
+		cleanLinks = cleanLinks.sort();
+
+		return cleanLinks;
+	},
+
+	_removeActiveLinks: function (links, index) {
+		var missingLinks = [];
+
+		var i,
+			item,
+			linkNames = [];
+
+		// Collect the names of all active links
+		for (i = 0; i < index.items.length; i++) {
+			item = index.items[i];
+
+			linkNames.push(item.name);
+			if (item.aka) {
+				linkNames = linkNames.concat(item.aka);
+			}
+		}
+
+		for (i = 0; i < linkNames.length; i++) {
+			// Ensure all linkNames are in lower case
+			linkNames[i] = linkNames[i].toLowerCase();
+		}
+
+		// Compare collected links with active link names
+		for (i = 0; i < links.length; i++) {
+			item = links[i];
+
+			if (linkNames.indexOf(item) === -1) {
+				missingLinks.push(item);
+			}
+		}
+
+		return missingLinks;
 	}
 };
 
 module.exports = {
-	add: Encyclopedia.add
+	add: Encyclopedia.add,
+	collectMissingLinks: Encyclopedia.collectMissingLinks
 };
