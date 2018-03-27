@@ -44,6 +44,8 @@ define(
 			autocompleteOutput: '.js-encyclopedia-autocomplete-output',
 			autocompleteItem: '.js-encyclopedia-autocomplete-item',
 
+			consolidateGrid: '.js-grid-consolidate',
+
 			// Data
 			autocompleteDataTags: 'autocomplete-tags',
 			dataValue: 'value',
@@ -142,6 +144,7 @@ define(
 				newUrl = document.location.href.replace(/#.*$/, '') + '#' + encodeURIComponent(Encyclopedia._convertStringForMatching(data.title));
 
 				$container.html(html);
+				Encyclopedia._consolidateElements();
 
 				document.title = 'D&D Encyclopedia | ' + currentItem.title;
 				if (newUrl === document.location.href) {
@@ -160,15 +163,15 @@ define(
 			},
 
 			_convertImages: function (html) {
-				var template = '<div class="grid-f">' +
+				var template = '<div class="grid-f js-grid-consolidate">' +
 					'<div class="grid__item flex-1-3 js-image-control">' +
 						'<div class="image-control-wrap">' +
-							'<div data-src="/assets/images/$1" style="background-image: url(/assets/images/$1" class="image-control js-image"></div>' +
+							'<div data-src="/assets/images/$3" style="background-image: url(/assets/images/$3" class="image-control js-image"></div>' +
 						'</div>' +
 					'</div>' +
 				'</div>';
 
-				html = html.replace(/\[\[img\|(.*?)\]\]/g, template);
+				html = html.replace(/(<p>)?(\[\[img\|(.*?)\]\])(<\/p>)?/g, template);
 
 				return html;
 			},
@@ -254,6 +257,25 @@ define(
 				html = html.replace(/\\([*])/g, '$1');
 
 				return html;
+			},
+
+			_consolidateElements: function () {
+				// When grids with the right class have been inserted
+				// next to one another, join them so their children are
+				// all within a single grid
+
+				var $grids = $(selectors.consolidateGrid);
+				var $gridsToJoin = $(selectors.consolidateGrid + ' + ' + selectors.consolidateGrid);
+
+				var i, $grid, $parentGrid;
+
+				for (var i = $gridsToJoin.length-1; i >= 0; i--) {
+					$grid = $gridsToJoin.eq(i);
+					$parentGrid = $gridsToJoin.prev(selectors.consolidateGrid);
+
+					$parentGrid.append($grid.children());
+					$grid.remove();
+				}
 			},
 
 			/////////////
