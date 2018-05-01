@@ -271,7 +271,7 @@ define(
 
 				for (var i = $gridsToJoin.length-1; i >= 0; i--) {
 					$grid = $gridsToJoin.eq(i);
-					$parentGrid = $gridsToJoin.prev(selectors.consolidateGrid);
+					$parentGrid = $grid.prev(selectors.consolidateGrid);
 
 					$parentGrid.append($grid.children());
 					$grid.remove();
