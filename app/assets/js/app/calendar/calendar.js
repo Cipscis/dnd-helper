@@ -187,7 +187,7 @@ define(
 					for (let h = 0; h < data.years.length; h++) {
 						let year = data.years[h];
 						for (let i = 0; i < year.months.length; i++) {
-							let month = data.months[i];
+							let month = year.months[i];
 
 							for (let j in month.days) {
 								let day = month.days[j];
