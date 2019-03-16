@@ -1,0 +1,17 @@
+.link-back {
+	display: inline-block;
+	padding: 10px 15px;
+	border-radius: 5px;
+
+	background: rgba($white, 0.2);
+	transition: background 0.3s;
+	&:hover, &:focus {
+		background: rgba($white, 0.4);
+	}
+
+	text-decoration: none;
+
+	&::before {
+		content: "< ";
+	}
+}

@@ -166,7 +166,7 @@ define(
 				var template = '<div class="grid-f js-grid-consolidate">' +
 					'<div class="grid__item flex-1-3 js-image-control">' +
 						'<div class="image-control-wrap">' +
-							'<div data-src="/assets/images/$3" style="background-image: url(/assets/images/$3" class="image-control js-image"></div>' +
+							'<div data-src="/assets/images/$3" style="background-image: url(/assets/images/$3);" class="image-control js-image"></div>' +
 						'</div>' +
 					'</div>' +
 				'</div>';

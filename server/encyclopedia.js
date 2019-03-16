@@ -204,10 +204,46 @@ var Encyclopedia = {
 		}
 
 		return missingLinks;
+	},
+
+	// Get links to a page
+	getLinksTo: function (req, res, next) {
+		var path = req.path.toLowerCase().replace(/^\//, '');
+
+		fs.readFile(fsPath + 'index.json', 'utf-8', Encyclopedia._onIndexReadGetLinksTo(res, path));
+	},
+
+	_onIndexReadGetLinksTo: function (res, name) {
+		return function (err, index) {
+			if (err) {
+				console.error(err);
+				return;
+			}
+
+			index = JSON.parse(index);
+
+			var i, item,
+				namesToMatch = [];
+				names = [];
+
+			for (i = 0; i < index.items.length; i++) {
+				item = index.items[i];
+
+				namesToMatch = item.aka || [];
+				namesToMatch.push(item.name.toLowerCase());
+
+				if (namesToMatch.indexOf(name) === -1) {
+					res.send(namesToMatch);
+				}
+			}
+
+			res.send(name);
+		};
 	}
 };
 
 module.exports = {
 	add: Encyclopedia.add,
-	collectMissingLinks: Encyclopedia.collectMissingLinks
+	collectMissingLinks: Encyclopedia.collectMissingLinks,
+	getLinksTo: Encyclopedia.getLinksTo
 };

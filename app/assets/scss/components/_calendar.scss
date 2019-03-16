@@ -13,6 +13,13 @@
 	padding: 0;
 }
 
+.calendar__year {
+	margin-top: 40px;
+	&:first-child {
+		margin-top: 0;
+	}
+}
+
 .calendar__year-num {
 	color: $white;
 }
@@ -58,6 +65,7 @@
 
 .calendar__month-day {
 	flex: 0 1 percentage(1/7);
+	color: rgba($black, 0.6);
 
 	&:before {
 		counter-increment: day;
@@ -70,6 +78,7 @@
 
 	&[tabindex] {
 		cursor: pointer;
+		color: $black;
 		font-weight: bold;
 	}
 

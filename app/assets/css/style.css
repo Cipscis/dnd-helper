@@ -276,8 +276,7 @@ html, body {
   margin: 0; }
 
 * {
-  box-sizing: border-box;
-  transition: all 0.3s; }
+  box-sizing: border-box; }
 
 ul, ol {
   margin: 0; }
@@ -627,6 +626,18 @@ dt, dd {
   input:focus + .fake-input__display {
     background: #999; }
 
+.link-back {
+  display: inline-block;
+  padding: 10px 15px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.2);
+  transition: background 0.3s;
+  text-decoration: none; }
+  .link-back:hover, .link-back:focus {
+    background: rgba(255, 255, 255, 0.4); }
+  .link-back::before {
+    content: "< "; }
+
 .symbol-ara {
   width: 100px;
   height: 100px;
@@ -924,6 +935,11 @@ dt, dd {
   margin: 0;
   padding: 0; }
 
+.calendar__year {
+  margin-top: 40px; }
+  .calendar__year:first-child {
+    margin-top: 0; }
+
 .calendar__year-num {
   color: #fff; }
 
@@ -960,7 +976,8 @@ dt, dd {
   counter-reset: day; }
 
 .calendar__month-day {
-  flex: 0 1 14.28571%; }
+  flex: 0 1 14.28571%;
+  color: rgba(0, 0, 0, 0.6); }
   .calendar__month-day:before {
     counter-increment: day;
     content: counter(day); }
@@ -968,6 +985,7 @@ dt, dd {
     background: #fff; }
   .calendar__month-day[tabindex] {
     cursor: pointer;
+    color: #000;
     font-weight: bold; }
   .calendar__month-day:focus, .calendar__month-day:focus-within {
     outline: none;
@@ -1506,3 +1524,6 @@ dt, dd {
   right: 10px;
   width: calc(100% - 20px);
   height: calc(100% - 20px); }
+
+.campaign-map__canvas {
+  max-width: 100%; }
