@@ -53,7 +53,7 @@ define(
 		};
 
 		var currentDate;
-		var calendarDurations;
+		var monthDurations;
 
 		var Encyclopedia = {
 			init: function () {
@@ -116,7 +116,7 @@ define(
 					var data = response.responseJSON;
 
 					currentDate = data.current;
-					calendarDurations = data.durations;
+					monthDurations = data.monthDurations;
 				}
 
 				Encyclopedia._initAutocomplete();
@@ -184,7 +184,7 @@ define(
 			_convertHtml: function (html) {
 				html = Encyclopedia._convertImages(html);
 
-				if (currentDate && calendarDurations) {
+				if (currentDate && monthDurations) {
 					html = Encyclopedia._convertSince(html);
 				}
 
@@ -262,12 +262,12 @@ define(
 					monthDifference -= 1;
 
 					// Add the number of days in the month before futureDate
-					dayDifference += calendarDurations.months[(futureDate[1]+calendarDurations.months.length-1)%calendarDurations.months.length];
+					dayDifference += monthDurations[(futureDate[1]+monthDurations.length-1)%monthDurations.length];
 				}
 				if (monthDifference < 0) {
 					yearDifference -= 1;
 
-					monthDifference += calendarDurations.months.length;
+					monthDifference += monthDurations.length;
 				}
 
 				dateDifference = [yearDifference, monthDifference, dayDifference];
