@@ -180,7 +180,7 @@ define(
 			_convertHtml: function (html) {
 				html = Encyclopedia._convertImages(html);
 
-				if (currentDate) {
+				if (currentDate && calendarDurations) {
 					html = Encyclopedia._convertSince(html);
 				}
 
