@@ -1,9 +1,6 @@
 {
 	"current": [1, 7, 28],
 	"durations": {
-		"year": {
-			"months": 12
-		},
 		"months": [
 			{"days": 31},
 			{"days": 28},

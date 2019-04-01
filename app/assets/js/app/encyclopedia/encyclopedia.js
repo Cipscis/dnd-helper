@@ -107,13 +107,17 @@ define(
 				$.ajax({
 					url: url,
 					dataType: 'json',
-					success: callback
+					complete: callback
 				});
 			},
 
-			_processCalendarIndex: function (data, status, response) {
-				currentDate = data.current;
-				calendarDurations = data.durations;
+			_processCalendarIndex: function (response, status) {
+				if (status === 'success') {
+					var data = response.responseJSON;
+
+					currentDate = data.current;
+					calendarDurations = data.durations;
+				}
 
 				Encyclopedia._initAutocomplete();
 			},
@@ -258,12 +262,12 @@ define(
 					monthDifference -= 1;
 
 					// Add the number of days in the month before futureDate
-					dayDifference += calendarDurations.months[(futureDate[1]+calendarDurations.year.months-1)%calendarDurations.year.months].days;
+					dayDifference += calendarDurations.months[(futureDate[1]+calendarDurations.months.length-1)%calendarDurations.months.length].days;
 				}
 				if (monthDifference < 0) {
 					yearDifference -= 1;
 
-					monthDifference += calendarDurations.year.months;
+					monthDifference += calendarDurations.months.length;
 				}
 
 				dateDifference = [yearDifference, monthDifference, dayDifference];
