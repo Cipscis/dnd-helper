@@ -52,11 +52,17 @@ define(
 			jsonSrc: 'src'
 		};
 
+		var currentDate;
+		var calendarDurations;
+
 		var Encyclopedia = {
 			init: function () {
 				Encyclopedia._initEvents();
 				Encyclopedia._initKeys();
-				Encyclopedia._initAutocomplete();
+
+				// TODO: Load indices in parallel,
+				// but wait for both to be loaded before initialising encyclopedia fully
+				Encyclopedia._initCalendarIndex(Encyclopedia._processCalendarIndex);
 			},
 
 			_initEvents: function () {
@@ -93,6 +99,23 @@ define(
 
 				keybinding.bindKey('S', Encyclopedia._contentSave, true, false, true);
 				keybinding.bindKey('L', Encyclopedia._contentEdit, true, false, true);
+			},
+
+			_initCalendarIndex: function (callback) {
+				var url = '/assets/json/calendar/index.json';
+
+				$.ajax({
+					url: url,
+					dataType: 'json',
+					success: callback
+				});
+			},
+
+			_processCalendarIndex: function (data, status, response) {
+				currentDate = data.current;
+				calendarDurations = data.durations;
+
+				Encyclopedia._initAutocomplete();
 			},
 
 			//////////
@@ -134,7 +157,7 @@ define(
 					$input = $(selectors.autocompleteInput),
 
 					html,
-					newUrl
+					newUrl;
 
 				currentItem = data;
 
@@ -146,7 +169,7 @@ define(
 				$container.html(html);
 				Encyclopedia._consolidateElements();
 
-				document.title = 'D&D Encyclopedia | ' + currentItem.title;
+				document.title = 'Encyclopedia | ' + currentItem.title;
 				if (newUrl === document.location.href) {
 					history.replaceState({html: html, currentItem: currentItem}, document.title, newUrl);
 				} else {
@@ -156,6 +179,11 @@ define(
 
 			_convertHtml: function (html) {
 				html = Encyclopedia._convertImages(html);
+
+				if (currentDate) {
+					html = Encyclopedia._convertSince(html);
+				}
+
 				html = Encyclopedia._convertLinks(html);
 				html = Encyclopedia._convertMarkdown(html);
 
@@ -166,7 +194,7 @@ define(
 				var template = '<div class="grid-f js-grid-consolidate">' +
 					'<div class="grid__item flex-1-3 js-image-control">' +
 						'<div class="image-control-wrap">' +
-							'<div data-src="/assets/images/$3" style="background-image: url(/assets/images/$3);" class="image-control js-image"></div>' +
+							'<div data-src="/assets/images/$3" style="background-image: url(\'/assets/images/$3\');" class="image-control js-image"></div>' +
 						'</div>' +
 					'</div>' +
 				'</div>';
@@ -174,6 +202,73 @@ define(
 				html = html.replace(/(<p>)?(\[\[img\|(.*?)\]\])(<\/p>)?/g, template);
 
 				return html;
+			},
+
+			_convertSince: function (html) {
+				var sincePattern = /\[\[since\|[^\]]*\]\]/g;
+				var sinceMatches = html.match(sincePattern);
+
+				if (sinceMatches) {
+					sinceMatches.forEach(function (match) {
+						var date = match.match(/\[\[since\|(.*?)\]\]/)[1];
+						var numberDate = date.split('-').map(function (a) { return parseInt(a, 10); });
+						var dateDifference = Encyclopedia._getDateDifferenceString(numberDate, currentDate);
+
+						dateDifference = '<span title="' + date + '">' + dateDifference + '</span>';
+
+						html = html.replace(match, dateDifference);
+					});
+				}
+
+				return html;
+			},
+
+			_getDateDifferenceString: function (pastDate, futureDate) {
+				var dateDifference = Encyclopedia._getDateDifference(pastDate, futureDate);
+				var dateDifferenceString = '[ERROR | Cannot calculate duration]';
+
+				if (dateDifference[0] >= 0) {
+					if (dateDifference[0] > 0) {
+						dateDifferenceString = dateDifference[0];
+						dateDifferenceString += ' year' + (dateDifferenceString > 1 ? 's' : '');
+					} else if (dateDifference[1] > 0) {
+						dateDifferenceString = dateDifference[1];
+						dateDifferenceString += ' month' + (dateDifferenceString > 1 ? 's' : '');
+					} else if (dateDifference[2] >= 0) {
+						if (dateDifference[2] > 14) {
+							dateDifferenceString = Math.floor(dateDifference[2] / 7);
+							dateDifferenceString += ' week' + (dateDifferenceString > 1 ? 's' : '');
+						} else {
+							dateDifferenceString = dateDifference[2];
+							dateDifferenceString += ' day' + (dateDifferenceString > 1 ? 's' : '');
+						}
+					}
+				}
+
+				return dateDifferenceString;
+			},
+
+			_getDateDifference: function (pastDate, futureDate) {
+				var dateDifference;
+				var yearDifference = futureDate[0] - pastDate[0];
+				var monthDifference = futureDate[1] - pastDate[1];
+				var dayDifference = futureDate[2] - pastDate[2];
+
+				if (dayDifference < 0) {
+					monthDifference -= 1;
+
+					// Add the number of days in the month before futureDate
+					dayDifference += calendarDurations.months[(futureDate[1]+calendarDurations.year.months-1)%calendarDurations.year.months].days;
+				}
+				if (monthDifference < 0) {
+					yearDifference -= 1;
+
+					monthDifference += calendarDurations.year.months;
+				}
+
+				dateDifference = [yearDifference, monthDifference, dayDifference];
+
+				return dateDifference;
 			},
 
 			_convertLinks: function (html) {
@@ -519,6 +614,21 @@ define(
 					}
 				}
 
+				// Sort by name first
+				results.items.sort(function (a, b) {
+					var nameA = a.item.name.toLowerCase();
+					var nameB = b.item.name.toLowerCase();
+
+					if (nameA < nameB) {
+						return -1;
+					} else if (nameA > nameB) {
+						return +1;
+					} else {
+						return 0;
+					}
+				});
+
+				// Then sort by score
 				results.items.sort(function (a, b) {
 					return b.score - a.score;
 				});
@@ -565,6 +675,10 @@ define(
 					i, queryToken,
 					j, tag;
 
+				if (query.trim() === '') {
+					return 1;
+				}
+
 				// TODO: This will count tags with spaces multiple times
 				query = Encyclopedia._convertStringForMatching(query).trim().split(' ');
 
@@ -574,20 +688,16 @@ define(
 
 					if (Encyclopedia._convertStringForMatching(item.name).match(queryToken)) {
 						score += 50;
-
-						// Better score for a total match
-						score += queryToken.length / item.name.length;
 					}
 
-					if (item.tags) {
-						for (j = 0; j < item.tags.length; j++) {
-							tag = item.tags[j];
+					if (queryToken.length > 1) {
+						if (item.tags) {
+							for (j = 0; j < item.tags.length; j++) {
+								tag = item.tags[j];
 
-							if (Encyclopedia._convertStringForMatching(tag).match(queryToken)) {
-								score += 5;
-
-								// Better score for a total match
-								score += queryToken.length / item.name.length;
+								if (Encyclopedia._convertStringForMatching(tag).match(queryToken)) {
+									score += 5;
+								}
 							}
 						}
 					}

@@ -34,7 +34,7 @@ define(
 				$('.js-image-display')
 					.removeClass('is-loading')
 					.css({
-						'background-image': 'url(' + imagePath + ')',
+						'background-image': 'url(\'' + imagePath + '\')',
 						'background-color': colour
 					});
 			}

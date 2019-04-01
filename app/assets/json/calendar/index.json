@@ -1,5 +1,24 @@
 {
 	"current": [1, 7, 28],
+	"durations": {
+		"year": {
+			"months": 12
+		},
+		"months": [
+			{"days": 31},
+			{"days": 28},
+			{"days": 31},
+			{"days": 30},
+			{"days": 31},
+			{"days": 30},
+			{"days": 31},
+			{"days": 31},
+			{"days": 30},
+			{"days": 31},
+			{"days": 30},
+			{"days": 31}
+		]
+	},
 	"years": [
 		{
 			"num": 1,
