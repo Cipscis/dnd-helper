@@ -262,7 +262,7 @@ define(
 					monthDifference -= 1;
 
 					// Add the number of days in the month before futureDate
-					dayDifference += calendarDurations.months[(futureDate[1]+calendarDurations.months.length-1)%calendarDurations.months.length].days;
+					dayDifference += calendarDurations.months[(futureDate[1]+calendarDurations.months.length-1)%calendarDurations.months.length];
 				}
 				if (monthDifference < 0) {
 					yearDifference -= 1;
