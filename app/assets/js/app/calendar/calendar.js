@@ -126,7 +126,7 @@ define(
 
 						let daysArr = [];
 
-						for (let j = 0; j < 28; j++) {
+						for (let j = 0; j < index.monthDurations[i]; j++) {
 							daysArr[j] = {};
 						}
 
